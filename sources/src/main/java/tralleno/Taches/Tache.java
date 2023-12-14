@@ -1,8 +1,9 @@
-package tralleno;
+package tralleno.Taches;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public abstract class Tache {
+public abstract class Tache implements Comparable<Tache>, Serializable{
     protected String titre;
     protected int id;
     protected Calendar dateDebut,dateFin;
@@ -11,13 +12,17 @@ public abstract class Tache {
 
     protected String description;
 
-    public static int IDVALIDACTUELLE=0;
+    public static int IDVALIDACTUEL=1;
 
+    /**
+     *
+     * @param t titre de la tâche
+     * @param d description de la tâche
+     */
     public Tache(String t,String d){
         this.titre=t;
         this.description=d;
-        this.id=Tache.IDVALIDACTUELLE++;
-
+        this.id=Tache.IDVALIDACTUEL++;
     }
 
     /**
@@ -32,7 +37,7 @@ public abstract class Tache {
         this.description=d;
         this.dateDebut=dD;
         this.dateFin=dF;
-        this.id=Tache.IDVALIDACTUELLE++;
+        this.id=Tache.IDVALIDACTUEL++;
     }
 
     public Tache(Tache t) {
@@ -42,6 +47,7 @@ public abstract class Tache {
         this.dateFin=t.getDateFin();
         this.id=t.getId();
     }
+
 
     public String getTitre() {
         return titre;
@@ -89,5 +95,22 @@ public abstract class Tache {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public int compareTo(Tache t) {
+        // Par exemple, comparaison basée sur l'ID des tâches
+        return Integer.compare(this.id, t.getId());
+    }
+
+    public String toString(){
+        String aff = "Titre : " + this.titre + "\n";
+        aff += "ID : " + this.id + "\n";
+        aff += "dateDebut : " + this.dateDebut + "\n";
+        aff += "dateFin : " + this.dateFin + "\n";
+        aff += "duree : " + this.duree + "\n";
+        aff += "Description : " + this.description + "\n";
+
+        return aff;
     }
 }

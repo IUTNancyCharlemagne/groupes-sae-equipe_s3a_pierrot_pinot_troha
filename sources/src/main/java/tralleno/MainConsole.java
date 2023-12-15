@@ -19,8 +19,9 @@ public class MainConsole {
         tache2.ajouterSousTache(tache3);
         tache2.ajouterSousTache(tache4);
 
-        List<Tache> l = tache1.getSousTaches();
+        List<Tache> l = tache2.getSousTaches();
 
+        System.out.println(l);
     }
 
 }

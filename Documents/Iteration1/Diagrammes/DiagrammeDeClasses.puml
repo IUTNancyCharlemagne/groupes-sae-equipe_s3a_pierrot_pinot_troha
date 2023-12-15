@@ -1,0 +1,149 @@
+@startuml
+class tralleno.serialisation.MainDeserialisation {
++ {static} void main(String[])
+}
+class tralleno.serialisation.MainSerialisation {
++ {static} void main(String[])
+}
+class tralleno.Section.Section {
+- List<Tache> taches
+- String nom
+- int id
++ <<Create>> Section(String)
++ <<Create>> Section(String,List<Tache>)
++ void ajouterTache(Tache)
++ void supprimerTache(Tache)
++ List<Tache> getTaches()
++ void setTaches(List<Tache>)
++ String getNom()
++ void setNom(String)
++ int getId()
++ void setId(int)
+}
+abstract class tralleno.Taches.Tache {
+# String titre
+# int id
+# Calendar dateDebut
+# int duree
+# String description
++ {static} int IDVALIDACTUEL
++ <<Create>> Tache(String,String)
++ <<Create>> Tache(String,String,Calendar,Calendar)
++ <<Create>> Tache(Tache)
++ String getTitre()
++ void setTitre(String)
++ int getId()
++ void setId(int)
++ Calendar getDateDebut()
++ void setDateDebut(Calendar)
++ Calendar getDateFin()
++ void setDateFin(Calendar)
++ int getDuree()
++ void setDuree(int)
++ String getDescription()
++ void setDescription(String)
++ int compareTo(Tache)
++ String toString()
+}
+class tralleno.Controleurs.ControlDragAndDrop {
+- ModeleBureau modele
++ void handle(ActionEvent)
+}
+class tralleno.Modele.ModeleBureau {
+- List<Observateur> observateurs
+- List<Section> sections
+- Map<Tache,List<Tache>> dependances
+- Tache tacheCourante
++ <<Create>> ModeleBureau()
++ void ajouterSection(Section)
++ List<Observateur> getObservateurs()
++ void setObservateurs(List<Observateur>)
++ List<Section> getSections()
++ void setSections(List<Section>)
++ Map<Tache,List<Tache>> getDependances()
++ void setDependances(Map<Tache,List<Tache>>)
++ Tache getTacheCourante()
++ void setTacheCourante(Tache)
++ void supprimerSection(Section)
++ void enregistrerObservateur(Observateur)
++ void supprimerObservateur(Observateur)
++ void notifierObservateurs()
+}
+class tralleno.Controleurs.ControlNavVues {
+- ModeleBureau modele
++ void handle(ActionEvent)
+}
+interface tralleno.Vues.Observateur {
++ void actualiser(Sujet)
+}
+class tralleno.Controleurs.ControlGlobal {
+- ModeleBureau modele
++ void handle(ActionEvent)
+}
+class tralleno.HelloApplication {
++ void start(Stage)
++ {static} void main(String[])
+}
+class tralleno.Vues.VueListe {
++ void actualiser(Sujet)
+}
+class tralleno.Vues.VueTableau {
++ void actualiser(Sujet)
+}
+class tralleno.Controleurs.ControlSection {
+- ModeleBureau modele
++ void handle(ActionEvent)
+}
+class tralleno.Controleurs.ControlTache {
+- ModeleBureau modele
++ void handle(ActionEvent)
+}
+class tralleno.HelloController {
+- Label welcomeText
+# void onHelloButtonClick()
+}
+class tralleno.Vues.VueGantt {
++ void actualiser(Sujet)
+}
+class tralleno.Taches.TacheFille {
++ <<Create>> TacheFille(String,String)
+}
+interface tralleno.Modele.Sujet {
++ void enregistrerObservateur(Observateur)
++ void supprimerObservateur(Observateur)
++ void notifierObservateurs()
+}
+class tralleno.Taches.TacheMere {
+# List<Tache> sousTaches
++ <<Create>> TacheMere(String,String)
++ <<Create>> TacheMere(String,String,Calendar,Calendar)
++ <<Create>> TacheMere(TacheMere)
++ void ajouterSousTache(Tache)
++ void supprimerSousTache(Tache)
++ List<Tache> getSousTaches()
++ void setSousTaches(List<Tache>)
+}
+class tralleno.MainConsole {
++ {static} void main(String[])
+}
+
+
+java.io.Serializable <|.. tralleno.Section.Section
+tralleno.Taches.Comparable <|.. tralleno.Taches.Tache
+java.io.Serializable <|.. tralleno.Taches.Tache
+javafx.event.EventHandler <|.. tralleno.Controleurs.ControlDragAndDrop
+tralleno.Modele.Sujet <|.. tralleno.Modele.ModeleBureau
+java.io.Serializable <|.. tralleno.Modele.ModeleBureau
+javafx.event.EventHandler <|.. tralleno.Controleurs.ControlNavVues
+javafx.event.EventHandler <|.. tralleno.Controleurs.ControlGlobal
+javafx.application.Application <|-- tralleno.HelloApplication
+tralleno.Vues.Observateur <|.. tralleno.Vues.VueListe
+tralleno.Vues.Observateur <|.. tralleno.Vues.VueTableau
+javafx.event.EventHandler <|.. tralleno.Controleurs.ControlSection
+javafx.event.EventHandler <|.. tralleno.Controleurs.ControlTache
+tralleno.Vues.Observateur <|.. tralleno.Vues.VueGantt
+java.io.Serializable <|.. tralleno.Taches.TacheFille
+tralleno.Taches.Tache <|-- tralleno.Taches.TacheFille
+java.io.Serializable <|.. tralleno.Taches.TacheMere
+tralleno.Taches.Tache <|-- tralleno.Taches.TacheMere
+@enduml

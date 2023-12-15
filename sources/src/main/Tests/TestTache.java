@@ -42,12 +42,12 @@ public class TestTache {
     }
 
     @Test
-    public void test_ID_Pas_pareil_Un(){
+    public void test_ID_Inferieur(){
         assertEquals(this.faireDevoirs.compareTo(this.reviserDS), -1);
     }
 
     @Test
-    public void test_ID_Pas_pareil_Deux(){
+    public void test_ID_Superieur(){
         assertEquals(this.reviserDS.compareTo(this.faireDevoirs), 1);
     }
 

@@ -44,6 +44,7 @@ public class ModeleBureau implements Sujet, Serializable {
      */
     public void ajouterSection(Section s){
         this.sections.add(s);
+        this.notifierObservateurs();
     }
 
     public List<Observateur> getObservateurs() {
@@ -84,6 +85,7 @@ public class ModeleBureau implements Sujet, Serializable {
      */
     public void supprimerSection(Section s){
         this.sections.remove(s);
+        this.notifierObservateurs();
     }
 
 

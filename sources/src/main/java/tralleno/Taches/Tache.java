@@ -1,5 +1,7 @@
 package tralleno.Taches;
 
+import tralleno.Modele.ModeleBureau;
+
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -22,7 +24,7 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
     public Tache(String t,String d){
         this.titre=t;
         this.description=d;
-        this.id=Tache.IDVALIDACTUEL++;
+        this.id= ModeleBureau.getIDTACHEACTUELLE();
     }
 
     /**
@@ -37,7 +39,7 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
         this.description=d;
         this.dateDebut=dD;
         this.dateFin=dF;
-        this.id=Tache.IDVALIDACTUEL++;
+        this.id=ModeleBureau.getIDTACHEACTUELLE();
     }
 
     public Tache(Tache t) {

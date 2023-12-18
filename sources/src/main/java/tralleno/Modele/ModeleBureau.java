@@ -32,6 +32,30 @@ public class ModeleBureau implements Sujet, Serializable {
      */
     private Tache tacheCourante;
 
+    /**
+     * nombre d'id de tache total, sert à avoir une id unique pour chaque tache
+     */
+    private static int IDTACHEACTUELLE=0;
+    /**
+     * nombre d'id de section total, sert à avoir une id unique pour chaque section
+     */
+    private static int IDSECTIONACTUELLE=0;
+    /**
+     * renvoi un id unique de section et incremente pour la suite
+     * @return int id section unique
+     */
+    public static int getIDSECTIONACTUELLE() {
+        return IDSECTIONACTUELLE++;
+    }
+
+    /**
+     * renvoi un id unique de tâche et incremente pour la suite
+     * @return int id tache unique
+     */
+    public static int getIDTACHEACTUELLE(){
+        return IDTACHEACTUELLE++;
+    }
+
     public ModeleBureau(){
         this.observateurs = new ArrayList<Observateur>();
         this.dependances = new TreeMap<Tache, List<Tache>>();

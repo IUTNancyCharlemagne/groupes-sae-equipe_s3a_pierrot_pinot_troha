@@ -1,5 +1,6 @@
 package tralleno.Section;
 
+import tralleno.Modele.ModeleBureau;
 import tralleno.Taches.Tache;
 
 import java.io.Serializable;
@@ -45,6 +46,7 @@ public class Section implements Serializable {
     public Section(String n, List<Tache> l){
         this.nom = n;
         this.taches = l;
+        this.id= ModeleBureau.getIDSECTIONACTUELLE();
     }
 
     /**

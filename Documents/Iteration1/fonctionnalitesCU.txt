@@ -1,0 +1,4 @@
+Mise en place de la base d’MVC. Les vues et contrôleurs ne seront développés qu’à partir du moment où nous utiliserons JavaFX. Cependant, ils ont été écrits. Réalisé par TROHA Stanislas, PINOT Gaëtan et PIERROT Nathan
+Mise en place d’un package dédié à la sérialisation (pour les tests), que nous transférerons dans le main quand on développera la partie graphique. TROHA Stanislas
+Création d’un main pour tester la sérialisation et les méthodes pour les tâches. TROHA Stanislas, PINOT Gaëtan et PIERROT Nathan
+Tests sur les Section et Tâche PIERROT Nathan

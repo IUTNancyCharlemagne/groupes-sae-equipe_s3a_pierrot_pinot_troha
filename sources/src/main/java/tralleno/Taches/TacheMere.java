@@ -1,6 +1,7 @@
 package tralleno.Taches;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -29,7 +30,7 @@ public class TacheMere extends Tache implements Serializable {
      * @param dD
      * @param dF
      */
-    public TacheMere(String t, String d, Calendar dD, Calendar dF){
+    public TacheMere(String t, String d, LocalDate dD, LocalDate dF){
         super(t, d, dD, dF);
         this.sousTaches = new ArrayList<Tache>();
     }

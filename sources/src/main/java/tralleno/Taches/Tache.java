@@ -3,12 +3,13 @@ package tralleno.Taches;
 import tralleno.Modele.ModeleBureau;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Calendar;
 
 public abstract class Tache implements Comparable<Tache>, Serializable{
     protected String titre;
     protected int id;
-    protected Calendar dateDebut,dateFin;
+    protected LocalDate dateDebut,dateFin;
 
     protected int duree ; //duree en jour
 
@@ -34,7 +35,7 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
      * @param dD
      * @param dF
      */
-    public Tache(String t,String d,Calendar dD,Calendar dF){
+    public Tache(String t,String d,LocalDate dD,LocalDate dF){
         this.titre=t;
         this.description=d;
         this.dateDebut=dD;
@@ -67,19 +68,19 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
         this.id = id;
     }
 
-    public Calendar getDateDebut() {
+    public LocalDate getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(Calendar dateDebut) {
+    public void setDateDebut(LocalDate dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public Calendar getDateFin() {
+    public LocalDate getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(Calendar dateFin) {
+    public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
     }
 

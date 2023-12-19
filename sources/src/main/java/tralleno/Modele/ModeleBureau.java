@@ -71,6 +71,15 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
+    public void ajouterTache(Tache t, Section s){
+        for (Section section : this.sections) {
+            if (section.equals(s)) {
+                section.ajouterTache(t);
+                break;
+            }
+        }
+        this.notifierObservateurs();
+    }
     public List<Observateur> getObservateurs() {
         return observateurs;
     }
@@ -79,12 +88,53 @@ public class ModeleBureau implements Sujet, Serializable {
         this.observateurs = observateurs;
     }
 
+    public Section getSection(String nom){
+        int i = 0;
+        boolean trouve = false;
+        while(i < this.sections.size() && !trouve){
+           if(this.sections.get(i).getNom().equals(nom))
+               trouve = true;
+           else{
+               i++;
+           }
+        }
+        Section s = null;
+        if(trouve){
+            s = this.sections.get(i);
+        }
+        return s;
+    }
+
+    public List<String> getNomSections() {
+        List<String> res = new ArrayList<String>();
+        for(Section s : this.sections){
+            res.add(s.getNom());
+        }
+        return res;
+    }
+
     public List<Section> getSections() {
         return sections;
     }
 
     public void setSections(List<Section> sections) {
         this.sections = sections;
+    }
+
+    public List<Tache> getTaches(){
+        List<Tache> res = new ArrayList<Tache>();
+        for(Section s : this.sections){
+            res.addAll(s.getTaches());
+        }
+        return res;
+    }
+
+    public List<String> getTitreTaches(){
+        List<String> res = new ArrayList<String>();
+        for(Tache t : this.getTaches()) {
+            res.add(t.getTitre());
+        }
+        return res;
     }
 
     public Map<Tache, List<Tache>> getDependances() {

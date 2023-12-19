@@ -64,7 +64,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Permet d'ajouter une section au modèle
-     * @param s
+     * @param s section à ajouter
      */
     public void ajouterSection(Section s){
         this.sections.add(s);
@@ -155,13 +155,52 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Permet de supprimer une section du modèle
-     * @param s
+     * @param s section à supprimer
      */
     public void supprimerSection(Section s){
+        // on supprime toutes les tâches et leurs dépendances avant de supprimer la section elle même
+        // (pour éviter tout problème avec les dépendances)
+        for(Tache t : s.getTaches()){
+            supprimerTache(t);
+        }
         this.sections.remove(s);
         this.notifierObservateurs();
     }
 
+    /**
+     * Méthode qui permet de supprimer une tâche, cela a pour conséquence de supprimer
+     * toutes les dépendances qu'elle pourrait avoir avec des autres tâches
+     *
+     * @param t tâche à supprimer
+     */
+    public void supprimerTache(Tache t){
+
+        //on parcourt toute la map pour truover si le tâche à supprimer se trouve dans une des listes de dépendances
+        for (Map.Entry<Tache, List<Tache>> entry : dependances.entrySet()) {
+            List<Tache> listeDependances = entry.getValue();
+
+            if(listeDependances.contains(t)){
+                //on retire la dépendance de la tâche qu'on veut supprimer
+                this.dependances.get(entry).remove(t);
+
+                // si après la suppression, la liste est vide alors la tâche n'a plus de dépendance, on peut donc l'enlever de la map
+                if(this.dependances.get(entry) == null){
+                    this.dependances.remove(entry);
+                }
+            }
+        }
+        //on retire les dépendances de la tâche à supprimer
+        this.dependances.remove(t);
+
+        //on retire la tâche de la liste de tâche de sa section
+        for(Section section : this.sections){
+            if(section.getTaches().contains(t)){
+                section.supprimerTache(t);
+            }
+        }
+        // on notifie tous les observateurs de la mise à jour
+        this.notifierObservateurs();
+    }
 
     /**
      * Permet d'enregistrer un observateur à la liste

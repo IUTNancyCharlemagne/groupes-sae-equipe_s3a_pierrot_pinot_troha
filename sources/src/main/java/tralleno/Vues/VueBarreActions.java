@@ -22,7 +22,7 @@ public class VueBarreActions extends HBox {
         super(10);
 
         // Logo de trellano (pour l'instant qu'avec chemin absolu, on verra plus tard)
-        ImageView logo = new ImageView(new Image("C:\\Users\\stantheman\\Desktop\\Semestre 3\\SAEs\\SAE_S3_01\\groupes-sae-equipe_s3a_pierrot_pinot_troha\\sources\\src\\main\\resources\\Images\\logo.png"));
+        ImageView logo = new ImageView(new Image("C:\\Users\\natha\\Desktop\\IUT\\SAE\\2A\\Developpement_dapplications\\groupes-sae-equipe_s3a_pierrot_pinot_troha\\sources\\src\\main\\resources\\Images\\logo.png"));
         logo.setFitHeight(30);
         logo.setPreserveRatio(true);
 

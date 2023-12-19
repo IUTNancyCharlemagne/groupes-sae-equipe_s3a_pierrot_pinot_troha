@@ -33,7 +33,7 @@ public class VueBarreActions extends HBox {
 
         try {
         FileInputStream f=new FileInputStream(file);
-            
+
         ImageView logo = new ImageView(new Image(f));
         logo.setFitHeight(30);
         logo.setPreserveRatio(true);

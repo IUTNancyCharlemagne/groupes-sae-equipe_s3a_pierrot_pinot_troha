@@ -105,12 +105,55 @@ public class ModeleBureau implements Sujet, Serializable {
         return s;
     }
 
+    /**
+     * Retourne la section dans laquelle est contenue une tâche
+     * @param t
+     * @return
+     */
+    public Section getSection(Tache t){
+        Section section = null;
+        for(Section s : this.sections){
+            if(s.getTaches().contains(t)){
+                section = s;
+                break;
+            }
+        }
+        return section;
+    }
+
     public List<String> getNomSections() {
         List<String> res = new ArrayList<String>();
         for(Section s : this.sections){
             res.add(s.getNom());
         }
         return res;
+    }
+
+    public void ajouterDependance(Tache t, Tache dependance){
+        if(dependance != null){
+            if(this.dependances.containsKey(t)){ // Si la map de dépendances contient déjà la tâche en entrée
+                // Alors on ajoute la tâche dépendance à la liste des tâches dépendantes
+                this.dependances.get(t).add(dependance);
+            }else{
+                // Sinon la tâche n'a encore aucune dépendance et il faudra aussi initialiser la liste
+                this.dependances.put(t, new ArrayList<>());
+                this.dependances.get(t).add(dependance);
+            }
+        }
+    }
+
+    public void ajouterDependances(Tache t, List<Tache> dependances){
+        if(dependances != null && !(dependances.isEmpty())){
+            if(this.dependances.containsKey(t)){ // Si la map de dépendances contient déjà la tâche en entrée
+                // Alors on ajoute la tâche dépendance à la liste des tâches dépendantes
+                this.dependances.get(t).addAll(dependances);
+            }else{
+                // Sinon la tâche n'a encore aucune dépendance et il faudra aussi initialiser la liste
+                this.dependances.put(t, new ArrayList<Tache>());
+
+                this.dependances.get(t).addAll(dependances);
+            }
+        }
     }
 
     public List<Section> getSections() {

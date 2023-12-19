@@ -9,7 +9,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import tralleno.Controleurs.BarreBoutons.ControlCreerTache;
+import tralleno.Controleurs.Sections.ControlCreerSection;
+import tralleno.Controleurs.Taches.ControlCreerTache;
 import tralleno.Modele.ModeleBureau;
 
 public class VueBarreActions extends HBox {
@@ -34,6 +35,7 @@ public class VueBarreActions extends HBox {
             Button creerTacheButton = new Button("Créer Tâche");
             creerTacheButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlCreerTache(modeleBureau));
             Button creerSectionButton = new Button("Créer Section");
+            creerSectionButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlCreerSection(modeleBureau));
             Button vueTypeButton = (type == TABLEAU) ? new Button("Vue Liste") : new Button("Vue Tableau");
             Button tachesArchiveesButton = new Button("Tâches archivées");
 

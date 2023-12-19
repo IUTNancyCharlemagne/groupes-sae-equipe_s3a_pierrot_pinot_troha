@@ -2,8 +2,10 @@ package tralleno.Vues;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import tralleno.Controleurs.Taches.ControlTache;
+import tralleno.Modele.ModeleBureau;
 import tralleno.Modele.Sujet;
 import tralleno.Taches.Tache;
 
@@ -11,7 +13,7 @@ import java.util.List;
 
 public class VueSection extends VBox implements Observateur {
 
-    public VueSection(String nom, List<Tache> taches) {
+    public VueSection(String nom, List<Tache> taches, ModeleBureau modele) {
         super();
         setPrefWidth(250);
         setMinHeight(50);
@@ -26,6 +28,7 @@ public class VueSection extends VBox implements Observateur {
 
         for (Tache t : taches) {
             VueTache vueTache = new VueTache(t);
+            vueTache.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlTache(modele)); // On ajoute un contrôleur à chaque tache créée.
             getChildren().add(vueTache);
         }
     }

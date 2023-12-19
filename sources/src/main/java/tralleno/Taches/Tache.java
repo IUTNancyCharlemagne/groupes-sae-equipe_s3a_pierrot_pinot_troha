@@ -1,12 +1,15 @@
 package tralleno.Taches;
 
 import tralleno.Modele.ModeleBureau;
+import tralleno.Section.Section;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Calendar;
 
 public abstract class Tache implements Comparable<Tache>, Serializable{
+
+    protected Section sectionParente;
     protected String titre;
     protected int id;
     protected LocalDate dateDebut,dateFin;
@@ -51,6 +54,13 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
         this.id=t.getId();
     }
 
+    public Section getSectionParente() {
+        return sectionParente;
+    }
+
+    public void setSectionParente(Section sectionParente) {
+        this.sectionParente = sectionParente;
+    }
 
     public String getTitre() {
         return titre;
@@ -107,13 +117,9 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
     }
 
     public String toString(){
-        String aff = "Titre : " + this.titre + "\n";
-        aff += "ID : " + this.id + "\n";
-        aff += "dateDebut : " + this.dateDebut + "\n";
-        aff += "dateFin : " + this.dateFin + "\n";
-        aff += "duree : " + this.duree + "\n";
-        aff += "Description : " + this.description + "\n";
-
+//        String aff = "Titre : " + this.titre + "\n";
+//        aff += "Section : " + this.sectionParente.getNom() + "\n";
+        String aff = this.titre + " - " + this.sectionParente.getNom() + "\n";
         return aff;
     }
 }

@@ -92,6 +92,8 @@ public class Section implements Serializable {
         this.id = id;
     }
 
-
+    public String toString() {
+        return this.getNom();
+    }
 
 }

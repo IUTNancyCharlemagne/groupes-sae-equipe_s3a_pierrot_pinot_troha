@@ -16,7 +16,9 @@ public class VueTache extends VBox implements Observateur {
         super();
 
         Label titreLabel = new Label(tache.getTitre());
-        Label descriptionLabel = new Label(tache.getDescription());
+        String description = tache.getDescription();
+        String descriptionAbregee = description.length() > 20 ? description.substring(0, 20) + "..." : description;
+        Label descriptionLabel = new Label(descriptionAbregee);
 
         titreLabel.setFont(Font.font("Arial", 14)); // Style pour le titre en gras et plus grand
         descriptionLabel.setFont(Font.font("Arial", 10)); // Style pour la description en plus petit

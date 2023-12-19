@@ -32,7 +32,7 @@ public class VueTableau extends HBox implements Observateur {
 
             for (Section section : sections) {
                 List<Tache> taches = section.getTaches();
-                VueSection vueSection = new VueSection(section.getNom(), taches);
+                VueSection vueSection = new VueSection(section.getNom(), taches, this.modeleBureau);
                 getChildren().add(vueSection);
             }
         }

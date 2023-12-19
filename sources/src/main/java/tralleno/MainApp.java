@@ -39,8 +39,13 @@ public class MainApp extends Application {
         tache1.ajouterSousTache(tache3);
 
         section1.ajouterTache(tache1);
+        tache1.setSectionParente(section1);
+
         section1.ajouterTache(tache4);
+        tache4.setSectionParente(section1);
+
         section1.ajouterTache(tache5);
+        tache5.setSectionParente(section1);
 
         modeleBureau.ajouterSection(section1);
         modeleBureau.ajouterSection(section2);
@@ -52,7 +57,7 @@ public class MainApp extends Application {
         VueBarreActions vueBarreActions = new VueBarreActions(VueBarreActions.TABLEAU, modeleBureau);
 
         // Création des vues
-        VueTableau vueTableau = new VueTableau(modeleBureau); // Méthode de création de ta VueTableau
+        VueTableau vueTableau = new VueTableau(modeleBureau);
 
         // On ajoute les vues au modèle.
         modeleBureau.enregistrerObservateur(vueTableau);

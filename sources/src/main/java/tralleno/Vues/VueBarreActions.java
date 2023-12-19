@@ -12,6 +12,10 @@ import javafx.scene.layout.Priority;
 import tralleno.Controleurs.BarreBoutons.ControlCreerTache;
 import tralleno.Modele.ModeleBureau;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class VueBarreActions extends HBox {
     public static int TABLEAU = 0;
     public static int LISTE = 1;
@@ -22,7 +26,16 @@ public class VueBarreActions extends HBox {
         super(10);
 
         // Logo de trellano (pour l'instant qu'avec chemin absolu, on verra plus tard)
-        ImageView logo = new ImageView(new Image("C:\\Users\\natha\\Desktop\\IUT\\SAE\\2A\\Developpement_dapplications\\groupes-sae-equipe_s3a_pierrot_pinot_troha\\sources\\src\\main\\resources\\Images\\logo.png"));
+
+        String img=System.getProperty("user.dir")+"/sources/src/main/resources/Images/logo.png";
+        System.out.println(img);
+        File file = new File(img);
+
+        try {
+        FileInputStream f=new FileInputStream(file);
+
+        ImageView logo = new ImageView(new Image(f));
+
         logo.setFitHeight(30);
         logo.setPreserveRatio(true);
 
@@ -44,6 +57,8 @@ public class VueBarreActions extends HBox {
             this.setSpacing(10);
             this.setAlignment(Pos.CENTER_LEFT);
             this.getChildren().addAll(logo, nomAppli, creerTacheButton, creerSectionButton, vueTypeButton, tachesArchiveesButton);
+        }} catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }

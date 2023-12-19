@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -115,12 +116,16 @@ public class ControlCreerTache implements EventHandler<MouseEvent> {
             fenetreCreationTache.close(); // Fermer la fenêtre une fois la tâche créée
         });
 
+        VBox boutonCentre=new VBox();
+        boutonCentre.getChildren().add(boutonCreerTache);
+        boutonCentre.setAlignment(Pos.CENTER);
         // On met le tout dans une Vbox qui est le formulaire
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
         layout.getChildren().addAll(titreTache, champTitre, labelDescription, champDescription,
                 choixSection, comboSection, choixDate, tachesAvant, comboTaches,
-                listViewTachesAvant, supprimerTache, boutonCreerTache);
+                listViewTachesAvant, supprimerTache, boutonCentre);
+
 
         // On crée la nouvelle scène et on lui ajoute le formulaire
         Scene scene = new Scene(layout, 400, 300);

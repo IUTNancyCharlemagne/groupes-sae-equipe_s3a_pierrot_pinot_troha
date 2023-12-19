@@ -55,6 +55,7 @@ public class Section implements Serializable {
      */
     public void ajouterTache(Tache t){
         this.taches.add(t);
+        t.setSectionParente(this);
     }
 
     /**

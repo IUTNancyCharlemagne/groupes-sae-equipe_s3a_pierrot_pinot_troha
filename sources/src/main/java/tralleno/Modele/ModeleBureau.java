@@ -181,7 +181,7 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
     public Map<Tache, List<Tache>> getDependances() {
-        return dependances;
+        return this.dependances != null ? this.dependances : null;
     }
 
     public void setDependances(Map<Tache, List<Tache>> dependances) {
@@ -217,21 +217,22 @@ public class ModeleBureau implements Sujet, Serializable {
      * @param t tâche à supprimer
      */
     public void supprimerTache(Tache t){
+        Set<Tache> listeDep = this.dependances.keySet();
 
-        //on parcourt toute la map pour truover si le tâche à supprimer se trouve dans une des listes de dépendances
-        for (Map.Entry<Tache, List<Tache>> entry : dependances.entrySet()) {
-            List<Tache> listeDependances = entry.getValue();
+        for(Tache tache : listeDep){
+            List<Tache> listeDependances = this.dependances.get(tache);
 
             if(listeDependances.contains(t)){
                 //on retire la dépendance de la tâche qu'on veut supprimer
-                this.dependances.get(entry).remove(t);
+                this.dependances.get(tache).remove(t);
 
                 // si après la suppression, la liste est vide alors la tâche n'a plus de dépendance, on peut donc l'enlever de la map
-                if(this.dependances.get(entry) == null){
-                    this.dependances.remove(entry);
+                if(this.dependances.get(tache).isEmpty()){
+                    this.dependances.remove(tache);
                 }
             }
         }
+
         //on retire les dépendances de la tâche à supprimer
         this.dependances.remove(t);
 

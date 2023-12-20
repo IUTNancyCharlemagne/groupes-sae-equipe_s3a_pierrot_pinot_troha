@@ -109,9 +109,6 @@ class tralleno.Modele.ModeleBureau {
 + void supprimerObservateur(Observateur)
 + void notifierObservateurs()
 }
-class tralleno.test.test {
-+ {static} void main(String[])
-}
 class tralleno.Vues.VueListe {
 + void actualiser(Sujet)
 }

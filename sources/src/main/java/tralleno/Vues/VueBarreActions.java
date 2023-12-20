@@ -28,7 +28,7 @@ public class VueBarreActions extends HBox {
 
         // Logo de trellano (pour l'instant qu'avec chemin absolu, on verra plus tard)
 
-        String img=System.getProperty("user.dir")+"/src/main/resources/Images/logo.png";
+        String img=System.getProperty("user.dir")+"/sources/src/main/resources/Images/logo.png";
         System.out.println(img);
         File file = new File(img);
 

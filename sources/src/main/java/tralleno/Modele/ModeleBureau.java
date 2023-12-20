@@ -140,6 +140,7 @@ public class ModeleBureau implements Sujet, Serializable {
                 this.dependances.get(t).add(dependance);
             }
         }
+        this.notifierObservateurs();
     }
 
     public void ajouterDependances(Tache t, List<Tache> dependances){
@@ -154,6 +155,17 @@ public class ModeleBureau implements Sujet, Serializable {
                 this.dependances.get(t).addAll(dependances);
             }
         }
+        this.notifierObservateurs();
+    }
+
+    public void modifierNomSection(Section s, String nom){
+        for(Section section : this.sections){
+            if (section == s) {
+                section.setNom(nom);
+                break;
+            }
+        }
+        this.notifierObservateurs();
     }
 
     public List<Section> getSections() {
@@ -217,7 +229,6 @@ public class ModeleBureau implements Sujet, Serializable {
      * @param t tâche à supprimer
      */
     public void supprimerTache(Tache t){
-
         //on parcourt toute la map pour truover si le tâche à supprimer se trouve dans une des listes de dépendances
         for (Map.Entry<Tache, List<Tache>> entry : dependances.entrySet()) {
             List<Tache> listeDependances = entry.getValue();

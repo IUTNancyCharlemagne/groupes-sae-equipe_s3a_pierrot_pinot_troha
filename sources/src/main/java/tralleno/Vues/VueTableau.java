@@ -1,7 +1,9 @@
 package tralleno.Vues;
 
 import javafx.geometry.Insets;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import tralleno.Controleurs.Sections.ControlModifSection;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Modele.Sujet;
 import tralleno.Section.Section;
@@ -33,6 +35,7 @@ public class VueTableau extends HBox implements Observateur {
             for (Section section : sections) {
                 List<Tache> taches = section.getTaches();
                 VueSection vueSection = new VueSection(section.getNom(), taches, this.modeleBureau);
+                vueSection.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlModifSection(modeleBureau, section));
                 getChildren().add(vueSection);
             }
         }

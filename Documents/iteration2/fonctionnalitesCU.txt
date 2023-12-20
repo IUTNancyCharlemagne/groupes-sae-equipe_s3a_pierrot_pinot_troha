@@ -1,6 +1,0 @@
-Créer une tache (interface graphique) Troha Stanislas
-Vue tableau (interface graphique) Troha Stanislas Pinot Gaëtan
-Supression de tache (interface graphique) Troha Stanislas, Pierrot Nathan
-Supprimer une section (interface graphique) Troha Stanislas, Pierrot Nathan
-Tests de toutes les methodes du modele Pierrot Nathan, Pinot Gaëtan
-Correction de bugs divers Pierrot Nathan, Pinot Gaëtan, Troha Stanislas

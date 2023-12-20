@@ -5,7 +5,7 @@ import javafx.scene.input.MouseEvent;
 
 public class ControlModifSection implements EventHandler<MouseEvent> {
 
-    public
+    //public
 
     @Override
     public void handle(MouseEvent mouseEvent) {

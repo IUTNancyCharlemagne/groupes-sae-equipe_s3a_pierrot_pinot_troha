@@ -9,13 +9,14 @@ import tralleno.Modele.Sujet;
 import tralleno.Section.Section;
 import tralleno.Taches.Tache;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Vue des tâches sous forme de tableau kanban. Les sections sont ordonnées par colonnes et comportent des tâches
  */
-public class VueTableau extends HBox implements Observateur {
-    private final ModeleBureau modeleBureau;
+public class VueTableau extends HBox implements Observateur, Serializable {
+        private final ModeleBureau modeleBureau;
 
     public VueTableau(ModeleBureau modeleBureau) {
         super(20);

@@ -29,14 +29,15 @@ public class VueBarreActions extends HBox {
         // Logo de trellano (pour l'instant qu'avec chemin absolu, on verra plus tard)
 
         String img=System.getProperty("user.dir")+"/src/main/resources/Images/logo.png";
-        System.out.println(img);
         File file = new File(img);
-
+        ImageView logo;
         try {
         FileInputStream f=new FileInputStream(file);
 
-        ImageView logo = new ImageView(new Image(f));
-
+         logo = new ImageView(new Image(f));
+        } catch (FileNotFoundException e) {
+            logo = new ImageView();
+        }
         logo.setFitHeight(30);
         logo.setPreserveRatio(true);
 
@@ -59,8 +60,6 @@ public class VueBarreActions extends HBox {
             this.setSpacing(10);
             this.setAlignment(Pos.CENTER_LEFT);
             this.getChildren().addAll(logo, nomAppli, creerTacheButton, creerSectionButton, vueTypeButton, tachesArchiveesButton);
-        }} catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         }
     }
 }

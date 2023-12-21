@@ -35,39 +35,46 @@ public class ModeleBureau implements Sujet, Serializable {
     /**
      * nombre d'id de tache total, sert à avoir une id unique pour chaque tache
      */
-    private static int IDTACHEACTUELLE=0;
+    private static int IDTACHEACTUELLE = 0;
 
     /**
      * nombre d'id de section total, sert à avoir une id unique pour chaque section
      */
-    private static int IDSECTIONACTUELLE=0;
+    private static int IDSECTIONACTUELLE = 0;
 
     /**
      * Map contenant en clé les Tâches archivées et en valeur ses dépendances (tâches à faire avant de pouvoir la commencer)
      */
-    private Map<Tache, List<Tache>> tachesArchivees;
+    private List<Tache> tachesArchivees;
+
+    public List<Tache> getTachesArchivees() {
+        return (this.tachesArchivees);
+    }
 
     /**
      * Map contenant en clé les Sections archivées et en valeur les tâches qui se trouvaient dans la section
      */
-    private Map<Section, List<Tache>> sectionsArchivees;
+    private List<Section> sectionsArchivees;
 
-    public ModeleBureau(){
+    public ModeleBureau() {
         this.observateurs = new ArrayList<Observateur>();
         this.dependances = new TreeMap<Tache, List<Tache>>();
         this.sections = new ArrayList<Section>();
+        this.tachesArchivees = new ArrayList<Tache>();
+        this.sectionsArchivees = new ArrayList<Section>();
     }
 
     /**
      * Permet d'ajouter une section au modèle
+     *
      * @param s section à ajouter
      */
-    public void ajouterSection(Section s){
+    public void ajouterSection(Section s) {
         this.sections.add(s);
         this.notifierObservateurs();
     }
 
-    public void ajouterTache(Tache t, Section s){
+    public void ajouterTache(Tache t, Section s) {
         for (Section section : this.sections) {
             if (section.equals(s)) {
                 section.ajouterTache(t);
@@ -78,18 +85,18 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
 
-    public Section getSection(String nom){
+    public Section getSection(String nom) {
         int i = 0;
         boolean trouve = false;
-        while(i < this.sections.size() && !trouve){
-           if(this.sections.get(i).getNom().equals(nom))
-               trouve = true;
-           else{
-               i++;
-           }
+        while (i < this.sections.size() && !trouve) {
+            if (this.sections.get(i).getNom().equals(nom))
+                trouve = true;
+            else {
+                i++;
+            }
         }
         Section s = null;
-        if(trouve){
+        if (trouve) {
             s = this.sections.get(i);
         }
         return s;
@@ -97,13 +104,14 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Retourne la section dans laquelle est contenue une tâche
+     *
      * @param t
      * @return
      */
-    public Section getSection(Tache t){
+    public Section getSection(Tache t) {
         Section section = null;
-        for(Section s : this.sections){
-            if(s.getTaches().contains(t)){
+        for (Section s : this.sections) {
+            if (s.getTaches().contains(t)) {
                 section = s;
                 break;
             }
@@ -113,18 +121,18 @@ public class ModeleBureau implements Sujet, Serializable {
 
     public List<String> getNomSections() {
         List<String> res = new ArrayList<String>();
-        for(Section s : this.sections){
+        for (Section s : this.sections) {
             res.add(s.getNom());
         }
         return res;
     }
 
-    public void ajouterDependance(Tache t, Tache dependance){
-        if(dependance != null){
-            if(this.dependances.containsKey(t)){ // Si la map de dépendances contient déjà la tâche en entrée
+    public void ajouterDependance(Tache t, Tache dependance) {
+        if (dependance != null) {
+            if (this.dependances.containsKey(t)) { // Si la map de dépendances contient déjà la tâche en entrée
                 // Alors on ajoute la tâche dépendance à la liste des tâches dépendantes
                 this.dependances.get(t).add(dependance);
-            }else{
+            } else {
                 // Sinon la tâche n'a encore aucune dépendance et il faudra aussi initialiser la liste
                 this.dependances.put(t, new ArrayList<>());
                 this.dependances.get(t).add(dependance);
@@ -133,12 +141,12 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
-    public void ajouterDependances(Tache t, List<Tache> dependances){
-        if(dependances != null && !(dependances.isEmpty())){
-            if(this.dependances.containsKey(t)){ // Si la map de dépendances contient déjà la tâche en entrée
+    public void ajouterDependances(Tache t, List<Tache> dependances) {
+        if (dependances != null && !(dependances.isEmpty())) {
+            if (this.dependances.containsKey(t)) { // Si la map de dépendances contient déjà la tâche en entrée
                 // Alors on ajoute la tâche dépendance à la liste des tâches dépendantes
                 this.dependances.get(t).addAll(dependances);
-            }else{
+            } else {
                 // Sinon la tâche n'a encore aucune dépendance et il faudra aussi initialiser la liste
                 this.dependances.put(t, new ArrayList<Tache>());
 
@@ -148,8 +156,8 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
-    public void modifierNomSection(Section s, String nom){
-        for(Section section : this.sections){
+    public void modifierNomSection(Section s, String nom) {
+        for (Section section : this.sections) {
             if (section == s) {
                 section.setNom(nom);
                 break;
@@ -166,17 +174,17 @@ public class ModeleBureau implements Sujet, Serializable {
         this.sections = sections;
     }
 
-    public List<Tache> getTaches(){
+    public List<Tache> getTaches() {
         List<Tache> res = new ArrayList<Tache>();
-        for(Section s : this.sections){
+        for (Section s : this.sections) {
             res.addAll(s.getTaches());
         }
         return res;
     }
 
-    public List<String> getTitreTaches(){
+    public List<String> getTitreTaches() {
         List<String> res = new ArrayList<String>();
-        for(Tache t : this.getTaches()) {
+        for (Tache t : this.getTaches()) {
             res.add(t.getTitre());
         }
         return res;
@@ -200,15 +208,16 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Permet de supprimer une section du modèle
+     *
      * @param s section à supprimer
      */
-    public void supprimerSection(Section s){
+    public void supprimerSection(Section s) {
         //copie de la liste des tâches pour pouvoir la parcourir correctement
         List<Tache> listeTacheCopie = new ArrayList<>(s.getTaches());
 
         // on supprime toutes les tâches et leurs dépendances avant de supprimer la section elle même
         // (pour éviter tout problème avec les dépendances)
-        for(Tache t : listeTacheCopie){
+        for (Tache t : listeTacheCopie) {
             supprimerTache(t);
         }
 
@@ -224,40 +233,40 @@ public class ModeleBureau implements Sujet, Serializable {
      *
      * @param t tâche à supprimer
      */
-    public void supprimerTache(Tache t){
+    public void supprimerTache(Tache t) {
         Set<Tache> listeTachesQuiOntDesDependances = this.dependances.keySet();
         //on stock les tâches qui n'ont plus de dépendances dans cette liste pour les supprimer après le parcourt de
         // la liste de tâches qui ont des dépendances sinon ça pose problème
         ArrayList<Tache> tachesARetirer = new ArrayList<Tache>();
 
         // on parcourt la liste de toutes les tâches qui ont des dépendances
-        for(Tache tache : listeTachesQuiOntDesDependances){
+        for (Tache tache : listeTachesQuiOntDesDependances) {
             //on récupère la liste des dépendances de la tâche courante
             List<Tache> listeDesDependances = this.dependances.get(tache);
 
             // on regarde si la liste des dépendances contient la tâche à supprimer
-            if(listeDesDependances.contains(t)){
+            if (listeDesDependances.contains(t)) {
                 //on retire la dépendance de la tâche qu'on veut supprimer
                 this.dependances.get(tache).remove(t);
 
                 //si une tâche n'a plus de dépendances alors on la met dans une liste pour la supprimer plus tard
-                if(this.dependances.get(tache).isEmpty()){
+                if (this.dependances.get(tache).isEmpty()) {
                     tachesARetirer.add(tache);
                 }
             }
         }
 
         //on retire toutes les tâches qui n'ont plus de dépendances de la map dependances
-        for(Tache tache : tachesARetirer){
-                this.dependances.remove(tache);
+        for (Tache tache : tachesARetirer) {
+            this.dependances.remove(tache);
         }
 
         //on retire les dépendances de la tâche à supprimer
         this.dependances.remove(t);
 
         //on retire la tâche de la liste de tâche de sa section
-        for(Section section : this.sections){
-            if(section.getTaches().contains(t)){
+        for (Section section : this.sections) {
+            if (section.getTaches().contains(t)) {
                 section.supprimerTache(t);
             }
         }
@@ -270,45 +279,13 @@ public class ModeleBureau implements Sujet, Serializable {
      *
      * @param t tâche à archiver
      */
-    public void archiverTache(Tache t){
-        Set<Tache> listeTachesQuiOntDesDependances = this.dependances.keySet();
-        // on stock les tâches qui n'ont plus de dépendances dans cette liste pour les supprimer après le parcourt de
-        // la liste de tâches qui ont des dépendances sinon ça pose problème
-        ArrayList<Tache> tachesARetirer = new ArrayList<Tache>();
+    public void archiverTache(Tache t) {
 
-        // on parcourt la liste de toutes les tâches qui ont des dépendances
-        for(Tache tache : listeTachesQuiOntDesDependances){
-            //on récupère la liste des dépendances de la tâche courante
-            List<Tache> listeDesDependances = this.dependances.get(tache);
 
-            // on regarde si la liste des dépendances contient la tâche à archiver
-            if(listeDesDependances.contains(t)){
-                if(this.tachesArchivees.containsKey(t)){ // Si la map des tâches archivées contient déjà la tâche en entrée
-                    // Alors on ajoute la tâche à la liste des tâches dépendantes archivées
-                    this.tachesArchivees.get(t).add(tache);
-                    // et on retire la tâche des dépendances
-                    this.dependances.get(tache).remove(t);
-                }else{
-                    // Sinon la tâche n'a encore aucune dépendance archivée et il faut aussi initialiser la liste
-                    this.tachesArchivees.put(t, new ArrayList<Tache>());
-                    this.tachesArchivees.get(t).add(tache);
-                    // et on retire la tâche des dépendances
-                    this.dependances.get(tache).remove(t);
-                }
-
-                //si une tâche n'a plus de dépendances alors on la met dans une liste pour la supprimer plus tard
-                if(this.dependances.get(tache).isEmpty()){
-                    tachesARetirer.add(tache);
-                }
-            }
-        }
-        //on retire toutes les tâches qui n'ont plus de dépendances de la map dependances
-        for(Tache tache : tachesARetirer){
-            this.dependances.remove(tache);
-        }
         // on parcourt la liste des sections jusqu'à trouver la section de la tâche à archiver
-        for(Section section : this.sections){
-            if(section.getTaches().contains(t)){
+        for (Section section : this.sections) {
+            if (section.getTaches().contains(t)) {
+                this.tachesArchivees.add(t);
                 section.getTaches().remove(t);
             }
         }
@@ -322,18 +299,17 @@ public class ModeleBureau implements Sujet, Serializable {
      *
      * @param s section à archiver
      */
-    public void archiverSection(Section s){
+    public void archiverSection(Section s) {
         //on archive la section avec toutes ses tâches
-        this.sectionsArchivees.put(s, new ArrayList<Tache>());
+        this.sectionsArchivees.add(s);
 
         //copie de la liste des tâches pour pouvoir la parcourir correctement
         List<Tache> listeTacheCopie = new ArrayList<>(s.getTaches());
 
         // on archive toutes les tâches et leurs dépendances avant d'archiver la section elle même
         // (pour éviter tout problème avec les dépendances)
-        for(Tache t : listeTacheCopie){
+        for (Tache t : listeTacheCopie) {
             archiverTache(t);
-            this.sectionsArchivees.get(s).add(t);
         }
 
         // on retire la section des sections non archivées
@@ -343,11 +319,11 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
-    public void restaurerTache(Tache t){
+    public void restaurerTache(Tache t) {
         //TODO
     }
 
-    public void restaurerSection(Section s){
+    public void restaurerSection(Section s) {
         //TODO
     }
 
@@ -361,6 +337,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * renvoi un id unique de section et incremente pour la suite
+     *
      * @return int id section unique
      */
     public static int getIDSECTIONACTUELLE() {
@@ -369,14 +346,16 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * renvoi un id unique de tâche et incremente pour la suite
+     *
      * @return int id tache unique
      */
-    public static int getIDTACHEACTUELLE(){
+    public static int getIDTACHEACTUELLE() {
         return IDTACHEACTUELLE++;
     }
 
     /**
      * Permet d'enregistrer un observateur à la liste
+     *
      * @param observateur
      */
     @Override
@@ -386,6 +365,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Permet de supprimer un observateur de la liste
+     *
      * @param observateur
      */
     @Override
@@ -398,8 +378,12 @@ public class ModeleBureau implements Sujet, Serializable {
      */
     @Override
     public void notifierObservateurs() {
-        for(Observateur o : this.observateurs){
+        for (Observateur o : this.observateurs) {
             o.actualiser(this);
         }
+    }
+
+    public List<Section> getSectionsArchivees() {
+        return(this.sectionsArchivees);
     }
 }

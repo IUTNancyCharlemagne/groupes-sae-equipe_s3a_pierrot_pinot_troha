@@ -42,6 +42,16 @@ public class ModeleBureau implements Sujet, Serializable {
      */
     private static int IDSECTIONACTUELLE=0;
 
+    /**
+     * Map contenant en clé les Tâches archivées et en valeur ses dépendances (tâches à faire avant de pouvoir la commencer)
+     */
+    private Map<Tache, List<Tache>> tachesArchivees;
+
+    /**
+     * Map contenant en clé les Sections archivées et en valeur les tâches qui se trouvaient dans la section
+     */
+    private Map<Section, List<Tache>> sectionsArchivees;
+
     public ModeleBureau(){
         this.observateurs = new ArrayList<Observateur>();
         this.dependances = new TreeMap<Tache, List<Tache>>();
@@ -193,17 +203,18 @@ public class ModeleBureau implements Sujet, Serializable {
      * @param s section à supprimer
      */
     public void supprimerSection(Section s){
-        // on supprime toutes les tâches et leurs dépendances avant de supprimer la section elle même
-        // (pour éviter tout problème avec les dépendances)
-
         //copie de la liste des tâches pour pouvoir la parcourir correctement
         List<Tache> listeTacheCopie = new ArrayList<>(s.getTaches());
 
+        // on supprime toutes les tâches et leurs dépendances avant de supprimer la section elle même
+        // (pour éviter tout problème avec les dépendances)
         for(Tache t : listeTacheCopie){
             supprimerTache(t);
         }
 
         this.sections.remove(s);
+
+        //on notifie tous les observateurs de la mise à jour
         this.notifierObservateurs();
     }
 
@@ -215,9 +226,9 @@ public class ModeleBureau implements Sujet, Serializable {
      */
     public void supprimerTache(Tache t){
         Set<Tache> listeTachesQuiOntDesDependances = this.dependances.keySet();
-        //on stock les tâches qui n'ont plus de dépendances dans cette liste pour les supprimer apres le parcourt de
-        // la liste de tâches quin ont des dépendances sinon ça pose problème
-        ArrayList<Tache> tachesASupprimer = new ArrayList<Tache>();
+        //on stock les tâches qui n'ont plus de dépendances dans cette liste pour les supprimer après le parcourt de
+        // la liste de tâches qui ont des dépendances sinon ça pose problème
+        ArrayList<Tache> tachesARetirer = new ArrayList<Tache>();
 
         // on parcourt la liste de toutes les tâches qui ont des dépendances
         for(Tache tache : listeTachesQuiOntDesDependances){
@@ -231,13 +242,13 @@ public class ModeleBureau implements Sujet, Serializable {
 
                 //si une tâche n'a plus de dépendances alors on la met dans une liste pour la supprimer plus tard
                 if(this.dependances.get(tache).isEmpty()){
-                    tachesASupprimer.add(tache);
+                    tachesARetirer.add(tache);
                 }
             }
         }
 
-        //on supprime toutes les tâches qui n'ont plus de dépendances
-        for(Tache tache : tachesASupprimer){
+        //on retire toutes les tâches qui n'ont plus de dépendances de la map dependances
+        for(Tache tache : tachesARetirer){
                 this.dependances.remove(tache);
         }
 
@@ -254,11 +265,89 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
+    /**
+     * Méthode qui permet d'archiver une tâche avec toutes ses dépendances
+     *
+     * @param t tâche à archiver
+     */
     public void archiverTache(Tache t){
+        Set<Tache> listeTachesQuiOntDesDependances = this.dependances.keySet();
+        // on stock les tâches qui n'ont plus de dépendances dans cette liste pour les supprimer après le parcourt de
+        // la liste de tâches qui ont des dépendances sinon ça pose problème
+        ArrayList<Tache> tachesARetirer = new ArrayList<Tache>();
+
+        // on parcourt la liste de toutes les tâches qui ont des dépendances
+        for(Tache tache : listeTachesQuiOntDesDependances){
+            //on récupère la liste des dépendances de la tâche courante
+            List<Tache> listeDesDependances = this.dependances.get(tache);
+
+            // on regarde si la liste des dépendances contient la tâche à archiver
+            if(listeDesDependances.contains(t)){
+                if(this.tachesArchivees.containsKey(t)){ // Si la map des tâches archivées contient déjà la tâche en entrée
+                    // Alors on ajoute la tâche à la liste des tâches dépendantes archivées
+                    this.tachesArchivees.get(t).add(tache);
+                    // et on retire la tâche des dépendances
+                    this.dependances.get(tache).remove(t);
+                }else{
+                    // Sinon la tâche n'a encore aucune dépendance archivée et il faut aussi initialiser la liste
+                    this.tachesArchivees.put(t, new ArrayList<Tache>());
+                    this.tachesArchivees.get(t).add(tache);
+                    // et on retire la tâche des dépendances
+                    this.dependances.get(tache).remove(t);
+                }
+
+                //si une tâche n'a plus de dépendances alors on la met dans une liste pour la supprimer plus tard
+                if(this.dependances.get(tache).isEmpty()){
+                    tachesARetirer.add(tache);
+                }
+            }
+        }
+        //on retire toutes les tâches qui n'ont plus de dépendances de la map dependances
+        for(Tache tache : tachesARetirer){
+            this.dependances.remove(tache);
+        }
+        // on parcourt la liste des sections jusqu'à trouver la section de la tâche à archiver
+        for(Section section : this.sections){
+            if(section.getTaches().contains(t)){
+                section.getTaches().remove(t);
+            }
+        }
+
+        //on notifie les observateurs de la modification
+        this.notifierObservateurs();
+    }
+
+    /**
+     * Méthode qui permet d'archiver une section en entier avec toutes ses tâches
+     *
+     * @param s section à archiver
+     */
+    public void archiverSection(Section s){
+        //on archive la section avec toutes ses tâches
+        this.sectionsArchivees.put(s, new ArrayList<Tache>());
+
+        //copie de la liste des tâches pour pouvoir la parcourir correctement
+        List<Tache> listeTacheCopie = new ArrayList<>(s.getTaches());
+
+        // on archive toutes les tâches et leurs dépendances avant d'archiver la section elle même
+        // (pour éviter tout problème avec les dépendances)
+        for(Tache t : listeTacheCopie){
+            archiverTache(t);
+            this.sectionsArchivees.get(s).add(t);
+        }
+
+        // on retire la section des sections non archivées
+        this.sections.remove(s);
+
+        //on notifie les observateurs de la modification
+        this.notifierObservateurs();
+    }
+
+    public void restaurerTache(Tache t){
         //TODO
     }
 
-    public void archiverSection(Section s){
+    public void restaurerSection(Section s){
         //TODO
     }
 

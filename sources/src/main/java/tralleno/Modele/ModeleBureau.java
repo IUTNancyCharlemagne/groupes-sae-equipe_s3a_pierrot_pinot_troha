@@ -36,25 +36,11 @@ public class ModeleBureau implements Sujet, Serializable {
      * nombre d'id de tache total, sert à avoir une id unique pour chaque tache
      */
     private static int IDTACHEACTUELLE=0;
+
     /**
      * nombre d'id de section total, sert à avoir une id unique pour chaque section
      */
     private static int IDSECTIONACTUELLE=0;
-    /**
-     * renvoi un id unique de section et incremente pour la suite
-     * @return int id section unique
-     */
-    public static int getIDSECTIONACTUELLE() {
-        return IDSECTIONACTUELLE++;
-    }
-
-    /**
-     * renvoi un id unique de tâche et incremente pour la suite
-     * @return int id tache unique
-     */
-    public static int getIDTACHEACTUELLE(){
-        return IDTACHEACTUELLE++;
-    }
 
     public ModeleBureau(){
         this.observateurs = new ArrayList<Observateur>();
@@ -80,13 +66,7 @@ public class ModeleBureau implements Sujet, Serializable {
         }
         this.notifierObservateurs();
     }
-    public List<Observateur> getObservateurs() {
-        return observateurs;
-    }
 
-    public void setObservateurs(List<Observateur> observateurs) {
-        this.observateurs = observateurs;
-    }
 
     public Section getSection(String nom){
         int i = 0;
@@ -215,34 +195,50 @@ public class ModeleBureau implements Sujet, Serializable {
     public void supprimerSection(Section s){
         // on supprime toutes les tâches et leurs dépendances avant de supprimer la section elle même
         // (pour éviter tout problème avec les dépendances)
-        for(Tache t : s.getTaches()){
+
+        //copie de la liste des tâches pour pouvoir la parcourir correctement
+        List<Tache> listeTacheCopie = new ArrayList<>(s.getTaches());
+
+        for(Tache t : listeTacheCopie){
             supprimerTache(t);
         }
+
         this.sections.remove(s);
         this.notifierObservateurs();
     }
 
     /**
      * Méthode qui permet de supprimer une tâche, cela a pour conséquence de supprimer
-     * toutes les dépendances qu'elle pourrait avoir avec des autres tâches
+     * toutes les dépendances chronologiques qu'elle pourrait avoir avec des autres tâches
      *
      * @param t tâche à supprimer
      */
     public void supprimerTache(Tache t){
-        Set<Tache> listeDep = this.dependances.keySet();
+        Set<Tache> listeTachesQuiOntDesDependances = this.dependances.keySet();
+        //on stock les tâches qui n'ont plus de dépendances dans cette liste pour les supprimer apres le parcourt de
+        // la liste de tâches quin ont des dépendances sinon ça pose problème
+        ArrayList<Tache> tachesASupprimer = new ArrayList<Tache>();
 
-        for(Tache tache : listeDep){
-            List<Tache> listeDependances = this.dependances.get(tache);
+        // on parcourt la liste de toutes les tâches qui ont des dépendances
+        for(Tache tache : listeTachesQuiOntDesDependances){
+            //on récupère la liste des dépendances de la tâche courante
+            List<Tache> listeDesDependances = this.dependances.get(tache);
 
-            if(listeDependances.contains(t)){
+            // on regarde si la liste des dépendances contient la tâche à supprimer
+            if(listeDesDependances.contains(t)){
                 //on retire la dépendance de la tâche qu'on veut supprimer
                 this.dependances.get(tache).remove(t);
 
-                // si après la suppression, la liste est vide alors la tâche n'a plus de dépendance, on peut donc l'enlever de la map
+                //si une tâche n'a plus de dépendances alors on la met dans une liste pour la supprimer plus tard
                 if(this.dependances.get(tache).isEmpty()){
-                    this.dependances.remove(tache);
+                    tachesASupprimer.add(tache);
                 }
             }
+        }
+
+        //on supprime toutes les tâches qui n'ont plus de dépendances
+        for(Tache tache : tachesASupprimer){
+                this.dependances.remove(tache);
         }
 
         //on retire les dépendances de la tâche à supprimer
@@ -256,6 +252,38 @@ public class ModeleBureau implements Sujet, Serializable {
         }
         // on notifie tous les observateurs de la mise à jour
         this.notifierObservateurs();
+    }
+
+    public void archiverTache(Tache t){
+        //TODO
+    }
+
+    public void archiverSection(Section s){
+        //TODO
+    }
+
+    public List<Observateur> getObservateurs() {
+        return observateurs;
+    }
+
+    public void setObservateurs(List<Observateur> observateurs) {
+        this.observateurs = observateurs;
+    }
+
+    /**
+     * renvoi un id unique de section et incremente pour la suite
+     * @return int id section unique
+     */
+    public static int getIDSECTIONACTUELLE() {
+        return IDSECTIONACTUELLE++;
+    }
+
+    /**
+     * renvoi un id unique de tâche et incremente pour la suite
+     * @return int id tache unique
+     */
+    public static int getIDTACHEACTUELLE(){
+        return IDTACHEACTUELLE++;
     }
 
     /**

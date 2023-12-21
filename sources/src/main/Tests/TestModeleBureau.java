@@ -11,7 +11,7 @@ public class TestModeleBureau {
 
     ModeleBureau bureau;
     Section maths, sae, vide;
-    TacheFille reviser1, reviser2, reviser3;
+    TacheFille reviser1, reviser2, reviser3, reviser4, reviser5;
 
     @BeforeEach
     public void setUp(){
@@ -27,10 +27,12 @@ public class TestModeleBureau {
         this.reviser1 = new TacheFille("à réviser en premier", "relire le cours");
         this.reviser2 = new TacheFille("à reviser en deuxième", "refaire les exercices");
         this.reviser3 = new TacheFille("réviser le JavaFX", "réviser le javaFX pour comprendre son utilisation dans le projet trello");
+        this.reviser5 = new TacheFille("multiple dépendance", "autre dépendance");
 
         //ajout des tâches dans les sections
         this.maths.ajouterTache(this.reviser1);
         this.maths.ajouterTache(this.reviser2);
+        this.maths.ajouterTache(this.reviser5);
         this.sae.ajouterTache(this.reviser3);
 
         //ajout des sections dans le bureau
@@ -40,6 +42,7 @@ public class TestModeleBureau {
 
         //ajout de dépendances entre des tâches
         this.bureau.ajouterDependance(this.reviser2, this.reviser1);
+        this.bureau.ajouterDependance(this.reviser5, this.reviser1);
     }
 
     @Test
@@ -107,8 +110,7 @@ public class TestModeleBureau {
 
         //vérification
         int nbDeDepApres = this.bureau.getDependances().size();
-        System.out.println(this.bureau.getDependances());
-        assertEquals(1, nbDeDepAvant);
+        assertEquals(2, nbDeDepAvant);
         assertEquals(0, nbDeDepApres);
     }
 
@@ -141,8 +143,8 @@ public class TestModeleBureau {
         int nbDeDepApres = this.bureau.getDependances().size();
 
         assertEquals(nbSectionsAvant-1, nbSectionsApres);
-        assertEquals(nbTachesAvant-2, nbTachesApres);
-        assertEquals(nbDeDepAvant-1, nbDeDepApres);
+        assertEquals(nbTachesAvant-3, nbTachesApres);
+        assertEquals(nbDeDepAvant-2, nbDeDepApres);
     }
 
     @Test

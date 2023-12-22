@@ -2,6 +2,7 @@ Fonctionnalités :
 	Serialiser l'application PINOT Gaëtan
 	Supprimer une tâche (JavaFX) TROHA Stanislas
 	Modifier une tâche (JavaFX) TROHA Stanislas
+	Contrôle des cohérences des dates TROHA Stanislas
 	Archivage de tâche et section PIERROT Nathan, PINOT Gaëtan
 	Test de l'archivage PINOT Gaëtan
 	Restauration de tâche et section PIERROT Nathan

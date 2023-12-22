@@ -243,21 +243,56 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
     /**
+     * Méthode qui permet de déterminer si une tâche est archivée ou non
+     *
+     * @param t tâche pour laquelle on veut connaitre sont etat
+     * @return true si la tâche est archivée et false sinon
+     */
+    public boolean isArchivee_Tache(Tache t){
+        return this.tachesArchivees != null && (this.tachesArchivees.contains(t));
+    }
+
+    /**
+     * Méthode qui permet de déterminer si une section est archivée ou non
+     *
+     * @param s section pour laquelle on veut connaitre sont etat
+     * @return true si la section est archivée et false sinon
+     */
+    public boolean isArchivee_Section(Section s){
+        return this.sectionsArchivees != null && (this.sectionsArchivees.contains(s));
+    }
+
+    public boolean isSupprimee_Section(Section s){
+        return this.sections.contains(s) || this.sectionsArchivees.contains(s);
+    }
+
+    /**
      * Permet de supprimer une section du modèle
      *
      */
     public void supprimerSection() {
-        //copie de la liste des tâches pour pouvoir la parcourir correctement
-        List<Tache> listeTacheCopie = new ArrayList<>(this.sectionCourante.getTaches());
+        //on regarde si la section est archivée ou pas
+        if(isArchivee_Section(this.sectionCourante)){ //si elle est archivée, alors on supprime juste la section
+            this.sectionsArchivees.remove(this.sectionCourante);
+        }else{ //si la section n'est pas archivée, on supprime la section et toutes ses tâches
+            //copie de la liste des tâches pour pouvoir la parcourir correctement
+            List<Tache> listeTacheCopie = new ArrayList<>(this.sectionCourante.getTaches());
 
+<<<<<<< HEAD
         // on supprime toutes les tâches et leurs dépendances avant de supprimer la section elle même
         // (pour éviter tout problème avec les dépendances)
         for (Tache t : listeTacheCopie) {
             this.tacheCourante = t;
             supprimerTache();
+=======
+            // on supprime toutes les tâches et leurs dépendances avant de supprimer la section elle même
+            // (pour éviter tout problème avec les dépendances)
+            for (Tache t : listeTacheCopie) {
+                supprimerTache(t);
+            }
+            this.sections.remove(this.sectionCourante);
+>>>>>>> 6b8ad4e0b1f54d80c4e1f57ab1e9349df9e3ea18
         }
-
-        this.sections.remove(this.sectionCourante);
 
         //on notifie tous les observateurs de la mise à jour
         this.notifierObservateurs();
@@ -299,12 +334,28 @@ public class ModeleBureau implements Sujet, Serializable {
         //on retire les dépendances de la tâche à supprimer
         this.dependances.remove(this.tacheCourante);
 
+<<<<<<< HEAD
         //on retire la tâche de la liste de tâche de sa section
         for (Section section : this.sections) {
             if (section.getTaches().contains(this.tacheCourante)) {
                 section.supprimerTache(this.tacheCourante);
+=======
+        //on regarde si la section de la tâche est archivée ou si la tâche est archivée ou non
+        if(isArchivee_Section(t.getSectionParente())){ //si la section est archivée
+            this.tachesArchivees.remove(t);
+        }else { //si la section n'est pas archivée alors la tâche peut être archivée ou pas
+            if(isArchivee_Tache(t)){
+                this.tachesArchivees.remove(t);
+            }else {
+                for (Section section : this.sections) {
+                    if (section.getTaches().contains(t)) {
+                        section.supprimerTache(t);
+                    }
+                }
+>>>>>>> 6b8ad4e0b1f54d80c4e1f57ab1e9349df9e3ea18
             }
         }
+
         // on notifie tous les observateurs de la mise à jour
         this.notifierObservateurs();
     }
@@ -315,9 +366,6 @@ public class ModeleBureau implements Sujet, Serializable {
      * @param t tâche à archiver
      */
     public void archiverTache(Tache t) {
-
-
-
         // on parcourt la liste des sections jusqu'à trouver la section de la tâche à archiver
         for (Section section : this.sections) {
             if (section.getTaches().contains(t)) {
@@ -355,12 +403,52 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
-    public void restaurerTache(Tache t) {
-        //TODO
+    /**
+     * Méthode qui permet d'ajouter une tâche dans une section donnée
+     *
+     * @param t tâche à ajouter
+     * @param s section dans laquelle ajouter la tâche
+     */
+    public void ajouterTacheDansSection(Tache t, Section s){
+        //on parcourt la liste des sections jusqu'à trouver la bonne et ajouter la tâche
+        for (Section section : this.sections) {
+            if (section.equals(s)) {
+                section.getTaches().add(t);
+                break;
+            }
+        }
     }
 
-    public void restaurerSection(Section s) {
-        //TODO
+    /**
+     * Méthode qui permet de restaurer une tâche dans la section dans laquelle elle se trouvait
+     *
+     * @param t tâche à restaurer
+     */
+    public void restaurerTache(Tache t) {
+        Section sectionParente = t.getSectionParente();
+        if(!isSupprimee_Section(sectionParente)){
+            if(!isArchivee_Section(sectionParente)){ //si la section est dans son état normal
+                ajouterTacheDansSection(t, sectionParente);
+            }else{ //si la section est archivée
+                //on restaure la section
+                restaurerSection(sectionParente);
+                ajouterTacheDansSection(t, sectionParente);
+            }
+        }else { //si la section a été supprimée
+            //on recréé la section de la tâche
+            this.sections.add(sectionParente);
+            ajouterTacheDansSection(t, sectionParente);
+        }
+    }
+
+    /**
+     * Méthode qui permet de restaurer une section
+     *
+     * @param s section à restaurer
+     */public void restaurerSection(Section s) {
+
+        this.sectionsArchivees.remove(s);
+        this.sections.add(s);
     }
 
     public List<Observateur> getObservateurs() {

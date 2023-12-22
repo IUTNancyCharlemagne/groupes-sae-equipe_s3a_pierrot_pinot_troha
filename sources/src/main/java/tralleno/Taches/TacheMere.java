@@ -50,8 +50,11 @@ public class TacheMere extends Tache implements Serializable {
      * @param t
      */
     public void ajouterSousTache(Tache t){
+
+        t.setSectionParente(this.getSectionParente());
         this.sousTaches.add(t);
     }
+
 
     /**
      * Permet de supprimer une sous tâche de l'instance de Tâche qui appelle la méthode

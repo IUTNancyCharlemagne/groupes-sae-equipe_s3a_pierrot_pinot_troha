@@ -243,6 +243,26 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
     /**
+     * Méthode qui permet de déterminer si une tâche est archivée ou non
+     *
+     * @param t tâche pour laquelle on veut connaitre sont etat
+     * @return true si la tâche est archivée et false sinon
+     */
+    public boolean isArchivee_Tache(Tache t){
+        return this.tachesArchivees != null && (this.tachesArchivees.contains(t));
+    }
+
+    /**
+     * Méthode qui permet de déterminer si une section est archivée ou non
+     *
+     * @param s section pour laquelle on veut connaitre sont etat
+     * @return true si la section est archivée et false sinon
+     */
+    public boolean isArchivee_Section(Section s){
+        return this.sectionsArchivees != null && (this.sectionsArchivees.contains(s));
+    }
+
+    /**
      * Permet de supprimer une section du modèle
      *
      */
@@ -256,7 +276,11 @@ public class ModeleBureau implements Sujet, Serializable {
             supprimerTache(t);
         }
 
-        this.sections.remove(this.sectionCourante);
+        if(isArchivee_Section(this.sectionCourante)){
+            this.sectionsArchivees.remove(this.sectionCourante);
+        }else{
+            this.sections.remove(this.sectionCourante);
+        }
 
         //on notifie tous les observateurs de la mise à jour
         this.notifierObservateurs();
@@ -299,12 +323,21 @@ public class ModeleBureau implements Sujet, Serializable {
         //on retire les dépendances de la tâche à supprimer
         this.dependances.remove(t);
 
-        //on retire la tâche de la liste de tâche de sa section
-        for (Section section : this.sections) {
-            if (section.getTaches().contains(t)) {
-                section.supprimerTache(t);
+        //on regarde si la section de la tâche est archivée ou si la tâche est archivée ou non
+        if(isArchivee_Section(t.getSectionParente())){ //si la section est archivée
+            this.tachesArchivees.remove(t);
+        }else { //si la saction n'est pas archivée alors la tâche peut être archivée ou pas
+            if(isArchivee_Tache(t)){
+                this.tachesArchivees.remove(t);
+            }else {
+                for (Section section : this.sections) {
+                    if (section.getTaches().contains(t)) {
+                        section.supprimerTache(t);
+                    }
+                }
             }
         }
+
         // on notifie tous les observateurs de la mise à jour
         this.notifierObservateurs();
     }
@@ -315,9 +348,6 @@ public class ModeleBureau implements Sujet, Serializable {
      * @param t tâche à archiver
      */
     public void archiverTache(Tache t) {
-
-
-
         // on parcourt la liste des sections jusqu'à trouver la section de la tâche à archiver
         for (Section section : this.sections) {
             if (section.getTaches().contains(t)) {

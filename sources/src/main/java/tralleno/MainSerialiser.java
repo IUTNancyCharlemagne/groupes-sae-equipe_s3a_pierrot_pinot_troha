@@ -98,7 +98,7 @@ public class MainSerialiser extends Application{
      */
     public static void main(String[] args) {
 
-        MainSerialiser.loaderModele("./src/main/java/tralleno/serialisation/modele.ser");
+        MainSerialiser.loaderModele("./src/main/resources/tralleno/serialisation/modele.ser");
         //lunch(new String[]{});
         launch(args);
         MainSerialiser.serialiser();

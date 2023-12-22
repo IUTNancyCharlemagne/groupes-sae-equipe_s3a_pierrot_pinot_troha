@@ -93,7 +93,8 @@ public class TestModeleBureau {
         int nbTachesAvantDansLaSection = this.bureau.getSection("SAE").getTaches().size();
 
         //test
-        this.bureau.supprimerTache(this.reviser3);
+        this.bureau.setTacheCourante(this.reviser3);
+        this.bureau.supprimerTache();
 
         //vérification
         int nbTachesApres = this.bureau.getTaches().size();
@@ -108,7 +109,8 @@ public class TestModeleBureau {
         int nbDeDepAvant = this.bureau.getDependances().size();
 
         //test
-        this.bureau.supprimerTache(this.reviser1);
+        this.bureau.setTacheCourante(this.reviser1);
+        this.bureau.supprimerTache();
 
         //vérification
         int nbDeDepApres = this.bureau.getDependances().size();
@@ -170,15 +172,16 @@ public class TestModeleBureau {
     }
     @Test
     public void test_archiverTacheSansDependences(){
-        this.bureau.archiverTache(this.reviser3);
+        this.bureau.setTacheCourante(this.reviser3);
+        this.bureau.archiverTache();
         assertFalse(this.bureau.getTaches().contains(this.reviser3),"la tache reviser3 ne devrait plus être dans les sections");
         assertTrue(this.bureau.getTachesArchivees().contains(this.reviser3),"la tache reviser3 devrait être dans les taches archivés");
     }
 
     @Test
     public void test_archiverTachesAvecDependences(){
-
-        this.bureau.archiverTache(this.reviser2);
+        this.bureau.setTacheCourante(this.reviser2);
+        this.bureau.archiverTache();
         assertFalse(this.bureau.getTaches().contains(this.reviser2),"la tache reviser2 ne devrait plus être dans les sections");
         assertTrue(this.bureau.getTachesArchivees().contains(this.reviser2),"la tache reviser2 devrait être dans les taches archivés");
         assertTrue(this.bureau.getDependances().containsKey(this.reviser2),"la tache reviser2 doit toujours être dans dependences");
@@ -186,14 +189,15 @@ public class TestModeleBureau {
 
     @Test
     public void test_archiverSectionSansTache(){
-
-       this.bureau.archiverSection(this.vide);
+        this.bureau.setSectionCourante(this.vide);
+       this.bureau.archiverSection();
        assertFalse(this.bureau.getSections().contains(this.vide),"la section vide ne doit plus être presente dans la liste de section");
        assertTrue(this.bureau.getSectionsArchivees().contains(this.vide),"la section vide doit être dans la liste de section archivés");
     }
     @Test
     public void test_archiverSectionAvecTache(){
-        this.bureau.archiverSection(this.maths);
+        this.bureau.setSectionCourante(this.maths);
+        this.bureau.archiverSection();
         assertFalse(this.bureau.getSections().contains(this.maths),"la section sae ne doit plus être presente dans la liste des sections");
         assertTrue(this.bureau.getSectionsArchivees().contains(this.maths),"la section sae doit être dans les sections archivés");
         assertTrue(this.maths.getTaches().isEmpty(),"la section doit être vide de tache");

@@ -61,6 +61,7 @@ public class MainSerialiser extends Application{
 
         // Création du conteneur principal pour la barre et la vue tableau
         VBox conteneurPrincipal = new VBox();
+        VBox.setVgrow(vueTableau, Priority.ALWAYS);
         conteneurPrincipal.getChildren().addAll(vueBarreActions, vueTableau);
 
         // Création de la scène et ajout du conteneur principal
@@ -97,7 +98,7 @@ public class MainSerialiser extends Application{
      */
     public static void main(String[] args) {
 
-        MainSerialiser.loaderModele("./src/main/java/tralleno/serialisation/modele.ser");
+        MainSerialiser.loaderModele("./src/main/resources/tralleno/serialisation/modele.ser");
         //lunch(new String[]{});
         launch(args);
         MainSerialiser.serialiser();

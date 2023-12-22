@@ -17,8 +17,8 @@ public class VueSection extends VBox implements Observateur {
 
     public VueSection(Section section, List<Tache> taches, ModeleBureau modele) {
         super();
-        setPrefWidth(250);
         setMinHeight(50);
+        setPrefWidth(150);
         setSpacing(10);
         setPadding(new Insets(10));
         setStyle("-fx-background-color: lightgray; -fx-border-color: darkgray; -fx-border-width: 1px;");

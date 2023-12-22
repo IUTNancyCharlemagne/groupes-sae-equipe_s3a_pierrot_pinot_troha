@@ -1,0 +1,15 @@
+Fonctionnalités :
+	Serialiser l'application PINOT Gaëtan
+	Supprimer une tâche (JavaFX) TROHA Stanislas
+	Modifier une tâche (JavaFX) TROHA Stanislas
+	Archivage de tâche et section PIERROT Nathan, PINOT Gaëtan
+	Test de l'archivage PINOT Gaëtan
+	Restauration de tâche et section PIERROT Nathan
+Cas d'utilisation
+	Sauvegarde du bureau quand on ferme l'application
+	Supprimer une tâche
+	Modifier une tâche
+	Supprimer une section
+	Modifier une section
+	Augmentation de l'accessibilité de l'application
+

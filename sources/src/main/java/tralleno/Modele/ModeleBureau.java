@@ -32,6 +32,27 @@ public class ModeleBureau implements Sujet, Serializable {
      */
     private Tache tacheCourante;
 
+    public Section getSectionCourante() {
+        return sectionCourante;
+    }
+
+    public void setSectionCourante(Section sectionCourante) {
+        this.sectionCourante = sectionCourante;
+    }
+
+    public void setTachesArchivees(List<Tache> tachesArchivees) {
+        this.tachesArchivees = tachesArchivees;
+    }
+
+    public void setSectionsArchivees(List<Section> sectionsArchivees) {
+        this.sectionsArchivees = sectionsArchivees;
+    }
+
+    /**
+     * Section courante sélectionnée par l'utilisateur
+     */
+    private Section sectionCourante;
+
     /**
      * nombre d'id de tache total, sert à avoir une id unique pour chaque tache
      */
@@ -74,10 +95,11 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
-    public void ajouterTache(Tache t, Section s) {
+    public void ajouterTache(Section s) {
         for (Section section : this.sections) {
             if (section.equals(s)) {
-                section.ajouterTache(t);
+                section.ajouterTache(this.tacheCourante);
+                this.tacheCourante.setSectionParente(s);
                 break;
             }
         }
@@ -127,30 +149,30 @@ public class ModeleBureau implements Sujet, Serializable {
         return res;
     }
 
-    public void ajouterDependance(Tache t, Tache dependance) {
+    public void ajouterDependance(Tache dependance) {
         if (dependance != null) {
-            if (this.dependances.containsKey(t)) { // Si la map de dépendances contient déjà la tâche en entrée
+            if (this.dependances.containsKey(this.tacheCourante)) { // Si la map de dépendances contient déjà la tâche en entrée
                 // Alors on ajoute la tâche dépendance à la liste des tâches dépendantes
-                this.dependances.get(t).add(dependance);
+                this.dependances.get(this.tacheCourante).add(dependance);
             } else {
                 // Sinon la tâche n'a encore aucune dépendance et il faudra aussi initialiser la liste
-                this.dependances.put(t, new ArrayList<>());
-                this.dependances.get(t).add(dependance);
+                this.dependances.put(this.tacheCourante, new ArrayList<>());
+                this.dependances.get(this.tacheCourante).add(dependance);
             }
         }
         this.notifierObservateurs();
     }
 
-    public void ajouterDependances(Tache t, List<Tache> dependances) {
+    public void ajouterDependances(List<Tache> dependances) {
         if (dependances != null && !(dependances.isEmpty())) {
-            if (this.dependances.containsKey(t)) { // Si la map de dépendances contient déjà la tâche en entrée
+            if (this.dependances.containsKey(this.tacheCourante)) { // Si la map de dépendances contient déjà la tâche en entrée
                 // Alors on ajoute la tâche dépendance à la liste des tâches dépendantes
-                this.dependances.get(t).addAll(dependances);
+                this.dependances.get(this.tacheCourante).addAll(dependances);
             } else {
                 // Sinon la tâche n'a encore aucune dépendance et il faudra aussi initialiser la liste
-                this.dependances.put(t, new ArrayList<Tache>());
+                this.dependances.put(this.tacheCourante, new ArrayList<Tache>());
 
-                this.dependances.get(t).addAll(dependances);
+                this.dependances.get(this.tacheCourante).addAll(dependances);
             }
         }
         this.notifierObservateurs();
@@ -164,6 +186,27 @@ public class ModeleBureau implements Sujet, Serializable {
             }
         }
         this.notifierObservateurs();
+    }
+
+    public void changerSection(Section section){
+        if(!(this.tacheCourante.getSectionParente() == section)){
+            this.tacheCourante.getSectionParente().supprimerTache(this.tacheCourante); // On supprime la tâche de la section dans laquelle est est actuellement
+            // Puis on l'ajoute à la nouvelle section
+            this.ajouterTache(section);
+            this.tacheCourante.setSectionParente(section);
+        }
+    }
+
+    /**
+     * Retourne la liste des tâches dépendantes chronologiquement de la tâcheCourante
+     * @return
+     */
+    public List<Tache> getDependancesTache(){
+        List<Tache> l = new ArrayList<>();
+        if(this.dependances.containsKey(this.tacheCourante)){
+            return this.dependances.get(this.tacheCourante);
+        }
+        return l;
     }
 
     public List<Section> getSections() {
@@ -182,13 +225,6 @@ public class ModeleBureau implements Sujet, Serializable {
         return res;
     }
 
-    public List<String> getTitreTaches() {
-        List<String> res = new ArrayList<String>();
-        for (Tache t : this.getTaches()) {
-            res.add(t.getTitre());
-        }
-        return res;
-    }
 
     public Map<Tache, List<Tache>> getDependances() {
         return this.dependances != null ? this.dependances : null;
@@ -209,11 +245,10 @@ public class ModeleBureau implements Sujet, Serializable {
     /**
      * Permet de supprimer une section du modèle
      *
-     * @param s section à supprimer
      */
-    public void supprimerSection(Section s) {
+    public void supprimerSection() {
         //copie de la liste des tâches pour pouvoir la parcourir correctement
-        List<Tache> listeTacheCopie = new ArrayList<>(s.getTaches());
+        List<Tache> listeTacheCopie = new ArrayList<>(this.sectionCourante.getTaches());
 
         // on supprime toutes les tâches et leurs dépendances avant de supprimer la section elle même
         // (pour éviter tout problème avec les dépendances)
@@ -221,7 +256,7 @@ public class ModeleBureau implements Sujet, Serializable {
             supprimerTache(t);
         }
 
-        this.sections.remove(s);
+        this.sections.remove(this.sectionCourante);
 
         //on notifie tous les observateurs de la mise à jour
         this.notifierObservateurs();
@@ -280,6 +315,7 @@ public class ModeleBureau implements Sujet, Serializable {
      * @param t tâche à archiver
      */
     public void archiverTache(Tache t) {
+
 
 
         // on parcourt la liste des sections jusqu'à trouver la section de la tâche à archiver

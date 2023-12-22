@@ -41,8 +41,10 @@ public class TestModeleBureau {
         this.bureau.ajouterSection(this.vide);
 
         //ajout de dépendances entre des tâches
-        this.bureau.ajouterDependance(this.reviser2, this.reviser1);
-        this.bureau.ajouterDependance(this.reviser5, this.reviser1);
+        this.bureau.setTacheCourante(this.reviser2);
+        this.bureau.ajouterDependance(this.reviser1);
+        this.bureau.setTacheCourante(this.reviser5);
+        this.bureau.ajouterDependance(this.reviser1);
     }
 
     @Test
@@ -64,9 +66,9 @@ public class TestModeleBureau {
         //préparation du test
         int nbTachesAvant = this.bureau.getTaches().size();
         TacheFille devApp = new TacheFille("Dev d'app", "Faire un trello");
-
+        this.bureau.setTacheCourante(devApp);
         //test
-        this.bureau.ajouterTache(devApp, this.sae);
+        this.bureau.ajouterTache(this.sae);
 
         //vérification
         int nbTachesApres = this.bureau.getTaches().size();
@@ -118,9 +120,9 @@ public class TestModeleBureau {
     public void test_supprimer_Section_vide(){
         //préparation du test
         int nbSectionsAvant = this.bureau.getSections().size();
-
+        this.bureau.setSectionCourante(this.vide);
         //test
-        this.bureau.supprimerSection(this.vide);
+        this.bureau.supprimerSection();
 
         //vérification
         int nbSectionsApres = this.bureau.getSections().size();
@@ -133,9 +135,9 @@ public class TestModeleBureau {
         int nbSectionsAvant = this.bureau.getSections().size();
         int nbTachesAvant = this.bureau.getTaches().size();
         int nbDeDepAvant = this.bureau.getDependances().size();
-
+        this.bureau.setSectionCourante(this.maths);
         //test
-        this.bureau.supprimerSection(this.maths);
+        this.bureau.supprimerSection();
 
         //vérification
         int nbSectionsApres = this.bureau.getSections().size();
@@ -159,7 +161,8 @@ public class TestModeleBureau {
         int nbDeDepAvant = this.bureau.getDependances().size();
 
         //test
-        this.bureau.ajouterDependance(this.reviser1, this.reviser2);
+        this.bureau.setTacheCourante(this.reviser1);
+        this.bureau.ajouterDependance(this.reviser2);
 
         //vérification
         int nbDeDepApres = this.bureau.getDependances().size();

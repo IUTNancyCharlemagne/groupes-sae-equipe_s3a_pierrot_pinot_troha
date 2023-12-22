@@ -62,6 +62,26 @@ public class ControlCreerTache implements EventHandler<MouseEvent> {
         choixDate.getChildren().addAll(labelDateDebut, dateDebut, labelDateFin, dateFin);
 
 
+        // Vérification de la date de début et de fin
+        dateDebut.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && dateFin.getValue() != null) {
+                if (newValue.isAfter(dateFin.getValue())) {
+                    // Si la date de début est après la date de fin, efface la date de fin
+                    dateFin.setValue(null);
+                }
+            }
+        });
+
+        dateFin.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && dateDebut.getValue() != null) {
+                if (newValue.isBefore(dateDebut.getValue())) {
+                    // Si la date de fin est avant la date de début, efface la date de début
+                    dateDebut.setValue(null);
+                }
+            }
+        });
+
+
         // Pour les dépendances chronologiques
         Label tachesAvant = new Label("Tâches à faire avant :");
         List<Tache> taches = this.modeleBureau.getTaches();
@@ -107,6 +127,8 @@ public class ControlCreerTache implements EventHandler<MouseEvent> {
                         )
         ); // trouvé sur internet, à voir si ça marche vraiment // bon bah ça marche vraiment
 
+
+
         boutonCreerTache.setOnAction(event -> {
             String titre = champTitre.getText();
             String description = champDescription.getText();
@@ -114,22 +136,46 @@ public class ControlCreerTache implements EventHandler<MouseEvent> {
             LocalDate dD = dateDebut.getValue();
             LocalDate dF = dateFin.getValue();
 
+            // Long processus de vérfication de cohérence entre les dates
+            // L'utilisateur, soit n'en choisi aucune des deux (laisse vide)
+            // Soit il doit renseigner les deux dates, et la date de début doit être avant la date de fin
+            boolean datesValides = true;
+            String messageErreur = "";
 
-            // On met toutes les données qu'on veut récupérer pour après créer la tâche (comme ça ça la crée que si l'utilisateur clique sur créer tache)
+            if ((dD == null && dF != null) || (dD != null && dF == null)) { // si une des dates est vide alors que l'autre est renseignée
+                datesValides = false;
+                messageErreur = "Veuillez remplir les deux champs de date ou laisser les deux vides.";
+            } else if (dD != null && dF != null && dD.isAfter(dF)) { // Si la date de début est après la date de fin
+                datesValides = false;
+                messageErreur = "La date de début ne peut pas être postérieure à la date de fin.";
+            }
+
+            if (datesValides) {
             TacheFille tache = new TacheFille(titre, description, dD, dF);
-
+            this.modeleBureau.setTacheCourante(tache);
             // On récupère la section choisie en tant qu'objet
             tache.setSectionParente(sectionChoisie);
-            modeleBureau.ajouterTache(tache, sectionChoisie);
+            modeleBureau.ajouterTache(sectionChoisie);
 
             // Maintenant on ajoute les dépendances chronologiques à la tâche s'il y en a
             ObservableList<Tache> tachesSelectionnees = listViewTachesAvant.getItems();
 
-            this.modeleBureau.ajouterDependances(tache, tachesSelectionnees);
+            this.modeleBureau.ajouterDependances(tachesSelectionnees);
 
             // On ferme la fenêtre une fois la tâche créée
             fenetreCreationTache.close();
+            } else {
+                // On affiche une alerte à l'utilisateur si les dates sont pas cohérentes
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur de dates");
+                alert.setHeaderText(null);
+                alert.setContentText(messageErreur);
+                alert.showAndWait();
+            }
         });
+
+
+
 
         // On met le tout dans une Vbox qui est le formulaire
         VBox layout = new VBox(10);

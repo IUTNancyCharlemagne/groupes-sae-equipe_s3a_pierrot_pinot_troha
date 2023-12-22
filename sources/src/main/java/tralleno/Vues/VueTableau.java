@@ -35,8 +35,7 @@ public class VueTableau extends HBox implements Observateur, Serializable {
 
             for (Section section : sections) {
                 List<Tache> taches = section.getTaches();
-                VueSection vueSection = new VueSection(section.getNom(), taches, this.modeleBureau);
-                vueSection.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlModifSection(modeleBureau, section));
+                VueSection vueSection = new VueSection(section, taches, this.modeleBureau);
                 getChildren().add(vueSection);
             }
         }

@@ -27,10 +27,12 @@ public class ControlModifSection implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent mouseEvent) {
+        this.modeleBureau.setSectionCourante(this.section);
         // On crée un nouveau stage (fenêtre)
         Stage fenetreModificationSection = new Stage();
         fenetreModificationSection.initModality(Modality.APPLICATION_MODAL);
         fenetreModificationSection.setTitle("Modifier section");
+
 
         // Puis on met dans les champs les valeurs actuelles de la section
         Label nomSection = new Label("Nom de la section:");

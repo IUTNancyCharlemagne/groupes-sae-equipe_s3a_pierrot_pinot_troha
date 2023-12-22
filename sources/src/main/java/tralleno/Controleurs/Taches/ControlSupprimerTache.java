@@ -1,28 +1,28 @@
-package tralleno.Controleurs.Sections;
+package tralleno.Controleurs.Taches;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Section.Section;
+import tralleno.Taches.Tache;
 
-public class ControlSupprimerSection implements EventHandler<MouseEvent> {
-
+public class ControlSupprimerTache implements EventHandler<MouseEvent> {
     private ModeleBureau modeleBureau;
 
-    private Section section;
+    private Tache tacheASupprimer;
 
     private Stage fenetre;
 
-    public ControlSupprimerSection(ModeleBureau m, Section s, Stage fenetre){
+    public ControlSupprimerTache(ModeleBureau m, Tache t, Stage fenetre){
         this.modeleBureau = m;
-        this.section = s;
+        this.tacheASupprimer = t;
         this.fenetre = fenetre;
     }
 
     @Override
     public void handle(MouseEvent mouseEvent) {
-        this.modeleBureau.supprimerSection();
+        this.modeleBureau.supprimerTache(this.tacheASupprimer);
         this.fenetre.close();
     }
 }

@@ -262,23 +262,27 @@ public class ModeleBureau implements Sujet, Serializable {
         return this.sectionsArchivees != null && (this.sectionsArchivees.contains(s));
     }
 
+    public boolean isSupprimee_Section(Section s){
+        return this.sections.contains(s) || this.sectionsArchivees.contains(s);
+    }
+
     /**
      * Permet de supprimer une section du modèle
      *
      */
     public void supprimerSection() {
-        //copie de la liste des tâches pour pouvoir la parcourir correctement
-        List<Tache> listeTacheCopie = new ArrayList<>(this.sectionCourante.getTaches());
-
-        // on supprime toutes les tâches et leurs dépendances avant de supprimer la section elle même
-        // (pour éviter tout problème avec les dépendances)
-        for (Tache t : listeTacheCopie) {
-            supprimerTache(t);
-        }
-
-        if(isArchivee_Section(this.sectionCourante)){
+        //on regarde si la section est archivée ou pas
+        if(isArchivee_Section(this.sectionCourante)){ //si elle est archivée, alors on supprime juste la section
             this.sectionsArchivees.remove(this.sectionCourante);
-        }else{
+        }else{ //si la section n'est pas archivée, on supprime la section et toutes ses tâches
+            //copie de la liste des tâches pour pouvoir la parcourir correctement
+            List<Tache> listeTacheCopie = new ArrayList<>(this.sectionCourante.getTaches());
+
+            // on supprime toutes les tâches et leurs dépendances avant de supprimer la section elle même
+            // (pour éviter tout problème avec les dépendances)
+            for (Tache t : listeTacheCopie) {
+                supprimerTache(t);
+            }
             this.sections.remove(this.sectionCourante);
         }
 
@@ -326,7 +330,7 @@ public class ModeleBureau implements Sujet, Serializable {
         //on regarde si la section de la tâche est archivée ou si la tâche est archivée ou non
         if(isArchivee_Section(t.getSectionParente())){ //si la section est archivée
             this.tachesArchivees.remove(t);
-        }else { //si la saction n'est pas archivée alors la tâche peut être archivée ou pas
+        }else { //si la section n'est pas archivée alors la tâche peut être archivée ou pas
             if(isArchivee_Tache(t)){
                 this.tachesArchivees.remove(t);
             }else {
@@ -385,12 +389,52 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
-    public void restaurerTache(Tache t) {
-        //TODO
+    /**
+     * Méthode qui permet d'ajouter une tâche dans une section donnée
+     *
+     * @param t tâche à ajouter
+     * @param s section dans laquelle ajouter la tâche
+     */
+    public void ajouterTacheDansSection(Tache t, Section s){
+        //on parcourt la liste des sections jusqu'à trouver la bonne et ajouter la tâche
+        for (Section section : this.sections) {
+            if (section.equals(s)) {
+                section.getTaches().add(t);
+                break;
+            }
+        }
     }
 
-    public void restaurerSection(Section s) {
-        //TODO
+    /**
+     * Méthode qui permet de restaurer une tâche dans la section dans laquelle elle se trouvait
+     *
+     * @param t tâche à restaurer
+     */
+    public void restaurerTache(Tache t) {
+        Section sectionParente = t.getSectionParente();
+        if(!isSupprimee_Section(sectionParente)){
+            if(!isArchivee_Section(sectionParente)){ //si la section est dans son état normal
+                ajouterTacheDansSection(t, sectionParente);
+            }else{ //si la section est archivée
+                //on restaure la section
+                restaurerSection(sectionParente);
+                ajouterTacheDansSection(t, sectionParente);
+            }
+        }else { //si la section a été supprimée
+            //on recréé la section de la tâche
+            this.sections.add(sectionParente);
+            ajouterTacheDansSection(t, sectionParente);
+        }
+    }
+
+    /**
+     * Méthode qui permet de restaurer une section
+     *
+     * @param s section à restaurer
+     */public void restaurerSection(Section s) {
+
+        this.sectionsArchivees.remove(s);
+        this.sections.add(s);
     }
 
     public List<Observateur> getObservateurs() {

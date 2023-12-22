@@ -253,7 +253,8 @@ public class ModeleBureau implements Sujet, Serializable {
         // on supprime toutes les tâches et leurs dépendances avant de supprimer la section elle même
         // (pour éviter tout problème avec les dépendances)
         for (Tache t : listeTacheCopie) {
-            supprimerTache(t);
+            this.tacheCourante = t;
+            supprimerTache();
         }
 
         this.sections.remove(this.sectionCourante);
@@ -266,9 +267,8 @@ public class ModeleBureau implements Sujet, Serializable {
      * Méthode qui permet de supprimer une tâche, cela a pour conséquence de supprimer
      * toutes les dépendances chronologiques qu'elle pourrait avoir avec des autres tâches
      *
-     * @param t tâche à supprimer
      */
-    public void supprimerTache(Tache t) {
+    public void supprimerTache() {
         Set<Tache> listeTachesQuiOntDesDependances = this.dependances.keySet();
         //on stock les tâches qui n'ont plus de dépendances dans cette liste pour les supprimer après le parcourt de
         // la liste de tâches qui ont des dépendances sinon ça pose problème
@@ -280,9 +280,9 @@ public class ModeleBureau implements Sujet, Serializable {
             List<Tache> listeDesDependances = this.dependances.get(tache);
 
             // on regarde si la liste des dépendances contient la tâche à supprimer
-            if (listeDesDependances.contains(t)) {
+            if (listeDesDependances.contains(this.tacheCourante)) {
                 //on retire la dépendance de la tâche qu'on veut supprimer
-                this.dependances.get(tache).remove(t);
+                this.dependances.get(tache).remove(this.tacheCourante);
 
                 //si une tâche n'a plus de dépendances alors on la met dans une liste pour la supprimer plus tard
                 if (this.dependances.get(tache).isEmpty()) {
@@ -297,12 +297,12 @@ public class ModeleBureau implements Sujet, Serializable {
         }
 
         //on retire les dépendances de la tâche à supprimer
-        this.dependances.remove(t);
+        this.dependances.remove(this.tacheCourante);
 
         //on retire la tâche de la liste de tâche de sa section
         for (Section section : this.sections) {
-            if (section.getTaches().contains(t)) {
-                section.supprimerTache(t);
+            if (section.getTaches().contains(this.tacheCourante)) {
+                section.supprimerTache(this.tacheCourante);
             }
         }
         // on notifie tous les observateurs de la mise à jour

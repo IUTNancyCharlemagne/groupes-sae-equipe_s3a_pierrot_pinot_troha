@@ -22,7 +22,8 @@ public class ControlSupprimerTache implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent mouseEvent) {
-        this.modeleBureau.supprimerTache(this.tacheASupprimer);
+        this.modeleBureau.setTacheCourante(this.tacheASupprimer);
+        this.modeleBureau.supprimerTache();
         this.fenetre.close();
     }
 }

@@ -64,6 +64,7 @@ public class MainApp extends Application {
 
         // Création du conteneur principal pour la barre et la vue tableau
         VBox conteneurPrincipal = new VBox();
+        VBox.setVgrow(vueTableau, Priority.ALWAYS);
         conteneurPrincipal.getChildren().addAll(vueBarreActions, vueTableau);
 
         // Création de la scène et ajout du conteneur principal

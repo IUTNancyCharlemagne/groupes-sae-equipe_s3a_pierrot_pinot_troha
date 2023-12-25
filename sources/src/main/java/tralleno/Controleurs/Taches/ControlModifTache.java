@@ -95,6 +95,7 @@ public class ControlModifTache implements EventHandler<MouseEvent> {
         // Pour les dépendances chronologiques
         Label tachesAvant = new Label("Tâches à faire avant :");
         List<Tache> taches = this.modeleBureau.getTaches();
+        taches.remove(this.tacheAModifier);
         ObservableList<Tache> tachesAFaireAvant = FXCollections.observableArrayList(taches);
         ComboBox<Tache> comboTaches = new ComboBox<>(tachesAFaireAvant);
 

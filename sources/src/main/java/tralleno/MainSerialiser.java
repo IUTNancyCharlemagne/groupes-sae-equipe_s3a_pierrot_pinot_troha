@@ -39,8 +39,9 @@ public class MainSerialiser extends Application{
             fluxEntree.close();
             fichierEntree.close();
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("nouveau modele");
-            MainSerialiser.modeleBureau=new ModeleBureau();
+//            System.out.println("nouveau modele");
+//            MainSerialiser.modeleBureau=new ModeleBureau();
+            e.printStackTrace();
         }
 
     }

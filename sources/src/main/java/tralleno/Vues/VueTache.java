@@ -7,13 +7,14 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import tralleno.Modele.ModeleBureau;
 import tralleno.Modele.Sujet;
 import tralleno.Taches.Tache;
 
 public class VueTache extends VBox implements Observateur {
 
     private Tache tache;
-    public VueTache(Tache tache) {
+    public VueTache(Tache tache, ModeleBureau modeleBureau) {
         super();
 
         this.tache = tache;
@@ -44,7 +45,7 @@ public class VueTache extends VBox implements Observateur {
             Dragboard dragboard = this.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
             content.putString(String.valueOf(this.tache.getId()));
-            System.out.println("REFERENCE TACHE AVANT ENCAPSULATION : " + this.tache);
+            modeleBureau.setTacheCourante(this.tache);
             dragboard.setContent(content);
             event.consume();
         });

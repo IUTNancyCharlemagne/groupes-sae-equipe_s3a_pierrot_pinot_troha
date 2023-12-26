@@ -111,20 +111,21 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
     public Section getSection(String nom) {
-        int i = 0;
-        boolean trouve = false;
-        while (i < this.sections.size() && !trouve) {
-            if (this.sections.get(i).getNom().equals(nom))
-                trouve = true;
-            else {
-                i++;
+        for (Section section : this.sections) {
+            if (section.getNom().equals(nom)) {
+                return section;
             }
         }
-        Section s = null;
-        if (trouve) {
-            s = this.sections.get(i);
+        return null;
+    }
+
+    public Section getSection(int id) {
+        for (Section section : this.sections) {
+            if (section.getId() == id) {
+                return section;
+            }
         }
-        return s;
+        return null;
     }
 
 

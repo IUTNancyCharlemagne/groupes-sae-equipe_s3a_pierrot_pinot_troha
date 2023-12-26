@@ -47,11 +47,11 @@ public class VueSection extends VBox implements Observateur {
         getChildren().add(sect);
 
         for (Tache t : taches) {
-            VueTache vueTache = new VueTache(t);
+            VueTache vueTache = new VueTache(t, modele);
             vueTache.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlModifTache(modele, t)); // On ajoute un contrôleur à chaque tache créée.
             getChildren().add(vueTache);
         }
-        
+
 
 
 
@@ -70,11 +70,8 @@ public class VueSection extends VBox implements Observateur {
 
             if (db.hasString()) {
                 Tache tacheADeplacer = modele.getTacheParId(Integer.valueOf(db.getString()));
-                System.out.println("REFERENCE TACHE APRES ENCAPSULATION : " + tacheADeplacer);
 
-                modele.setTacheCourante(tacheADeplacer);
                 modele.changerSection(section);
-                System.out.println("COUCOU");
 
                 success = true;
             }

@@ -49,6 +49,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import tralleno.Controleurs.Sections.ControlModifSection;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Modele.Sujet;
@@ -68,16 +70,17 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
         super();
         setPadding(new Insets(10));
         this.modeleBureau = modeleBureau;
+        setStyle("-fx-background-color: #add8e6;");
 
         actualiser(modeleBureau);
     }
 
-    @Override
     public void actualiser(Sujet s) {
         if (s instanceof ModeleBureau) {
             setContent(null); // On efface le contenu existant
 
-            HBox containerSections = new HBox(20); // Un conteneur horizontal pour les sections
+            HBox containerSections = new HBox(20);
+            containerSections.setStyle("-fx-background-color: #add8e6;");
             containerSections.setPadding(new Insets(10));
 
             List<Section> sections = ((ModeleBureau) s).getSections();
@@ -85,11 +88,17 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
             for (Section section : sections) {
                 List<Tache> taches = section.getTaches();
                 VueSection vueSection = new VueSection(section, taches, this.modeleBureau);
-                containerSections.getChildren().add(vueSection);
 
+                // On crée un Pane car sinon tous les enfants de Hbox (donc toutes les sections) adaptent leur hauteur à celle de la section la plus haute
+                // Là, cela restera dynamique dans le pane et selon leur nombre de tâches, les sections auront une hauteur différente
+                Pane sectionPane = new Pane();
+                sectionPane.getChildren().add(vueSection);
+                sectionPane.setMaxHeight(Region.USE_PREF_SIZE);
+
+                containerSections.getChildren().add(sectionPane);
             }
 
-            setContent(containerSections); // Ajoute le conteneur horizontal de sections au ScrollPane
+            setContent(containerSections);
         }
     }
 }

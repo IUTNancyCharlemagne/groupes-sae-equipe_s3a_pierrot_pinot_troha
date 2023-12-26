@@ -20,7 +20,9 @@ public class VueTache extends VBox implements Observateur {
         this.tache = tache;
 
 
-        Label titreLabel = new Label(tache.getTitre());
+        String nomAbrege = tache.getTitre().length() > 15 ? tache.getTitre().substring(0, 15) + "..." : tache.getTitre();
+        Label titreLabel = new Label(nomAbrege);
+
         String description = tache.getDescription();
         String descriptionAbregee = description.length() > 20 ? description.substring(0, 20) + "..." : description;
         Label descriptionLabel = new Label(descriptionAbregee);
@@ -35,7 +37,8 @@ public class VueTache extends VBox implements Observateur {
         texteBox.setPadding(new Insets(5)); // Ajoute un espacement entre le texte et les bords du conteneur
         texteBox.setSpacing(5); // Espacement entre le titre et la description
 
-        texteBox.setStyle("-fx-border-color: black; -fx-border-width: 1px;"); // Ajoute une bordure autour du VBox
+        texteBox.setStyle("-fx-border-color: black; -fx-border-width: 1px; -fx-border-radius: 5px; -fx-background-color: white; -fx-background-radius: 5px;");
+
 
         this.getChildren().add(texteBox); // Ajoute le VBox dans la StackPane
 

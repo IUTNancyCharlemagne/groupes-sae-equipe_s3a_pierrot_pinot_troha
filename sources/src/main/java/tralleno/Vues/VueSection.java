@@ -25,16 +25,18 @@ public class VueSection extends VBox implements Observateur {
         this.section = section;
 
         setMinHeight(50);
-        setPrefWidth(150);
+        setPrefWidth(200);
         setSpacing(10);
         setPadding(new Insets(10));
-        setStyle("-fx-background-color: lightgray; -fx-border-color: darkgray; -fx-border-width: 1px;");
+        setStyle("-fx-background-color: #f5f5f5; -fx-border-color: #cec0c0; -fx-border-width: 1px; -fx-border-radius: 5px; -fx-background-radius: 5px;");
+
 
         String nom = section.getNom();
 
         String nomAbrege = nom.length() > 30 ? nom.substring(0, 30) + "..." : nom;
         Label labelSection = new Label(nom);
         labelSection.setStyle("-fx-font-weight: bold;");
+
 
         // On crée un élément graphique juste pour que le nom de la section soit cliquable
         VBox sect = new VBox();

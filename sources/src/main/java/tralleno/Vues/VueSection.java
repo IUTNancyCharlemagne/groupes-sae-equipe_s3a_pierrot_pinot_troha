@@ -13,6 +13,7 @@ import tralleno.Modele.ModeleBureau;
 import tralleno.Modele.Sujet;
 import tralleno.Section.Section;
 import tralleno.Taches.Tache;
+import tralleno.Vues.VueTache;
 
 import java.util.List;
 

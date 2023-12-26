@@ -80,7 +80,6 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
             setContent(null); // On efface le contenu existant
 
             HBox containerSections = new HBox(20);
-            containerSections.setStyle("-fx-background-color: #add8e6;");
             containerSections.setPadding(new Insets(10));
 
             List<Section> sections = ((ModeleBureau) s).getSections();

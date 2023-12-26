@@ -11,6 +11,8 @@ import tralleno.Modele.ModeleBureau;
 import tralleno.Modele.Sujet;
 import tralleno.Taches.Tache;
 
+import java.util.List;
+
 public class VueTache extends VBox implements Observateur {
 
     private Tache tache;
@@ -19,7 +21,12 @@ public class VueTache extends VBox implements Observateur {
 
         this.tache = tache;
 
+        this.actualiser(modeleBureau);
 
+    }
+
+    @Override
+    public void actualiser(Sujet s) {
         String nomAbrege = tache.getTitre().length() > 15 ? tache.getTitre().substring(0, 15) + "..." : tache.getTitre();
         Label titreLabel = new Label(nomAbrege);
 
@@ -27,23 +34,23 @@ public class VueTache extends VBox implements Observateur {
         String descriptionAbregee = description.length() > 20 ? description.substring(0, 20) + "..." : description;
         Label descriptionLabel = new Label(descriptionAbregee);
 
-        titreLabel.setFont(Font.font("Arial", 14)); // Style pour le titre en gras et plus grand
-        descriptionLabel.setFont(Font.font("Arial", 10)); // Style pour la description en plus petit
+        titreLabel.setFont(Font.font("Arial", 14));
+        descriptionLabel.setFont(Font.font("Arial", 10));
 
-        titreLabel.setWrapText(true); // Permet au texte de se mettre à la ligne s'il est trop long
+        titreLabel.setWrapText(true);
         descriptionLabel.setWrapText(true);
 
         VBox texteBox = new VBox(titreLabel, descriptionLabel);
-        texteBox.setPadding(new Insets(5)); // Ajoute un espacement entre le texte et les bords du conteneur
-        texteBox.setSpacing(5); // Espacement entre le titre et la description
+        texteBox.setPadding(new Insets(5));
+        texteBox.setSpacing(5);
 
-        texteBox.setStyle("-fx-border-color: black; -fx-border-width: 1px; -fx-border-radius: 5px; -fx-background-color: white; -fx-background-radius: 5px;");
+        texteBox.setStyle("-fx-border-color: #e8cdcd; -fx-border-width: 1px; -fx-border-radius: 5px; -fx-background-color: white; -fx-background-radius: 5px;");
 
+        ModeleBureau modeleBureau = (ModeleBureau) s;
 
-        this.getChildren().add(texteBox); // Ajoute le VBox dans la StackPane
+        this.getChildren().add(texteBox);
 
-
-        // On rend la tâche draggable c'est à dire qu'on peut la maintenir et la déposer quelque part d'autre
+        // Pour déplacer les tâches d'une section à l'autre
         this.setOnDragDetected(event -> {
             Dragboard dragboard = this.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
@@ -52,11 +59,5 @@ public class VueTache extends VBox implements Observateur {
             dragboard.setContent(content);
             event.consume();
         });
-    }
-
-
-    @Override
-    public void actualiser(Sujet s) {
-
     }
 }

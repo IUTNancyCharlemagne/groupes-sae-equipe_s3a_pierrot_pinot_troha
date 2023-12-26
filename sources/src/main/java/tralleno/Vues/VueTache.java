@@ -2,18 +2,22 @@ package tralleno.Vues;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import tralleno.Modele.Sujet;
 import tralleno.Taches.Tache;
 
 public class VueTache extends VBox implements Observateur {
+
+    private Tache tache;
     public VueTache(Tache tache) {
         super();
+
+        this.tache = tache;
+
 
         Label titreLabel = new Label(tache.getTitre());
         String description = tache.getDescription();
@@ -33,6 +37,17 @@ public class VueTache extends VBox implements Observateur {
         texteBox.setStyle("-fx-border-color: black; -fx-border-width: 1px;"); // Ajoute une bordure autour du VBox
 
         this.getChildren().add(texteBox); // Ajoute le VBox dans la StackPane
+
+
+        // On rend la tâche draggable c'est à dire qu'on peut la maintenir et la déposer quelque part d'autre
+        this.setOnDragDetected(event -> {
+            Dragboard dragboard = this.startDragAndDrop(TransferMode.MOVE);
+            ClipboardContent content = new ClipboardContent();
+            content.putString(String.valueOf(this.tache.getId()));
+            System.out.println("REFERENCE TACHE AVANT ENCAPSULATION : " + this.tache);
+            dragboard.setContent(content);
+            event.consume();
+        });
     }
 
 

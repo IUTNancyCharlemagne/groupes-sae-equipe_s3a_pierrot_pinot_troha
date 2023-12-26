@@ -13,4 +13,7 @@ module com.example.sources {
     opens tralleno.Modele to javafx.fxml;
     exports tralleno.Section;
     opens tralleno.Section to javafx.fxml;
+
+    opens exemples to javafx.fxml;
+    exports exemples;
 }

@@ -116,10 +116,10 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
         return Integer.compare(this.id, t.getId());
     }
 
-    public String toString(){
-//        String aff = "Titre : " + this.titre + "\n";
-//        aff += "Section : " + this.sectionParente.getNom() + "\n";
-        String aff = this.titre + " - " + this.sectionParente.getNom() + "\n";
-        return aff;
-    }
+//    public String toString(){
+////        String aff = "Titre : " + this.titre + "\n";
+////        aff += "Section : " + this.sectionParente.getNom() + "\n";
+//        String aff = this.titre + " - " + this.sectionParente.getNom() + "\n";
+//        return aff;
+//    }
 }

@@ -154,7 +154,6 @@ public class ControlCreerTache implements EventHandler<MouseEvent> {
             TacheFille tache = new TacheFille(titre, description, dD, dF);
             this.modeleBureau.setTacheCourante(tache);
             // On récupère la section choisie en tant qu'objet
-            tache.setSectionParente(sectionChoisie);
             modeleBureau.ajouterTache(sectionChoisie);
 
             // Maintenant on ajoute les dépendances chronologiques à la tâche s'il y en a

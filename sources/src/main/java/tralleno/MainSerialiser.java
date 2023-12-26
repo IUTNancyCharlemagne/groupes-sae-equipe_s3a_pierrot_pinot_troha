@@ -5,10 +5,13 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import tralleno.Section.Section;
+import tralleno.Taches.Tache;
 import tralleno.Vues.VueBarreActions;
 import tralleno.Vues.VueTableau;
 
 import java.io.*;
+import java.util.List;
 
 public class MainSerialiser extends Application{
     public static ModeleBureau modeleBureau;
@@ -70,6 +73,14 @@ public class MainSerialiser extends Application{
 
         // Affichage de la fenêtre principale
         primaryStage.show();
+
+//        List<Section> sections = modeleBureau.getSections();
+//        for(Section s : sections){
+//            System.out.println(s.getNom());
+//            for(Tache t : s.getTaches()){
+//                System.out.println(t);
+//            }
+//        }
 
     }
 

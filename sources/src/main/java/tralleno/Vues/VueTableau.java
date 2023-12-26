@@ -46,6 +46,7 @@ package tralleno.Vues;
 
 import javafx.geometry.Insets;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.ScrollPane;
 import tralleno.Controleurs.Sections.ControlModifSection;
@@ -85,6 +86,7 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
                 List<Tache> taches = section.getTaches();
                 VueSection vueSection = new VueSection(section, taches, this.modeleBureau);
                 containerSections.getChildren().add(vueSection);
+
             }
 
             setContent(containerSections); // Ajoute le conteneur horizontal de sections au ScrollPane

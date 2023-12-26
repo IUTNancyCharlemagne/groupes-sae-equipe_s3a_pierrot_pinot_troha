@@ -32,21 +32,6 @@ public class ModeleBureau implements Sujet, Serializable {
      */
     private Tache tacheCourante;
 
-    public Section getSectionCourante() {
-        return sectionCourante;
-    }
-
-    public void setSectionCourante(Section sectionCourante) {
-        this.sectionCourante = sectionCourante;
-    }
-
-    public void setTachesArchivees(List<Tache> tachesArchivees) {
-        this.tachesArchivees = tachesArchivees;
-    }
-
-    public void setSectionsArchivees(List<Section> sectionsArchivees) {
-        this.sectionsArchivees = sectionsArchivees;
-    }
 
     /**
      * Section courante sélectionnée par l'utilisateur
@@ -77,6 +62,8 @@ public class ModeleBureau implements Sujet, Serializable {
      */
     private List<Section> sectionsArchivees;
 
+
+
     public ModeleBureau() {
         this.observateurs = new ArrayList<Observateur>();
         this.dependances = new TreeMap<Tache, List<Tache>>();
@@ -106,6 +93,22 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
+
+    public Section getSectionCourante() {
+        return sectionCourante;
+    }
+
+    public void setSectionCourante(Section sectionCourante) {
+        this.sectionCourante = sectionCourante;
+    }
+
+    public void setTachesArchivees(List<Tache> tachesArchivees) {
+        this.tachesArchivees = tachesArchivees;
+    }
+
+    public void setSectionsArchivees(List<Section> sectionsArchivees) {
+        this.sectionsArchivees = sectionsArchivees;
+    }
 
     public Section getSection(String nom) {
         int i = 0;
@@ -172,6 +175,10 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
+    /**
+     * Déplace la tâche courante dans la section passée en paramètre
+     * @param section
+     */
     public void changerSection(Section section) {
         if (!(this.tacheCourante.getSectionParente() == section)) {
             this.tacheCourante.getSectionParente().supprimerTache(this.tacheCourante); // On supprime la tâche de la section dans laquelle est est actuellement
@@ -208,6 +215,19 @@ public class ModeleBureau implements Sujet, Serializable {
             res.addAll(s.getTaches());
         }
         return res;
+    }
+
+    public Tache getTacheParId(int id){
+        // On parcourt tout jusqu'à trouver, sinon on finit par retourner un objet nul
+        for (Section section : sections) {
+            for (Tache tache : section.getTaches()) {
+                if (tache.getId() == id) {
+                    return tache;
+                }
+            }
+        }
+        // On retourne  null sinon
+        return null;
     }
 
 

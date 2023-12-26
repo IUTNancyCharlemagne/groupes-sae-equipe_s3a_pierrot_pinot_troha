@@ -2,7 +2,10 @@ package tralleno.Vues;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import tralleno.Controleurs.Sections.ControlModifSection;
 import tralleno.Controleurs.Taches.ControlModifTache;
@@ -15,8 +18,12 @@ import java.util.List;
 
 public class VueSection extends VBox implements Observateur {
 
+    private Section section;
+
     public VueSection(Section section, List<Tache> taches, ModeleBureau modele) {
         super();
+        this.section = section;
+
         setMinHeight(50);
         setPrefWidth(150);
         setSpacing(10);
@@ -44,6 +51,39 @@ public class VueSection extends VBox implements Observateur {
             vueTache.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlModifTache(modele, t)); // On ajoute un contrôleur à chaque tache créée.
             getChildren().add(vueTache);
         }
+        
+
+
+
+        // Gestion du "drag over" pour accepter les tâches
+        this.setOnDragOver(event -> {
+            if (event.getGestureSource() instanceof VueTache) {
+                event.acceptTransferModes(TransferMode.MOVE);
+                event.consume();
+            }
+        });
+
+        // Gestion du "drop" pour récupérer la tâche
+        this.setOnDragDropped(event -> {
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+
+            if (db.hasString()) {
+                Tache tacheADeplacer = modele.getTacheParId(Integer.valueOf(db.getString()));
+                System.out.println("REFERENCE TACHE APRES ENCAPSULATION : " + tacheADeplacer);
+
+                modele.setTacheCourante(tacheADeplacer);
+                modele.changerSection(section);
+                System.out.println("COUCOU");
+
+                success = true;
+            }
+
+            event.setDropCompleted(success);
+            event.consume();
+        });
+
+
     }
 
     @Override

@@ -73,10 +73,14 @@ public class MainApp extends Application {
 
         // Affichage de la fenêtre principale
         primaryStage.show();
+
+
+
     }
 
     public static void main(String[] args) {
         launch(args);
+
     }
 }
 

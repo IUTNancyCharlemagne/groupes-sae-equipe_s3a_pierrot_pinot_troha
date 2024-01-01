@@ -5,17 +5,20 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import tralleno.Section.Section;
-import tralleno.Taches.Tache;
 import tralleno.Vues.VueBarreActions;
 import tralleno.Vues.VueTableau;
 
 import java.io.*;
-import java.util.List;
 
 public class MainSerialiser extends Application{
+    /**
+     * Modèle qui comporte les données de l'application
+     */
     public static ModeleBureau modeleBureau;
-    //chemin ou se trouve
+
+    /**
+     * Chemin du fichier contenant les données sérialisées
+     */
     public static String chemin;
 
 
@@ -25,8 +28,6 @@ public class MainSerialiser extends Application{
      * @param chemin chemin ou se trouve le fichier serialisé
      */
     public static void loaderModele(String chemin){
-
-
         MainSerialiser.chemin=chemin;
         // on essai de recuperer le fichier si ça marche pas on créer un nouveau modele
         try {
@@ -39,9 +40,8 @@ public class MainSerialiser extends Application{
             fluxEntree.close();
             fichierEntree.close();
         } catch (IOException | ClassNotFoundException e) {
-//            System.out.println("nouveau modele");
-//            MainSerialiser.modeleBureau=new ModeleBureau();
-            e.printStackTrace();
+            System.out.println("nouveau modele");
+            MainSerialiser.modeleBureau=new ModeleBureau();
         }
 
     }
@@ -74,14 +74,8 @@ public class MainSerialiser extends Application{
 
         // Affichage de la fenêtre principale
         primaryStage.show();
+//        System.out.println(modeleBureau.getSections().get(0).getTaches().size());
 
-//        List<Section> sections = modeleBureau.getSections();
-//        for(Section s : sections){
-//            System.out.println(s.getNom());
-//            for(Tache t : s.getTaches()){
-//                System.out.println(t);
-//            }
-//        }
 
     }
 

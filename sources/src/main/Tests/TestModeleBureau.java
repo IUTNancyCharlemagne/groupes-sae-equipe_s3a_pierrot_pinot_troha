@@ -68,7 +68,8 @@ public class TestModeleBureau {
         TacheFille devApp = new TacheFille("Dev d'app", "Faire un trello");
         this.bureau.setTacheCourante(devApp);
         //test
-        this.bureau.ajouterTache(this.sae);
+        this.bureau.setSectionCourante(this.sae);
+        this.bureau.ajouterTache();
 
         //vérification
         int nbTachesApres = this.bureau.getTaches().size();

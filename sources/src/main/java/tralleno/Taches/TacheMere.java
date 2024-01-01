@@ -3,18 +3,20 @@ package tralleno.Taches;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Classe qui représente une tâche pouvant comporter des sous-tâches etc...
+ */
 public class TacheMere extends Tache implements Serializable {
 
     /**
-     * Liste des sous-tâches de l'instance de tâche
+     * Liste des sous-tâches de la tacheMere (qui peuvent aussi être des TacheMere etc...)
      */
     protected List<Tache> sousTaches;
 
     /**
-     *
+     * Construit une tâche à partir d'un titre et d'une description
      * @param t titre de la tâche
      * @param d description de la tâche
      */
@@ -24,7 +26,7 @@ public class TacheMere extends Tache implements Serializable {
     }
 
     /**
-     * les paramètres doivent êtres vérifiés avant
+     * Construit une tâche à partir d'un titre  d'une description et de dates de début et de fin
      * @param t
      * @param d
      * @param dD
@@ -36,7 +38,7 @@ public class TacheMere extends Tache implements Serializable {
     }
 
     /**
-     *
+     * Crée une tâche mère par copie de la tâcheMere passée en paramètres
      * @param t
      */
     public TacheMere(TacheMere t) {
@@ -64,10 +66,18 @@ public class TacheMere extends Tache implements Serializable {
         this.sousTaches.remove(t);
     }
 
+    /**
+     * Retourne la liste de sous-tâches de la tâche mère
+     * @return
+     */
     public List<Tache> getSousTaches(){
         return this.sousTaches;
     }
 
+    /**
+     * Permet de changer la liste de sous-tâches de la tâche-mère
+     * @param l
+     */
     public void setSousTaches(List<Tache> l){
         this.sousTaches = l;
     }

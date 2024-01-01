@@ -7,21 +7,42 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Calendar;
 
+/**
+ * Classe représentant une tâche, se déclinant en deux type de tâches. TacheFille, étant une tâche ne possèdant pas de sous-tâche
+ * Et TacheMere, possèdant des sous-tâches
+ */
 public abstract class Tache implements Comparable<Tache>, Serializable{
 
+    /**
+     * Référence de la section dans laquelle une tâche est contenue
+     */
     protected Section sectionParente;
+    /**
+     * Titre de la tâche
+     */
     protected String titre;
+    /**
+     * Identifiant unique de la tâche
+     */
     protected int id;
+    /**
+     * Dates de début et de fin de la tâche
+     */
     protected LocalDate dateDebut,dateFin;
 
+    /**
+     * Durée de la tâche (déduite des dates de début et de fin)
+     */
     protected int duree ; //duree en jour
 
+    /**
+     * Description textuelle de la tâche
+     */
     protected String description;
 
-    public static int IDVALIDACTUEL=1;
 
     /**
-     *
+     * Construit une tâche à partir de son titre et de sa description
      * @param t titre de la tâche
      * @param d description de la tâche
      */
@@ -32,7 +53,7 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
     }
 
     /**
-     * les paramètres doivent êtres vérifiés avant
+     * Construit une tâche à partir de son titre, sa description, ses dates de début et de fin
      * @param t
      * @param d
      * @param dD
@@ -46,6 +67,10 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
         this.id=ModeleBureau.getIDTACHEACTUELLE();
     }
 
+    /**
+     * Construit une tâche par copie de la tâche passée en paramètre
+     * @param t
+     */
     public Tache(Tache t) {
         this.titre=t.getTitre();
         this.description=t.getDescription();
@@ -110,16 +135,22 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
         this.description = description;
     }
 
+    /**
+     * Compare deux tâches selon leur id. Nécessaire pour la manière dont elles peuvent être triées.
+     * @param t the object to be compared.
+     * @return
+     */
     @Override
     public int compareTo(Tache t) {
-        // Par exemple, comparaison basée sur l'ID des tâches
         return Integer.compare(this.id, t.getId());
     }
 
-//    public String toString(){
-////        String aff = "Titre : " + this.titre + "\n";
-////        aff += "Section : " + this.sectionParente.getNom() + "\n";
-//        String aff = this.titre + " - " + this.sectionParente.getNom() + "\n";
-//        return aff;
-//    }
+    /**
+     * Retourne le titre de la tâche ainsi que le nom de la section à laquelle elle appartient
+     * @return String
+     */
+    public String toString(){
+        String aff = this.titre + " - " + this.sectionParente.getNom() + "\n";
+        return aff;
+    }
 }

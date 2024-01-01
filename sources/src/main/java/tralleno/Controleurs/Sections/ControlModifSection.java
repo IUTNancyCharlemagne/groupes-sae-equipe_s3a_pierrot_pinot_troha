@@ -14,17 +14,36 @@ import tralleno.Section.Section;
 import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 
+/**
+ * Classe qui gère la modification d'une section
+ */
 public class ControlModifSection implements EventHandler<MouseEvent> {
 
+    /**
+     * Modèle qui comporte les données de l'application
+     */
     private ModeleBureau modeleBureau;
 
+    /**
+     * Section qui est modifiée
+     */
     private Section section;
 
+    /**
+     * Construit un contrôleur à partir d'un modèle et d'une section
+     * @param modeleBureau
+     * @param section
+     */
     public ControlModifSection(ModeleBureau modeleBureau, Section section) {
         this.modeleBureau = modeleBureau;
         this.section = section;
     }
 
+    /**
+     * Lorsque l'utilisateur clique sur une section, cette méthode est appelée.
+     * Elle prend en charge l'évenement en modifiant une section
+     * @param mouseEvent
+     */
     @Override
     public void handle(MouseEvent mouseEvent) {
         this.modeleBureau.setSectionCourante(this.section);
@@ -39,8 +58,10 @@ public class ControlModifSection implements EventHandler<MouseEvent> {
         TextField champNom = new TextField(this.section.getNom());
 
         Button supprimerSection = new Button("Supprimer");
+        // On ajoute le contrôleur relatif à la suppression d'une section pour le bouton supprimer
         supprimerSection.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlSupprimerSection(this.modeleBureau, this.section, fenetreModificationSection));
         Button archiverSection = new Button("Archiver");
+        // Ici on ajoutera un contrôleur pour l'archivage des tâches.
 
         HBox actions = new HBox(10);
 
@@ -48,9 +69,10 @@ public class ControlModifSection implements EventHandler<MouseEvent> {
 
         Button boutonModifierSection = new Button("Modifier Section");
 
-
+        // Lorsque le bouton modifier est cliqué, alors on récupère le nouveau nom de la section
+        // Et on modifie la section
         boutonModifierSection.setOnAction(event -> {
-            this.modeleBureau.modifierNomSection(this.section, champNom.getText());
+            this.modeleBureau.modifierNomSection(champNom.getText());
             fenetreModificationSection.close();
         });
 

@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Section.Section;
 import tralleno.Taches.Tache;
-import tralleno.Taches.TacheFille;
+import tralleno.Taches.TacheMere;
 import tralleno.Taches.TacheMere;
 import tralleno.Vues.VueBarreActions;
 import tralleno.Vues.VueTableau;
@@ -31,21 +31,46 @@ public class MainApp extends Application {
         Section section5 = new Section("Section 5");
 
         TacheMere tache1 = new TacheMere("Tache 1", "Nettoyer maison");
-        Tache tache2 = new TacheFille("Tache 2", "Passer l'aspirateur");
-        Tache tache3 = new TacheFille("Tache 3", "Passer la serpillière");
+        Tache tache2 = new TacheMere("Tache 2", "Passer l'aspirateur");
+        Tache tache3 = new TacheMere("Tache 3", "Passer la serpillière");
         TacheMere tache4 = new TacheMere("Tache 4", "Ratisser le jardin");
         TacheMere tache5 = new TacheMere("Tache 5", "Réparer la voiture");
+        TacheMere tache6 = new TacheMere("Tache 6", "Feuuur");
+        TacheMere tache7 = new TacheMere("Tache 7", "QUoiiiii");
+        TacheMere tacheFEUR = new TacheMere("Tache FEUR", "fezrth");
+        TacheMere tacheQUOI = new TacheMere("Tache QUOI", "dezfrt");
+
+
+
+
         tache1.ajouterSousTache(tache2);
         tache1.ajouterSousTache(tache3);
 
+        tache1.ajouterSousTache(tache6);
+        tache6.ajouterSousTache(tache7);
+
         section1.ajouterTache(tache1);
         tache1.setSectionParente(section1);
+
+        tache2.setSectionParente(section1);
+
+        tache3.setSectionParente(section1);
 
         section1.ajouterTache(tache4);
         tache4.setSectionParente(section1);
 
         section1.ajouterTache(tache5);
         tache5.setSectionParente(section1);
+
+        tache6.setSectionParente(section1);
+
+        tache7.setSectionParente(section1);
+
+        section2.ajouterTache(tacheFEUR);
+        tacheFEUR.setSectionParente(section2);
+
+        section3.ajouterTache(tacheQUOI);
+        tacheQUOI.setSectionParente(section3);
 
         modeleBureau.ajouterSection(section1);
         modeleBureau.ajouterSection(section2);

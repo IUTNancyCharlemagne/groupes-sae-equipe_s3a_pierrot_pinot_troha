@@ -2,6 +2,7 @@ package tralleno.Modele;
 
 import tralleno.Section.Section;
 import tralleno.Taches.Tache;
+import tralleno.Taches.TacheMere;
 import tralleno.Vues.Observateur;
 
 import java.io.Serializable;
@@ -32,45 +33,42 @@ public class ModeleBureau implements Sujet, Serializable {
      */
     private Tache tacheCourante;
 
-
     /**
      * Section courante sélectionnée par l'utilisateur
      */
     private Section sectionCourante;
 
     /**
-     * nombre d'id de tache total, sert à avoir une id unique pour chaque tache
+     * Nombre d'id de tache total, sert à avoir une id unique pour chaque tache
      */
     private static int IDTACHEACTUELLE = 0;
 
     /**
-     * nombre d'id de section total, sert à avoir une id unique pour chaque section
+     * Nombre d'id de section total, sert à avoir une id unique pour chaque section
      */
     private static int IDSECTIONACTUELLE = 0;
 
     /**
-     * Map contenant en clé les Tâches archivées et en valeur ses dépendances (tâches à faire avant de pouvoir la commencer)
+     * Liste contenant les Tâches archivées
      */
     private List<Tache> tachesArchivees;
 
-    public List<Tache> getTachesArchivees() {
-        return (this.tachesArchivees);
-    }
-
     /**
-     * Map contenant en clé les Sections archivées et en valeur les tâches qui se trouvaient dans la section
+     * Liste contenant les sections archivées
      */
     private List<Section> sectionsArchivees;
 
-
-
+    /**
+     * Construit le modèle en initialisant ses attributs.
+     */
     public ModeleBureau() {
         this.observateurs = new ArrayList<Observateur>();
-        this.dependances = new TreeMap<Tache, List<Tache>>();
         this.sections = new ArrayList<Section>();
+        this.dependances = new TreeMap<Tache, List<Tache>>();
         this.tachesArchivees = new ArrayList<Tache>();
         this.sectionsArchivees = new ArrayList<Section>();
     }
+
 
     /**
      * Permet d'ajouter une section au modèle
@@ -82,61 +80,26 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
-    public void ajouterTache(Section s) {
+    /**
+     * Permet d'ajouter une tâche à la section courante (this.sectionCourante)
+     */
+    public void ajouterTache() {
         for (Section section : this.sections) {
-            if (section.equals(s)) {
+            if (section.equals(this.sectionCourante)) {
                 section.ajouterTache(this.tacheCourante);
-                this.tacheCourante.setSectionParente(s);
+                this.tacheCourante.setSectionParente(this.sectionCourante);
                 break;
             }
         }
         this.notifierObservateurs();
     }
 
-
-    public Section getSectionCourante() {
-        return sectionCourante;
-    }
-
-    public void setSectionCourante(Section sectionCourante) {
-        this.sectionCourante = sectionCourante;
-    }
-
-    public void setTachesArchivees(List<Tache> tachesArchivees) {
-        this.tachesArchivees = tachesArchivees;
-    }
-
-    public void setSectionsArchivees(List<Section> sectionsArchivees) {
-        this.sectionsArchivees = sectionsArchivees;
-    }
-
-    public Section getSection(String nom) {
-        for (Section section : this.sections) {
-            if (section.getNom().equals(nom)) {
-                return section;
-            }
-        }
-        return null;
-    }
-
-    public Section getSection(int id) {
-        for (Section section : this.sections) {
-            if (section.getId() == id) {
-                return section;
-            }
-        }
-        return null;
-    }
-
-
-    public List<String> getNomSections() {
-        List<String> res = new ArrayList<String>();
-        for (Section s : this.sections) {
-            res.add(s.getNom());
-        }
-        return res;
-    }
-
+    /**
+     * Permet d'ajouter une tâche en dépendance à la tâche courante.
+     * C'est à dire que la tâche courante aura besoin de la tâche passée en paramètres de la méthode pour
+     * pouvoir se commencer
+     * @param dependance
+     */
     public void ajouterDependance(Tache dependance) {
         if (dependance != null) {
             if (this.dependances.containsKey(this.tacheCourante)) { // Si la map de dépendances contient déjà la tâche en entrée
@@ -151,6 +114,10 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
+    /**
+     * Permet d'ajouter une liste entière de tâches dépendantes à la tâche courante (tâche à faire avant la tâche courante)
+     * @param dependances liste des tâches à faire avant la tâche courante
+     */
     public void ajouterDependances(List<Tache> dependances) {
         if (dependances != null && !(dependances.isEmpty())) {
             if (this.dependances.containsKey(this.tacheCourante)) { // Si la map de dépendances contient déjà la tâche en entrée
@@ -166,31 +133,80 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
-    public void modifierNomSection(Section s, String nom) {
+    /**
+     * Méthode qui retourne l'objet section à partir de son nom
+     * @param nom
+     * @return
+     */
+    public Section getSection(String nom) {
         for (Section section : this.sections) {
-            if (section == s) {
-                section.setNom(nom);
-                break;
+            if (section.getNom().equals(nom)) {
+                return section;
             }
         }
+        return null;
+    }
+
+    /**
+     * Méthode qui retourne la liste de noms des sections du modèle
+     * @return
+     */
+    public List<String> getNomSections() {
+        List<String> res = new ArrayList<String>();
+        for (Section s : this.sections) {
+            res.add(s.getNom());
+        }
+        return res;
+    }
+
+    /**
+     * Permet de modifier le nom de la section courante sectionCourante
+     * @param nom
+     */
+    public void modifierNomSection(String nom) {
+        this.sectionCourante.setNom(nom);
         this.notifierObservateurs();
     }
 
     /**
-     * Déplace la tâche courante dans la section passée en paramètre
+     * Permet de déplacer une tâche (et ses sous-tâches) de la section dans laquelle elle était de base
+     * c'est à dire sectionCourante, pour ensuite la déplacer dans la section passée en paramètres,
+     * qui devient à son tour la section courante
      * @param section
      */
     public void changerSection(Section section) {
-        if (!(this.tacheCourante.getSectionParente() == section)) {
             this.tacheCourante.getSectionParente().supprimerTache(this.tacheCourante); // On supprime la tâche de la section dans laquelle est est actuellement
             // Puis on l'ajoute à la nouvelle section
-            this.ajouterTache(section);
+            this.sectionCourante = section;
+            this.ajouterTache();
             this.tacheCourante.setSectionParente(section);
+
+            // Mettre à jour récursivement la section parente pour les sous-tâches
+            mettreAJourSousTachesSection(this.tacheCourante, section);
+
+        this.notifierObservateurs();
+    }
+
+    /**
+     * Méthode récursive utiliser par changerSection(Section section)
+     * qui permet de mettre à jour les sous-tâches de la tâche qu'on a déplacée de section.
+     * Car les sous-tâches ne sont pas directement contenues dans la liste de tâche d'une section, mais indiquent
+     * la section dans laquelle elles se trouvent via leur attribut sectionParente
+     * @param tache
+     * @param section
+     */
+    private void mettreAJourSousTachesSection(Tache tache, Section section) {
+        if (tache instanceof TacheMere) { // Si elle contient des sous-tâches
+            List<Tache> sousTaches = ((TacheMere) tache).getSousTaches();
+            for (Tache sousTache : sousTaches) {
+                sousTache.setSectionParente(section); // On met à jour sa section parente.
+                mettreAJourSousTachesSection(sousTache, section);
+            }
         }
     }
 
     /**
-     * Retourne la liste des tâches dépendantes chronologiquement de la tâcheCourante
+     * Retourne la liste des tâches dont la tâcheCourante dépend chronologiquement
      *
      * @return
      */
@@ -202,14 +218,13 @@ public class ModeleBureau implements Sujet, Serializable {
         return l;
     }
 
-    public List<Section> getSections() {
-        return sections;
-    }
 
-    public void setSections(List<Section> sections) {
-        this.sections = sections;
-    }
-
+    /**
+     * Retourne la liste des tâches du modèle.
+     * Pour l'instant ne retourne pas les sous-tâches des tâches.
+     * A voir du point de vue dépendances chronologiques
+     * @return
+     */
     public List<Tache> getTaches() {
         List<Tache> res = new ArrayList<Tache>();
         for (Section s : this.sections) {
@@ -218,35 +233,62 @@ public class ModeleBureau implements Sujet, Serializable {
         return res;
     }
 
-    public Tache getTacheParId(int id){
-        // On parcourt tout jusqu'à trouver, sinon on finit par retourner un objet nul
+    /**
+     * Retourne une tâche selon son id en utilisant une autre méthode récursive, qui descend dans la hiérarchie des tâches et de ses sous-tâches
+     * @param id
+     * @return
+     */
+    public Tache getTacheParId(int id) {
         for (Section section : sections) {
             for (Tache tache : section.getTaches()) {
-                if (tache.getId() == id) {
-                    return tache;
+                Tache found = chercherTache(id, tache);
+                if (found != null) {
+                    return found;
                 }
             }
         }
-        // On retourne  null sinon
         return null;
     }
 
-
-    public Map<Tache, List<Tache>> getDependances() {
-        return this.dependances != null ? this.dependances : null;
+    /**
+     * Méthode récursive qui descend jusqu'en bas des sous-tâches d'une tâche
+     * pour trouver la tâche qui correspond via l'id passé en paramètres.
+     *
+     * @param id
+     * @param tache
+     * @return
+     */
+    private Tache chercherTache(int id, Tache tache) {
+        // Si l'id de la tâche en paramètre est le meme que la tâche on l'a trouvée
+        if (tache.getId() == id) {
+            return tache;
+        }
+        if (tache instanceof TacheMere) { // Si la tâche est une tâcheMère on parcourt ses sous-tâches pour répéter l'opération
+            TacheMere tacheMere = (TacheMere) tache;
+            for (Tache sousTache : tacheMere.getSousTaches()) {
+                Tache found = chercherTache(id, sousTache);
+                if (found != null) {
+                    return found;
+                }
+            }
+        }
+        return null; // sinon aucune tâche ne possède cet id
     }
 
-    public void setDependances(Map<Tache, List<Tache>> dependances) {
-        this.dependances = dependances;
+    /**
+     * Méthode qui permet d'ajouter la tâche courante dans la section courante
+     *
+     */
+    public void ajouterTacheDansSection (){
+        //on parcourt la liste des sections jusqu'à trouver la bonne et ajouter la tâche
+        for (Section section : this.sections) {
+            if (section.equals(this.sectionCourante)) {
+                section.getTaches().add(this.tacheCourante);
+                break;
+            }
+        }
     }
 
-    public Tache getTacheCourante() {
-        return tacheCourante;
-    }
-
-    public void setTacheCourante(Tache tacheCourante) {
-        this.tacheCourante = tacheCourante;
-    }
 
     /**
      * Méthode qui permet de déterminer si une tâche est archivée ou non
@@ -273,22 +315,18 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
     /**
-     * Permet de supprimer une section du modèle
+     * Permet de supprimer la sectionCourante du modèle. Si la section est archivée cela supprime uniquement la section
+     * Si elle ne l'est pas, cela supprimera également ses tâches et sous-tâches.
      */
     public void supprimerSection() {
         //on regarde si la section est archivée ou pas
         if (isArchivee_Section(this.sectionCourante)) { //si elle est archivée, alors on supprime juste la section
             this.sectionsArchivees.remove(this.sectionCourante);
         } else { //si la section n'est pas archivée, on supprime la section et toutes ses tâches
-            //copie de la liste des tâches pour pouvoir la parcourir correctement
-            List<Tache> listeTacheCopie = new ArrayList<>(this.sectionCourante.getTaches());
-
-            // on supprime toutes les tâches et leurs dépendances avant de supprimer la section elle même
             // (pour éviter tout problème avec les dépendances)
-            for (Tache t : listeTacheCopie) {
+            for (Tache t : this.sectionCourante.getTaches()) {
                 this.tacheCourante = t;
-                this.supprimerTache();
-
+                this.supprimerTache(); // Méthode qui supprime toutes les dépendances chronologiques d'une tâche également.
             }
             this.sections.remove(this.sectionCourante);
             //on notifie tous les observateurs de la mise à jour
@@ -296,207 +334,358 @@ public class ModeleBureau implements Sujet, Serializable {
         }
     }
 
-        /**
-         * Méthode qui permet de supprimer une tâche, cela a pour conséquence de supprimer
-         * toutes les dépendances chronologiques qu'elle pourrait avoir avec des autres tâches
-         *
-         */
-        public void supprimerTache () {
-            Set<Tache> listeTachesQuiOntDesDependances = this.dependances.keySet();
-            //on stock les tâches qui n'ont plus de dépendances dans cette liste pour les supprimer après le parcourt de
-            // la liste de tâches qui ont des dépendances sinon ça pose problème
-            ArrayList<Tache> tachesARetirer = new ArrayList<Tache>();
 
-            // on parcourt la liste de toutes les tâches qui ont des dépendances
-            for (Tache tache : listeTachesQuiOntDesDependances) {
-                //on récupère la liste des dépendances de la tâche courante
-                List<Tache> listeDesDependances = this.dependances.get(tache);
 
-                // on regarde si la liste des dépendances contient la tâche à supprimer
-                if (listeDesDependances.contains(this.tacheCourante)) {
-                    //on retire la dépendance de la tâche qu'on veut supprimer
-                    this.dependances.get(tache).remove(this.tacheCourante);
+    /**
+     * Méthode qui permet de supprimer la tacheCourante, cela a pour conséquence de supprimer
+     * toutes les dépendances chronologiques qu'elle pourrait avoir avec des autres tâches
+     */
+    public void supprimerTache() {
+        Set<Tache> listeTachesQuiOntDesDependances = this.dependances.keySet();
+        //on stock les tâches qui n'ont plus de dépendances dans cette liste pour les supprimer après le parcours de
+        // la liste de tâches qui ont des dépendances sinon ça pose problème
+        ArrayList<Tache> tachesARetirer = new ArrayList<Tache>();
 
-                    //si une tâche n'a plus de dépendances alors on la met dans une liste pour la supprimer plus tard
-                    if (this.dependances.get(tache).isEmpty()) {
-                        tachesARetirer.add(tache);
-                    }
-                }
-            }
+        // on parcourt la liste de toutes les tâches qui ont des dépendances
+        for (Tache tache : listeTachesQuiOntDesDependances) {
+            //on récupère la liste des dépendances de la tâche courante
+            List<Tache> listeDesDependances = this.dependances.get(tache);
 
-            //on retire toutes les tâches qui n'ont plus de dépendances de la map dependances
-            for (Tache tache : tachesARetirer) {
-                this.dependances.remove(tache);
-            }
+            // on regarde si la liste des dépendances contient la tâche à supprimer
+            if (listeDesDependances.contains(this.tacheCourante)) {
+                //on retire la dépendance de la tâche qu'on veut supprimer
+                this.dependances.get(tache).remove(this.tacheCourante);
 
-            //on retire les dépendances de la tâche à supprimer
-            this.dependances.remove(this.tacheCourante);
-
-            //on regarde si la section de la tâche est archivée ou si la tâche est archivée ou non
-            if (isArchivee_Section(this.tacheCourante.getSectionParente())) { //si la section est archivée
-                this.tachesArchivees.remove(this.tacheCourante);
-            } else { //si la section n'est pas archivée alors la tâche peut être archivée ou pas
-                if (isArchivee_Tache(this.tacheCourante)) {
-                    this.tachesArchivees.remove(this.tacheCourante);
-                } else {
-                    for (Section section : this.sections) {
-                        if (section.getTaches().contains(this.tacheCourante)) {
-                            section.supprimerTache(this.tacheCourante);
-                        }
-                    }
-                }
-            }
-            // on notifie tous les observateurs de la mise à jour
-            this.notifierObservateurs();
-        }
-
-        /**
-         * Méthode qui permet d'archiver une tâche avec toutes ses dépendances
-         *
-         */
-        public void archiverTache () {
-            // on parcourt la liste des sections jusqu'à trouver la section de la tâche à archiver
-            for (Section section : this.sections) {
-                if (section.getTaches().contains(this.tacheCourante)) {
-                    this.tachesArchivees.add(this.tacheCourante);
-                    section.getTaches().remove(this.tacheCourante);
-                }
-            }
-
-            //on notifie les observateurs de la modification
-            this.notifierObservateurs();
-        }
-
-        /**
-         * Méthode qui permet d'archiver une section en entier avec toutes ses tâches
-         *
-         */
-        public void archiverSection () {
-            //on archive la section avec toutes ses tâches
-            this.sectionsArchivees.add(this.sectionCourante);
-
-            //copie de la liste des tâches pour pouvoir la parcourir correctement
-            List<Tache> listeTacheCopie = new ArrayList<>(this.sectionCourante.getTaches());
-
-            // on archive toutes les tâches et leurs dépendances avant d'archiver la section elle même
-            // (pour éviter tout problème avec les dépendances)
-            for (Tache t : listeTacheCopie) {
-                this.tacheCourante = t;
-                this.archiverTache();
-            }
-
-            // on retire la section des sections non archivées
-            this.sections.remove(this.sectionCourante);
-
-            //on notifie les observateurs de la modification
-            this.notifierObservateurs();
-        }
-
-        /**
-         * Méthode qui permet d'ajouter une tâche dans une section donnée
-         *
-         * @param t tâche à ajouter
-         * @param s section dans laquelle ajouter la tâche
-         */
-        public void ajouterTacheDansSection (Tache t, Section s){
-            //on parcourt la liste des sections jusqu'à trouver la bonne et ajouter la tâche
-            for (Section section : this.sections) {
-                if (section.equals(s)) {
-                    section.getTaches().add(t);
-                    break;
+                //si une tâche n'a plus de dépendances alors on la met dans une liste pour la supprimer plus tard
+                if (this.dependances.get(tache).isEmpty()) {
+                    tachesARetirer.add(tache);
                 }
             }
         }
 
-        /**
-         * Méthode qui permet de restaurer une tâche dans la section dans laquelle elle se trouvait
-         *
-         * @param t tâche à restaurer
-         */
-        public void restaurerTache (Tache t){
-            Section sectionParente = t.getSectionParente();
-            if (!isSupprimee_Section(sectionParente)) {
-                if (!isArchivee_Section(sectionParente)) { //si la section est dans son état normal
-                    ajouterTacheDansSection(t, sectionParente);
-                } else { //si la section est archivée
-                    //on restaure la section
-                    restaurerSection(sectionParente);
-                    ajouterTacheDansSection(t, sectionParente);
+        //on retire toutes les tâches qui n'ont plus de dépendances de la map dependances
+        for (Tache tache : tachesARetirer) {
+            this.dependances.remove(tache);
+        }
+
+        //on retire les dépendances de la tâche à supprimer
+        this.dependances.remove(this.tacheCourante);
+
+        //on regarde si la section de la tâche est archivée ou si la tâche est archivée ou non
+        if (isArchivee_Section(this.tacheCourante.getSectionParente())) { //si la section est archivée
+            // La tâche n'est pas contenue directement dans sa section parente. Elle est uniquement dans tachesArchivees
+
+            // On va donc créer une section qui prend la liste des tâches archivées pour la passer en paramètres de
+            // la méthode de suppression récursive
+            Section sectionTachesArchivees = new Section("archive", this.tachesArchivees);
+            supprimerTacheRecursive(sectionTachesArchivees); // On utilise cette méthode au cas où ce soit une sous-tâche
+            // qui soit archivée, car dans ce cas là, il faut parcourir toute la liste de tâches pour trouver l'éventuelle
+            // sous-tâche
+        } else { //si la section n'est pas archivée alors la tâche peut être quand meme être archivée ou pas
+            if (isArchivee_Tache(this.tacheCourante)) {
+                // La tâche n'est pas contenue directement dans sa section parente. Elle est uniquement dans tachesArchivees
+                // On va donc créer une section qui prend la liste des tâches archivées pour la passer en paramètres de
+                // la méthode de suppression récursive
+                Section sectionTachesArchivees = new Section("archive", this.tachesArchivees);
+                supprimerTacheRecursive(sectionTachesArchivees);
+            } else { // Si elle n'est pas archivée
+                this.tacheCourante.getSectionParente().supprimerTache(this.tacheCourante);
+                supprimerTacheRecursive(this.tacheCourante.getSectionParente()); // la section dans laquelle est contenue la tâche est sa section parente
+            }
+        }
+        this.notifierObservateurs();
+    }
+
+    /**
+     * Parcourt la section dans laquelle la tâche/sous-tâche est contenue, et tant qu'on ne la trouve pas on descendra
+     * dans les sous-tâches en appelant la méthode supprimerSousTacheRecursive
+     */
+    public void supprimerTacheRecursive(Section section) {
+        // Obtient la tâche à supprimer depuis l'attribut tacheCourante du modèle
+        Tache tacheASupprimer = this.tacheCourante;
+
+            List<Tache> tachesSection = section.getTaches();
+            for (Tache tache : new ArrayList<>(tachesSection)) {
+                if (tache == tacheASupprimer) { // Comparaison par référence
+                    tachesSection.remove(tache);
+                } else if (tache instanceof TacheMere) {
+                    TacheMere tacheMere = (TacheMere) tache;
+                    supprimerSousTacheRecursive(tacheASupprimer, tacheMere.getSousTaches());
                 }
-            } else { //si la section a été supprimée
-                //on recréé la section de la tâche
-                this.sections.add(sectionParente);
-                ajouterTacheDansSection(t, sectionParente);
             }
-        }
+    }
 
-        /**
-         * Méthode qui permet de restaurer une section
-         *
-         * @param s section à restaurer
-         */public void restaurerSection (Section s){
-
-            this.sectionsArchivees.remove(s);
-            this.sections.add(s);
-        }
-
-        public List<Observateur> getObservateurs () {
-            return observateurs;
-        }
-
-        public void setObservateurs (List < Observateur > observateurs) {
-            this.observateurs = observateurs;
-        }
-
-        /**
-         * renvoi un id unique de section et incremente pour la suite
-         *
-         * @return int id section unique
-         */
-        public static int getIDSECTIONACTUELLE () {
-            return IDSECTIONACTUELLE++;
-        }
-
-        /**
-         * renvoi un id unique de tâche et incremente pour la suite
-         *
-         * @return int id tache unique
-         */
-        public static int getIDTACHEACTUELLE () {
-            return IDTACHEACTUELLE++;
-        }
-
-        /**
-         * Permet d'enregistrer un observateur à la liste
-         *
-         * @param observateur
-         */
-        @Override
-        public void enregistrerObservateur (Observateur observateur){
-            this.observateurs.add(observateur);
-        }
-
-        /**
-         * Permet de supprimer un observateur de la liste
-         *
-         * @param observateur
-         */
-        @Override
-        public void supprimerObservateur (Observateur observateur){
-            this.observateurs.remove(observateur);
-        }
-
-        /**
-         * Notifie tous les observateurs du modèle et les actualise
-         */
-        @Override
-        public void notifierObservateurs () {
-            for (Observateur o : this.observateurs) {
-                o.actualiser(this);
+    /**
+     * Méthode récursive, qui pour chaque sous tâche, parcourt à nouveau ses sous-tâches jusqu'à trouver la tâche à supprimer
+     * Et la supprimer, une fois la sous-tâche trouvée, ses sous-tâches seront elles aussi supprimées grâce au patron composite
+     * @param tacheASupprimer
+     * @param sousTaches
+     */
+    private void supprimerSousTacheRecursive(Tache tacheASupprimer, List<Tache> sousTaches) {
+        for (Tache sousTache : new ArrayList<>(sousTaches)) {
+            if (sousTache == tacheASupprimer) { // Comparaison par référence
+                sousTaches.remove(sousTache);
+            } else if (sousTache instanceof TacheMere) {
+                TacheMere tacheMere = (TacheMere) sousTache;
+                supprimerSousTacheRecursive(tacheASupprimer, tacheMere.getSousTaches());
             }
-        }
-
-        public List<Section> getSectionsArchivees () {
-            return (this.sectionsArchivees);
         }
     }
+
+
+    /**
+     * Méthode récursive qui permet de déterminer si la tacheMere est une sous-tâche de la tacheActuelle
+     * Cela permet d'empêcher (dans cette application) le déplacement d'une tâche dans une de ses sous-tâches
+     * @param tacheMere
+     * @param tacheActuelle
+     * @return
+     */
+    public boolean estSousTacheDe(Tache tacheMere, Tache tacheActuelle) {
+        if (tacheActuelle instanceof TacheMere) {
+            List<Tache> sousTaches = ((TacheMere) tacheActuelle).getSousTaches();
+            for (Tache sousTache : sousTaches) {
+                if (sousTache == tacheMere) {
+                    return true;
+                } else if (sousTache instanceof TacheMere) {
+                    if (estSousTacheDe(tacheMere, sousTache)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * Méthode qui permet d'archiver la tâcheCourante avec toutes ses dépendances
+     * (et donc ses sous-tâches qui sont naturellement inclues)
+     *
+     */
+    public void archiverTache () {
+        this.tacheCourante.getSectionParente().supprimerTache(this.tacheCourante);
+        this.tachesArchivees.add(this.tacheCourante);
+
+        //on notifie les observateurs de la modification
+        this.notifierObservateurs();
+    }
+
+    /**
+     * Méthode qui permet d'archiver une section en entière ainsi que toutes ses tâches
+     *
+     */
+    public void archiverSection () {
+        //on archive la section avec toutes ses tâches
+        this.sectionsArchivees.add(this.sectionCourante);
+
+        // on archive toutes les tâches et leurs dépendances avant d'archiver la section elle même
+        // (pour éviter tout problème avec les dépendances)
+        for (Tache t : this.sectionCourante.getTaches()) {
+            this.tacheCourante = t;
+            this.archiverTache();
+        }
+
+        // on retire la section des sections non archivées
+        this.sections.remove(this.sectionCourante);
+
+        //on notifie les observateurs de la modification
+        this.notifierObservateurs();
+    }
+
+
+
+    /**
+     * Méthode qui permet de restaurer la tâche courante dans la section dans
+     * laquelle elle se trouvait avant d'être archivée
+     *
+     */
+    public void restaurerTache (){
+        Section sectionParente = this.tacheCourante.getSectionParente();
+        this.sectionCourante = sectionParente;
+        if (!isSupprimee_Section(sectionParente)) {
+            if (!isArchivee_Section(sectionParente)) { //si la section est dans son état normal
+                ajouterTacheDansSection();
+            } else { //si la section est archivée
+                //on restaure la section
+                restaurerSection();
+                ajouterTacheDansSection();
+            }
+        } else { //si la section a été supprimée
+            //on recréé la section de la tâche
+            this.sections.add(sectionParente);
+            ajouterTacheDansSection();
+        }
+    }
+
+    /**
+     * Méthode qui permet de restaurer une section
+     *
+     */
+    public void restaurerSection (){
+        this.sectionsArchivees.remove(this.sectionCourante);
+        this.sections.add(this.sectionCourante);
+    }
+
+    /**
+     * Permet d'enregistrer un observateur à la liste
+     *
+     * @param observateur
+     */
+    @Override
+    public void enregistrerObservateur (Observateur observateur){
+        this.observateurs.add(observateur);
+    }
+
+    /**
+     * Permet de supprimer un observateur de la liste
+     *
+     * @param observateur
+     */
+    @Override
+    public void supprimerObservateur (Observateur observateur){
+        this.observateurs.remove(observateur);
+    }
+
+    /**
+     * Notifie tous les observateurs du modèle et les actualise
+     */
+    @Override
+    public void notifierObservateurs () {
+        for (Observateur o : this.observateurs) {
+            o.actualiser(this);
+        }
+    }
+
+    /**
+     * Retourne la liste des observateurs du modèle
+     * @return
+     */
+    public List<Observateur> getObservateurs () {
+        return observateurs;
+    }
+
+    /**
+     * Permet de changer la liste des observateurs du modèle par celle passée en paramètre
+     * @param observateurs
+     */
+    public void setObservateurs (List < Observateur > observateurs) {
+        this.observateurs = observateurs;
+    }
+
+    /**
+     * renvoi un id unique de section et incremente pour la suite
+     *
+     * @return int id section unique
+     */
+    public static int getIDSECTIONACTUELLE () {
+        return IDSECTIONACTUELLE++;
+    }
+
+    /**
+     * renvoi un id unique de tâche et incremente pour la suite
+     *
+     * @return int id tache unique
+     */
+    public static int getIDTACHEACTUELLE () {
+        return IDTACHEACTUELLE++;
+    }
+
+
+    /**
+     * Retourne la tâche courante
+     * @return
+     */
+    public Tache getTacheCourante() {
+        return tacheCourante;
+    }
+
+    /**
+     * Permet de modifier la tâche courante
+     * @param tacheCourante
+     */
+    public void setTacheCourante(Tache tacheCourante) {
+        this.tacheCourante = tacheCourante;
+    }
+
+    /**
+     * Retourne la section courante
+     * @return
+     */
+    public Section getSectionCourante() {
+        return sectionCourante;
+    }
+
+    /**
+     * Permet de changer la section courante
+     * @param sectionCourante
+     */
+    public void setSectionCourante(Section sectionCourante) {
+        this.sectionCourante = sectionCourante;
+    }
+
+    /**
+     * Retourne la liste des tâches archivées
+     * @return
+     */
+    public List<Tache> getTachesArchivees() {
+        return (this.tachesArchivees);
+    }
+
+
+    /**
+     * Permet de changer la liste de tâches archivées
+     * @param tachesArchivees
+     */
+    public void setTachesArchivees(List<Tache> tachesArchivees) {
+        this.tachesArchivees = tachesArchivees;
+    }
+
+    /**
+     * Retourne la liste des sections archivées
+     * @return
+     */
+    public List<Section> getSectionsArchivees () {
+        return (this.sectionsArchivees);
+    }
+
+    /**
+     * Permet de changer la liste des sections archivées
+     * @param sectionsArchivees
+     */
+    public void setSectionsArchivees(List<Section> sectionsArchivees) {
+        this.sectionsArchivees = sectionsArchivees;
+    }
+
+    /**
+     * Retourne la table des dépendances chronologiques
+     * @return
+     */
+    public Map<Tache, List<Tache>> getDependances() {
+        return this.dependances != null ? this.dependances : null;
+    }
+
+    /**
+     * Permet de changer la table des dépendances chronologiques
+     * @param dependances
+     */
+    public void setDependances(Map<Tache, List<Tache>> dependances) {
+        this.dependances = dependances;
+    }
+
+    /**
+     * Retourne la liste des sections du modèle
+     * @return
+     */
+    public List<Section> getSections() {
+        return sections;
+    }
+
+    /**
+     * Permet de changer la liste des sections du modèles par la liste de sections passée en paramètre
+     * @param sections
+     */
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
+    }
+
+}

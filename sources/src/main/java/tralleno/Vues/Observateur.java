@@ -7,5 +7,9 @@ import tralleno.Modele.Sujet;
  */
 public interface Observateur {
 
+    /**
+     * Se déclenche lorsque l'état du modèle change
+     * @param s
+     */
     public void actualiser(Sujet s);
 }

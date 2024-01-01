@@ -14,21 +14,40 @@ import javafx.stage.Stage;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Section.Section;
 import tralleno.Taches.Tache;
-import tralleno.Taches.TacheFille;
 
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Classe qui gère la modification d'une tâche lorsque l'utilisateur clique sur le bouton modifier d'une tâche
+ */
 public class ControlModifTache implements EventHandler<MouseEvent> {
 
+    /**
+     * Modèle qui comporte les données de l'application
+     */
     private ModeleBureau modeleBureau;
+
+    /**
+     * Tâche concernée par la modification
+     */
     private Tache tacheAModifier;
 
+    /**
+     * Construit le contrôleur à partir du modele et de la tâche à modifier
+     * @param modeleBureau
+     * @param tacheAModifier
+     */
     public ControlModifTache(ModeleBureau modeleBureau, Tache tacheAModifier) {
         this.modeleBureau = modeleBureau;
         this.tacheAModifier = tacheAModifier;
     }
 
+    /**
+     * Lorsque l'utilisateur clique sur le bouton "..." de la tâche, cette méthode est appelée.
+     * Elle prend en charge l'évenement en permettant à l'utilisateur de modifier la tâche
+     * @param mouseEvent
+     */
     @Override
     public void handle(MouseEvent mouseEvent) {
         this.modeleBureau.setTacheCourante(this.tacheAModifier);
@@ -46,15 +65,17 @@ public class ControlModifTache implements EventHandler<MouseEvent> {
         TextField champTitre = new TextField(tacheAModifier.getTitre());
         TextField champDescription = new TextField(tacheAModifier.getDescription());
 
-        Label choixSection = new Label("Section :");
-        // On récupère les noms des sections du modèle pour la liste
-        List<Section> listeSections = this.modeleBureau.getSections();
-
-        ObservableList<Section> sections = FXCollections.observableArrayList(listeSections);
-        ComboBox<Section> comboSection = new ComboBox<>(sections);
-
-        // Et après on met en valeur déjà sélecionnée la section à laquelle la tache appartient
-        comboSection.setValue(this.tacheAModifier.getSectionParente());
+        // Concernant les sections, étant donné que le drag and drop a été implémenté, on peut pour l'instant se passer
+        // de la modification de section via le menu de modification d'une tâche
+//        Label choixSection = new Label("Section :");
+//        // On récupère les noms des sections du modèle pour la liste
+//        List<Section> listeSections = this.modeleBureau.getSections();
+//
+//        ObservableList<Section> sections = FXCollections.observableArrayList(listeSections);
+//        ComboBox<Section> comboSection = new ComboBox<>(sections);
+//
+//        // Et après on met en valeur déjà sélecionnée la section à laquelle la tache appartient
+//        comboSection.setValue(this.tacheAModifier.getSectionParente());
 
         // Maintenant les dates de début et fin
         Label labelDateDebut = new Label("Date de début:");
@@ -117,7 +138,7 @@ public class ControlModifTache implements EventHandler<MouseEvent> {
 
 
 
-// EventHandler pour que la liste des tâches select se mette à jour
+        // EventHandler pour que la liste des tâches select se mette à jour
         comboTaches.setOnAction(event -> {
             Tache tacheSelectionnee = comboTaches.getValue();
             if (tacheSelectionnee != null && !listViewTachesAvant.getItems().contains(tacheSelectionnee)) {
@@ -146,7 +167,7 @@ public class ControlModifTache implements EventHandler<MouseEvent> {
         boutonModifierTache.disableProperty().bind(
                 champTitre.textProperty().isEmpty()
                         .or(champDescription.textProperty().isEmpty()
-                                .or(comboSection.valueProperty().isNull())
+//                                .or(comboSection.valueProperty().isNull())
                         )
         ); // trouvé sur internet, à voir si ça marche vraiment // bon bah ça marche vraiment
 
@@ -154,7 +175,7 @@ public class ControlModifTache implements EventHandler<MouseEvent> {
         boutonModifierTache.setOnAction(event -> {
             String titre = champTitre.getText();
             String description = champDescription.getText();
-            Section sectionChoisie = comboSection.getValue();
+//            Section sectionChoisie = comboSection.getValue();
             LocalDate dD = dateDebut.getValue();
             LocalDate dF = dateFin.getValue();
             ObservableList<Tache> tachesSelectionnees = listViewTachesAvant.getItems();
@@ -182,7 +203,8 @@ public class ControlModifTache implements EventHandler<MouseEvent> {
                 this.tacheAModifier.setDateDebut(dD);
                 this.tacheAModifier.setDateFin(dF);
                 // On récupère la section choisie en tant qu'objet et on l'ajoute après l'avoir changée de section
-                this.modeleBureau.changerSection(sectionChoisie);
+                // Il faut vérifier supprimer le
+//                this.modeleBureau.changerSection(sectionChoisie);
 
                 // Maintenant on ajoute les dépendances chronologiques à la tâche s'il y en a
                this.modeleBureau.ajouterDependances(tachesSelectionnees);
@@ -206,13 +228,14 @@ public class ControlModifTache implements EventHandler<MouseEvent> {
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
 
+        // choixSection, comboSection à ajouter aussi au layout
         layout.getChildren().addAll(titreTache, champTitre, labelDescription, champDescription,
-                choixSection, comboSection, choixDate,tachesAvant, dependances,
+                choixDate,tachesAvant, dependances,
                 listViewTachesAvant, actions, boutonModifierTache);
 
 
         // On crée la nouvelle scène et on lui ajoute le formulaire
-        Scene scene = new Scene(layout, 400, 440);
+        Scene scene = new Scene(layout, 400, 400);
         fenetreModificationTache.setScene(scene);
         fenetreModificationTache.showAndWait();
 

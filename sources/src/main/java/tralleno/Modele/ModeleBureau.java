@@ -121,6 +121,7 @@ public class ModeleBureau implements Sujet, Serializable {
     public void ajouterDependances(List<Tache> dependances) {
         if (dependances != null && !(dependances.isEmpty())) {
             if (this.dependances.containsKey(this.tacheCourante)) { // Si la map de dépendances contient déjà la tâche en entrée
+                this.dependances.get(this.tacheCourante).clear();
                 // Alors on ajoute la tâche dépendance à la liste des tâches dépendantes
                 this.dependances.get(this.tacheCourante).addAll(dependances);
             } else {
@@ -128,6 +129,10 @@ public class ModeleBureau implements Sujet, Serializable {
                 this.dependances.put(this.tacheCourante, new ArrayList<Tache>());
 
                 this.dependances.get(this.tacheCourante).addAll(dependances);
+            }
+        }else{
+            if(this.dependances.containsKey(this.tacheCourante)){
+                this.dependances.get(this.tacheCourante).clear();
             }
         }
         this.notifierObservateurs();

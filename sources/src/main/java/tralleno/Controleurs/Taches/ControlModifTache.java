@@ -208,6 +208,7 @@ public class ControlModifTache implements EventHandler<MouseEvent> {
 
                 // Maintenant on ajoute les dépendances chronologiques à la tâche s'il y en a
                this.modeleBureau.ajouterDependances(tachesSelectionnees);
+                System.out.println(tachesSelectionnees);
 
 //                this.modeleBureau.ajouterDependances(tache, tachesSelectionnees);
 

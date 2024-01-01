@@ -329,14 +329,14 @@ public class ModeleBureau implements Sujet, Serializable {
             this.sectionsArchivees.remove(this.sectionCourante);
         } else { //si la section n'est pas archivée, on supprime la section et toutes ses tâches
             // (pour éviter tout problème avec les dépendances)
-            for (Tache t : this.sectionCourante.getTaches()) {
+            List<Tache> taches = new ArrayList<>(this.sectionCourante.getTaches()); // Pour éviter les ConcurrentModificationException
+            for (Tache t : taches) {
                 this.tacheCourante = t;
                 this.supprimerTache(); // Méthode qui supprime toutes les dépendances chronologiques d'une tâche également.
             }
             this.sections.remove(this.sectionCourante);
-            //on notifie tous les observateurs de la mise à jour
-            this.notifierObservateurs();
         }
+        this.notifierObservateurs();
     }
 
 

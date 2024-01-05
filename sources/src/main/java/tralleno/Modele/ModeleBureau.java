@@ -468,6 +468,7 @@ public class ModeleBureau implements Sujet, Serializable {
      *
      */
     public void archiverTache () {
+        System.out.println("ARCHIVAGE TAGE " + this.tacheCourante);
         this.tacheCourante.getSectionParente().supprimerTache(this.tacheCourante);
         this.tachesArchivees.add(this.tacheCourante);
 
@@ -483,9 +484,11 @@ public class ModeleBureau implements Sujet, Serializable {
         //on archive la section avec toutes ses tâches
         this.sectionsArchivees.add(this.sectionCourante);
 
+        List<Tache> taches = new ArrayList<>(this.sectionCourante.getTaches());
+
         // on archive toutes les tâches et leurs dépendances avant d'archiver la section elle même
         // (pour éviter tout problème avec les dépendances)
-        for (Tache t : this.sectionCourante.getTaches()) {
+        for (Tache t : taches) {
             this.tacheCourante = t;
             this.archiverTache();
         }

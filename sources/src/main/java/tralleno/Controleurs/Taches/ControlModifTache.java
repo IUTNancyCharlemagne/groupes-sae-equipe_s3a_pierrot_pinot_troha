@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import tralleno.Controleurs.Archivage.ControlArchiverTache;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Section.Section;
 import tralleno.Taches.Tache;
@@ -158,6 +159,7 @@ public class ControlModifTache implements EventHandler<MouseEvent> {
         Button boutonSupprimerTache = new Button("Supprimer la tâche");
         boutonSupprimerTache.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlSupprimerTache(this.modeleBureau, this.tacheAModifier, fenetreModificationTache));
         Button boutonArchiverTache = new Button("Archiver la tâche");
+        boutonArchiverTache.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlArchiverTache(this.modeleBureau, this.tacheAModifier, fenetreModificationTache));
 
         HBox actions = new HBox(10);
         actions.getChildren().addAll(boutonSupprimerTache, boutonArchiverTache);

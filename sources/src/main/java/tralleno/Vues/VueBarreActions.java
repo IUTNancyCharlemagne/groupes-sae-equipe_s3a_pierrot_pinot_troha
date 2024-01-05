@@ -1,5 +1,6 @@
 package tralleno.Vues;
 
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -10,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import tralleno.Controleurs.ControlVues;
 import tralleno.Controleurs.Sections.ControlCreerSection;
 import tralleno.Controleurs.Taches.ControlCreerTache;
 import tralleno.Modele.ModeleBureau;
@@ -33,7 +35,7 @@ public class VueBarreActions extends HBox {
      * @param type
      * @param modeleBureau
      */
-    public VueBarreActions(int type, ModeleBureau modeleBureau) {
+    public VueBarreActions(int type, ModeleBureau modeleBureau, VuePrincipale vuePrincipale) {
         super(10);
 
         String img=System.getProperty("user.dir")+"/src/main/resources/Images/logo.png";
@@ -60,10 +62,9 @@ public class VueBarreActions extends HBox {
         ChoiceBox<String> choixVue = new ChoiceBox<>();
         choixVue.getItems().addAll("Vue Tableau", "Vue Liste");
         choixVue.setValue("Vue Tableau");
-        // Créer le contrôleur de changement de vue quand on s'occupera de la vue liste
+        choixVue.addEventHandler(ActionEvent.ACTION, new ControlVues(choixVue, vuePrincipale));
 
-
-        Button tachesArchiveesButton = new Button("Tâches archivées");
+        Button tachesArchiveesButton = new Button("Archivage");
 
         HBox.setHgrow(nomAppli, Priority.ALWAYS);
 

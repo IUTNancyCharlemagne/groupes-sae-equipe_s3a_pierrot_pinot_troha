@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import tralleno.Vues.VueBarreActions;
+import tralleno.Vues.VuePrincipale;
 import tralleno.Vues.VueTableau;
 
 import java.io.*;
@@ -49,34 +50,11 @@ public class MainSerialiser extends Application{
     //demarrage de l'application javafx avec l'attribut de modele en static
     @Override
     public void start(Stage primaryStage) {
-
         primaryStage.setTitle("Tralleno - SAE3.01 Logiciel d'organisation de tâches personnel");
 
-        // ###################################
-        // On crée le modèle
-
-        VueBarreActions vueBarreActions = new VueBarreActions(VueBarreActions.TABLEAU, modeleBureau);
-
-        // Création des vues
-        VueTableau vueTableau = new VueTableau(modeleBureau);
-
-        // On ajoute les vues au modèle.
-        MainSerialiser.modeleBureau.enregistrerObservateur(vueTableau);
-
-        // Création du conteneur principal pour la barre et la vue tableau
-        VBox conteneurPrincipal = new VBox();
-        VBox.setVgrow(vueTableau, Priority.ALWAYS);
-        conteneurPrincipal.getChildren().addAll(vueBarreActions, vueTableau);
-
-        // Création de la scène et ajout du conteneur principal
-        Scene scene = new Scene(conteneurPrincipal, 800, 600);
-        primaryStage.setScene(scene);
-
-        // Affichage de la fenêtre principale
+        VuePrincipale vuePrincipale = new VuePrincipale(primaryStage, modeleBureau);
+        primaryStage.setScene(vuePrincipale.getScene());
         primaryStage.show();
-//        System.out.println(modeleBureau.getSections().get(0).getTaches().size());
-
-
     }
 
 

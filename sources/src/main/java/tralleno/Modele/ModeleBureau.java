@@ -41,13 +41,30 @@ public class ModeleBureau implements Sujet, Serializable {
     /**
      * Nombre d'id de tache total, sert à avoir une id unique pour chaque tache
      */
-    private static int IDTACHEACTUELLE = 0;
+    public static int IDTACHEACTUELLE = 0;
 
+    public int getIdtacheactuelle() {
+        return idtacheactuelle;
+    }
+
+    public void setIdtacheactuelle(int idtacheactuelle) {
+        this.idtacheactuelle = idtacheactuelle;
+    }
+
+    public int getIdsectionactuelle() {
+        return idsectionactuelle;
+    }
+
+    public void setIdsectionactuelle(int idsectionactuelle) {
+        this.idsectionactuelle = idsectionactuelle;
+    }
+
+    private int idtacheactuelle;
     /**
      * Nombre d'id de section total, sert à avoir une id unique pour chaque section
      */
-    private static int IDSECTIONACTUELLE = 0;
-
+    public static int IDSECTIONACTUELLE = 0;
+    private int idsectionactuelle;
     /**
      * Liste contenant les Tâches archivées
      */
@@ -67,6 +84,8 @@ public class ModeleBureau implements Sujet, Serializable {
         this.dependances = new TreeMap<Tache, List<Tache>>();
         this.tachesArchivees = new ArrayList<Tache>();
         this.sectionsArchivees = new ArrayList<Section>();
+        idsectionactuelle=0;
+        idtacheactuelle=0;
     }
 
 

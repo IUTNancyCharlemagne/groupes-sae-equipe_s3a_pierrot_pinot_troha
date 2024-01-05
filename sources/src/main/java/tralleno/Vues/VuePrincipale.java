@@ -7,11 +7,13 @@ import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.Serializable;
+
 /**
  * Vue globale de l'application
  */
 
-public class VuePrincipale {
+public class VuePrincipale implements Serializable {
 
     public static int TABLEAU;
 

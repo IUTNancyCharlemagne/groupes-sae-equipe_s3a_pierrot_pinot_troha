@@ -98,6 +98,7 @@ public class ModeleBureau implements Sujet, Serializable {
      * Permet d'ajouter une tâche en dépendance à la tâche courante.
      * C'est à dire que la tâche courante aura besoin de la tâche passée en paramètres de la méthode pour
      * pouvoir se commencer
+     *
      * @param dependance
      */
     public void ajouterDependance(Tache dependance) {
@@ -116,6 +117,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Permet d'ajouter une liste entière de tâches dépendantes à la tâche courante (tâche à faire avant la tâche courante)
+     *
      * @param dependances liste des tâches à faire avant la tâche courante
      */
     public void ajouterDependances(List<Tache> dependances) {
@@ -130,8 +132,8 @@ public class ModeleBureau implements Sujet, Serializable {
 
                 this.dependances.get(this.tacheCourante).addAll(dependances);
             }
-        }else{
-            if(this.dependances.containsKey(this.tacheCourante)){
+        } else {
+            if (this.dependances.containsKey(this.tacheCourante)) {
                 this.dependances.get(this.tacheCourante).clear();
             }
         }
@@ -140,6 +142,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Méthode qui retourne l'objet section à partir de son nom
+     *
      * @param nom
      * @return
      */
@@ -154,6 +157,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Méthode qui retourne la liste de noms des sections du modèle
+     *
      * @return
      */
     public List<String> getNomSections() {
@@ -166,6 +170,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Permet de modifier le nom de la section courante sectionCourante
+     *
      * @param nom
      */
     public void modifierNomSection(String nom) {
@@ -177,17 +182,18 @@ public class ModeleBureau implements Sujet, Serializable {
      * Permet de déplacer une tâche (et ses sous-tâches) de la section dans laquelle elle était de base
      * c'est à dire sectionCourante, pour ensuite la déplacer dans la section passée en paramètres,
      * qui devient à son tour la section courante
+     *
      * @param section
      */
     public void changerSection(Section section) {
-            this.tacheCourante.getSectionParente().supprimerTache(this.tacheCourante); // On supprime la tâche de la section dans laquelle est est actuellement
-            // Puis on l'ajoute à la nouvelle section
-            this.sectionCourante = section;
-            this.ajouterTache();
-            this.tacheCourante.setSectionParente(section);
+        this.tacheCourante.getSectionParente().supprimerTache(this.tacheCourante); // On supprime la tâche de la section dans laquelle est est actuellement
+        // Puis on l'ajoute à la nouvelle section
+        this.sectionCourante = section;
+        this.ajouterTache();
+        this.tacheCourante.setSectionParente(section);
 
-            // Mettre à jour récursivement la section parente pour les sous-tâches
-            mettreAJourSousTachesSection(this.tacheCourante, section);
+        // Mettre à jour récursivement la section parente pour les sous-tâches
+        mettreAJourSousTachesSection(this.tacheCourante, section);
 
         this.notifierObservateurs();
     }
@@ -197,6 +203,7 @@ public class ModeleBureau implements Sujet, Serializable {
      * qui permet de mettre à jour les sous-tâches de la tâche qu'on a déplacée de section.
      * Car les sous-tâches ne sont pas directement contenues dans la liste de tâche d'une section, mais indiquent
      * la section dans laquelle elles se trouvent via leur attribut sectionParente
+     *
      * @param tache
      * @param section
      */
@@ -228,6 +235,7 @@ public class ModeleBureau implements Sujet, Serializable {
      * Retourne la liste des tâches du modèle.
      * Pour l'instant ne retourne pas les sous-tâches des tâches.
      * A voir du point de vue dépendances chronologiques
+     *
      * @return
      */
     public List<Tache> getTaches() {
@@ -240,6 +248,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Retourne une tâche selon son id en utilisant une autre méthode récursive, qui descend dans la hiérarchie des tâches et de ses sous-tâches
+     *
      * @param id
      * @return
      */
@@ -282,9 +291,8 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Méthode qui permet d'ajouter la tâche courante dans la section courante
-     *
      */
-    public void ajouterTacheDansSection (){
+    public void ajouterTacheDansSection() {
         //on parcourt la liste des sections jusqu'à trouver la bonne et ajouter la tâche
         for (Section section : this.sections) {
             if (section.equals(this.sectionCourante)) {
@@ -338,7 +346,6 @@ public class ModeleBureau implements Sujet, Serializable {
         }
         this.notifierObservateurs();
     }
-
 
 
     /**
@@ -409,20 +416,21 @@ public class ModeleBureau implements Sujet, Serializable {
         // Obtient la tâche à supprimer depuis l'attribut tacheCourante du modèle
         Tache tacheASupprimer = this.tacheCourante;
 
-            List<Tache> tachesSection = section.getTaches();
-            for (Tache tache : new ArrayList<>(tachesSection)) {
-                if (tache == tacheASupprimer) { // Comparaison par référence
-                    tachesSection.remove(tache);
-                } else if (tache instanceof TacheMere) {
-                    TacheMere tacheMere = (TacheMere) tache;
-                    supprimerSousTacheRecursive(tacheASupprimer, tacheMere.getSousTaches());
-                }
+        List<Tache> tachesSection = section.getTaches();
+        for (Tache tache : new ArrayList<>(tachesSection)) {
+            if (tache == tacheASupprimer) { // Comparaison par référence
+                tachesSection.remove(tache);
+            } else if (tache instanceof TacheMere) {
+                TacheMere tacheMere = (TacheMere) tache;
+                supprimerSousTacheRecursive(tacheASupprimer, tacheMere.getSousTaches());
             }
+        }
     }
 
     /**
      * Méthode récursive, qui pour chaque sous tâche, parcourt à nouveau ses sous-tâches jusqu'à trouver la tâche à supprimer
      * Et la supprimer, une fois la sous-tâche trouvée, ses sous-tâches seront elles aussi supprimées grâce au patron composite
+     *
      * @param tacheASupprimer
      * @param sousTaches
      */
@@ -441,6 +449,7 @@ public class ModeleBureau implements Sujet, Serializable {
     /**
      * Méthode récursive qui permet de déterminer si la tacheMere est une sous-tâche de la tacheActuelle
      * Cela permet d'empêcher (dans cette application) le déplacement d'une tâche dans une de ses sous-tâches
+     *
      * @param tacheMere
      * @param tacheActuelle
      * @return
@@ -465,9 +474,8 @@ public class ModeleBureau implements Sujet, Serializable {
     /**
      * Méthode qui permet d'archiver la tâcheCourante avec toutes ses dépendances
      * (et donc ses sous-tâches qui sont naturellement inclues)
-     *
      */
-    public void archiverTache () {
+    public void archiverTache() {
         System.out.println("ARCHIVAGE TAGE " + this.tacheCourante);
         this.tacheCourante.getSectionParente().supprimerTache(this.tacheCourante);
         this.tachesArchivees.add(this.tacheCourante);
@@ -478,9 +486,8 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Méthode qui permet d'archiver une section en entière ainsi que toutes ses tâches
-     *
      */
-    public void archiverSection () {
+    public void archiverSection() {
         //on archive la section avec toutes ses tâches
         this.sectionsArchivees.add(this.sectionCourante);
 
@@ -501,13 +508,11 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
 
-
     /**
      * Méthode qui permet de restaurer la tâche courante dans la section dans
      * laquelle elle se trouvait avant d'être archivée
-     *
      */
-    public void restaurerTache (){
+    public void restaurerTache() {
         Section sectionParente = this.tacheCourante.getSectionParente();
         this.sectionCourante = sectionParente;
         if (!isSupprimee_Section(sectionParente)) {
@@ -527,9 +532,8 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Méthode qui permet de restaurer une section
-     *
      */
-    public void restaurerSection (){
+    public void restaurerSection() {
         this.sectionsArchivees.remove(this.sectionCourante);
         this.sections.add(this.sectionCourante);
     }
@@ -540,7 +544,7 @@ public class ModeleBureau implements Sujet, Serializable {
      * @param observateur
      */
     @Override
-    public void enregistrerObservateur (Observateur observateur){
+    public void enregistrerObservateur(Observateur observateur) {
         this.observateurs.add(observateur);
     }
 
@@ -550,7 +554,7 @@ public class ModeleBureau implements Sujet, Serializable {
      * @param observateur
      */
     @Override
-    public void supprimerObservateur (Observateur observateur){
+    public void supprimerObservateur(Observateur observateur) {
         this.observateurs.remove(observateur);
     }
 
@@ -558,7 +562,7 @@ public class ModeleBureau implements Sujet, Serializable {
      * Notifie tous les observateurs du modèle et les actualise
      */
     @Override
-    public void notifierObservateurs () {
+    public void notifierObservateurs() {
         for (Observateur o : this.observateurs) {
             o.actualiser(this);
         }
@@ -566,17 +570,19 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Retourne la liste des observateurs du modèle
+     *
      * @return
      */
-    public List<Observateur> getObservateurs () {
+    public List<Observateur> getObservateurs() {
         return observateurs;
     }
 
     /**
      * Permet de changer la liste des observateurs du modèle par celle passée en paramètre
+     *
      * @param observateurs
      */
-    public void setObservateurs (List < Observateur > observateurs) {
+    public void setObservateurs(List<Observateur> observateurs) {
         this.observateurs = observateurs;
     }
 
@@ -585,7 +591,7 @@ public class ModeleBureau implements Sujet, Serializable {
      *
      * @return int id section unique
      */
-    public static int getIDSECTIONACTUELLE () {
+    public static int getIDSECTIONACTUELLE() {
         return IDSECTIONACTUELLE++;
     }
 
@@ -594,13 +600,14 @@ public class ModeleBureau implements Sujet, Serializable {
      *
      * @return int id tache unique
      */
-    public static int getIDTACHEACTUELLE () {
+    public static int getIDTACHEACTUELLE() {
         return IDTACHEACTUELLE++;
     }
 
 
     /**
      * Retourne la tâche courante
+     *
      * @return
      */
     public Tache getTacheCourante() {
@@ -609,6 +616,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Permet de modifier la tâche courante
+     *
      * @param tacheCourante
      */
     public void setTacheCourante(Tache tacheCourante) {
@@ -617,6 +625,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Retourne la section courante
+     *
      * @return
      */
     public Section getSectionCourante() {
@@ -625,6 +634,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Permet de changer la section courante
+     *
      * @param sectionCourante
      */
     public void setSectionCourante(Section sectionCourante) {
@@ -633,6 +643,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Retourne la liste des tâches archivées
+     *
      * @return
      */
     public List<Tache> getTachesArchivees() {
@@ -642,6 +653,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Permet de changer la liste de tâches archivées
+     *
      * @param tachesArchivees
      */
     public void setTachesArchivees(List<Tache> tachesArchivees) {
@@ -650,14 +662,16 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Retourne la liste des sections archivées
+     *
      * @return
      */
-    public List<Section> getSectionsArchivees () {
+    public List<Section> getSectionsArchivees() {
         return (this.sectionsArchivees);
     }
 
     /**
      * Permet de changer la liste des sections archivées
+     *
      * @param sectionsArchivees
      */
     public void setSectionsArchivees(List<Section> sectionsArchivees) {
@@ -666,6 +680,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Retourne la table des dépendances chronologiques
+     *
      * @return
      */
     public Map<Tache, List<Tache>> getDependances() {
@@ -674,6 +689,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Permet de changer la table des dépendances chronologiques
+     *
      * @param dependances
      */
     public void setDependances(Map<Tache, List<Tache>> dependances) {
@@ -682,6 +698,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Retourne la liste des sections du modèle
+     *
      * @return
      */
     public List<Section> getSections() {
@@ -690,10 +707,38 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Permet de changer la liste des sections du modèles par la liste de sections passée en paramètre
+     *
      * @param sections
      */
     public void setSections(List<Section> sections) {
         this.sections = sections;
     }
 
+    public void gentTest() {
+        //creation de la liste de tache pour les test, il faut qu'il y ait une date de debut et de fin et que ce soit pas une sous tache
+        List<Tache> listTacheGantt = this.getTaches();
+        //on parcours la liste des taches et on enleve celle qui n'on pas de date
+        if (!listTacheGantt.isEmpty()) {
+            for (Tache t : listTacheGantt) {
+                if (t.getDateDebut() == null) {
+                    listTacheGantt.remove(t);
+                }
+            }
+            ArrayList<Tache> listeDepTach;
+            for (Tache t : listTacheGantt) {
+
+                System.out.println(t.getTitre() + "Debut: " + t.getDateDebut() + " Fin: " + t.getDateFin());
+                System.out.println("Tache a faire avant:");
+                listeDepTach = (ArrayList<Tache>) this.dependances.get(t);
+                if (listeDepTach!=null && !listeDepTach.isEmpty()) {
+                    for (Tache taDep : listeDepTach) {
+                        if (listTacheGantt.contains(taDep)) {
+                            System.out.println(taDep.getTitre());
+                        }
+                    }
+
+                }
+            }
+        }
+    }
 }

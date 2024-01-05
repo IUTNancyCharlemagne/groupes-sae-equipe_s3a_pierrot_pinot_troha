@@ -6,10 +6,12 @@ import javafx.scene.control.ListView;
 import javafx.collections.FXCollections;
 import tralleno.Modele.Sujet;
 
-public class VueListe extends VBox implements Observateur {
+import java.io.Serializable;
 
-    private final ComboBox<String> choixListe;
-    private final ListView<String> vueListe;
+public class VueListe extends VBox implements Observateur, Serializable {
+
+    private final transient ComboBox<String> choixListe;
+    private final transient ListView<String> vueListe;
 
     public VueListe() {
         choixListe = new ComboBox<>();

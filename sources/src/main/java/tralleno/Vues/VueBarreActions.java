@@ -19,12 +19,13 @@ import tralleno.Modele.ModeleBureau;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 
 /**
  * Représente graphiquement la barre de navigation en haut de l'application. Elle permet de créer une tâche, de créer une section
  * De changer de vue, d'accéder aux tâches/sections archivées
  */
-public class VueBarreActions extends HBox {
+public class VueBarreActions extends HBox implements Serializable {
     public static int TABLEAU = 0;
     public static int LISTE = 1;
 

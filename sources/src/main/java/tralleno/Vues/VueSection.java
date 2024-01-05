@@ -13,13 +13,14 @@ import tralleno.Section.Section;
 import tralleno.Taches.Tache;
 import tralleno.Taches.TacheMere;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Cette classe représente une section via une VBox. Les sections sont contenues dans les différentes vues et ne sont pas
  * directement reliées au modèle. Elles y sont par l'intermédiaire des VueTableau/VueListe etc...
  */
-public class VueSection extends VBox implements Observateur {
+public class VueSection extends VBox implements Observateur, Serializable {
 
     /**
      * Section qui est représentée par la vue

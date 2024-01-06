@@ -1,5 +1,6 @@
 package tralleno.Vues;
 
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -10,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import tralleno.Controleurs.ControlVues;
 import tralleno.Controleurs.Sections.ControlCreerSection;
 import tralleno.Controleurs.Taches.ControlCreerTache;
 import tralleno.Modele.ModeleBureau;
@@ -17,12 +19,13 @@ import tralleno.Modele.ModeleBureau;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 
 /**
  * Représente graphiquement la barre de navigation en haut de l'application. Elle permet de créer une tâche, de créer une section
  * De changer de vue, d'accéder aux tâches/sections archivées
  */
-public class VueBarreActions extends HBox {
+public class VueBarreActions extends HBox implements Serializable {
     public static int TABLEAU = 0;
     public static int LISTE = 1;
 
@@ -33,7 +36,7 @@ public class VueBarreActions extends HBox {
      * @param type
      * @param modeleBureau
      */
-    public VueBarreActions(int type, ModeleBureau modeleBureau) {
+    public VueBarreActions(int type, ModeleBureau modeleBureau, VuePrincipale vuePrincipale) {
         super(10);
 
         String img=System.getProperty("user.dir")+"/src/main/resources/Images/logo.png";
@@ -63,10 +66,9 @@ public class VueBarreActions extends HBox {
         choixVue.getItems().addAll("Vue Tableau", "Vue Liste");
         choixVue.getStyleClass().add("choixVue");
         choixVue.setValue("Vue Tableau");
-        // Créer le contrôleur de changement de vue quand on s'occupera de la vue liste
+        choixVue.addEventHandler(ActionEvent.ACTION, new ControlVues(choixVue, vuePrincipale));
 
-
-        Button tachesArchiveesButton = new Button("Tâches archivées");
+        Button tachesArchiveesButton = new Button("Archivage");
         tachesArchiveesButton.getStyleClass().add("actionButton");
 
         HBox.setHgrow(nomAppli, Priority.ALWAYS);

@@ -1,0 +1,1 @@
+Ce fichier a juste pour but de push le directory serialisation sur github, car étant donné qu'il est vide en général, il n'est pas push sur github

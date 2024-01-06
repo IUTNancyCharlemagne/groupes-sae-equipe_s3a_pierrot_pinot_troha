@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import tralleno.Controleurs.Archivage.ControlArchiverSection;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Section.Section;
 import javafx.scene.layout.VBox;
@@ -61,8 +62,7 @@ public class ControlModifSection implements EventHandler<MouseEvent> {
         // On ajoute le contrôleur relatif à la suppression d'une section pour le bouton supprimer
         supprimerSection.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlSupprimerSection(this.modeleBureau, this.section, fenetreModificationSection));
         Button archiverSection = new Button("Archiver");
-        // Ici on ajoutera un contrôleur pour l'archivage des tâches.
-
+        archiverSection.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlArchiverSection(this.modeleBureau, this.section, fenetreModificationSection));
         HBox actions = new HBox(10);
 
         actions.getChildren().addAll(supprimerSection, archiverSection);

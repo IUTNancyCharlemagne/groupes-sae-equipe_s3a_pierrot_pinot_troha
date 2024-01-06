@@ -53,8 +53,9 @@ public class VueTache extends TitledPane implements Observateur {
         this.setExpanded(true);
         this.tache = tache;
         this.sousTachesBox = new VBox();
+        this.sousTachesBox.getStyleClass().add("sousTachesBox");
         this.tacheParente = tacheParente;
-
+        this.getStyleClass().add("vueTache");
         actualiser(modeleBureau);
     }
 
@@ -70,6 +71,7 @@ public class VueTache extends TitledPane implements Observateur {
         Label titreLabel = new Label(tache.getTitre());
         titreLabel.setFont(Font.font(14));
         titreLabel.setWrapText(true);
+        titreLabel.getStyleClass().add("titreTache");
 
         Button modifierButton = new Button("...");
         modifierButton.getStyleClass().add("modifier-button");
@@ -81,12 +83,15 @@ public class VueTache extends TitledPane implements Observateur {
         HBox headerBox = new HBox(titreLabel, spacer, modifierButton);
         headerBox.setSpacing(5);
         headerBox.setPadding(new Insets(5));
+        headerBox.getStyleClass().add("enteteTache");
 
         VBox contenuTache = new VBox();
         contenuTache.setSpacing(5);
         contenuTache.setPadding(new Insets(5));
+        contenuTache.getStyleClass().add("contenuTache");
 
         Label descriptionLabel = new Label(tache.getDescription());
+        descriptionLabel.getStyleClass().add("descriptionLabel");
         descriptionLabel.setWrapText(true);
 
         contenuTache.getChildren().addAll(descriptionLabel, sousTachesBox);
@@ -101,6 +106,7 @@ public class VueTache extends TitledPane implements Observateur {
             for (Tache sousTache : sousTaches) {
                 VueTache vueSousTache = new VueTache(sousTache, modeleBureau, (TacheMere) this.tache);
                 sousTachesBox.getChildren().add(vueSousTache);
+                VBox.setMargin(vueSousTache, new Insets(0, 0, 5, 0)); // marge : haut, droite, bas, gauche
             }
         }
 

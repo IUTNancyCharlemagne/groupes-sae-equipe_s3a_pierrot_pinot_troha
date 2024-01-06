@@ -1,6 +1,7 @@
 package tralleno.Vues;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -39,7 +40,7 @@ public class VueSection extends VBox implements Observateur {
         setPrefWidth(200);
         setSpacing(10);
         setPadding(new Insets(10));
-        setStyle("-fx-background-color: #f5f5f5; -fx-border-color: #cec0c0; -fx-border-width: 1px; -fx-border-radius: 5px; -fx-background-radius: 5px;");
+        getStyleClass().add("section");
 
 
         actualiser(modele);
@@ -60,12 +61,14 @@ public class VueSection extends VBox implements Observateur {
 
         String nomAbrege = nom.length() > 30 ? nom.substring(0, 30) + "..." : nom;
         Label labelSection = new Label(nom);
-        labelSection.setStyle("-fx-font-weight: bold;");
+        labelSection.setAlignment(Pos.CENTER);
+        labelSection.getStyleClass().add("nomSection");
 
 
         // On crée un élément graphique juste pour que le nom de la section soit cliquable et pas toute la VBox
         VBox sect = new VBox();
         sect.setPadding(new Insets(5));
+        sect.getStyleClass().add("fond_titre_section");
 
         sect.getChildren().add(labelSection);
 

@@ -49,28 +49,33 @@ public class VueBarreActions extends HBox {
         logo.setPreserveRatio(true);
 
         Label nomAppli = new Label("Tralleno");
-        nomAppli.setStyle("-fx-font-weight: bold;");
+        nomAppli.getStyleClass().add("nomAppli");
 
 
         Button creerTacheButton = new Button("Créer Tâche");
+        creerTacheButton.getStyleClass().add("actionButton");
         creerTacheButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlCreerTache(modeleBureau));
         Button creerSectionButton = new Button("Créer Section");
+        creerSectionButton.getStyleClass().add("actionButton");
         creerSectionButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlCreerSection(modeleBureau));
 
         ChoiceBox<String> choixVue = new ChoiceBox<>();
         choixVue.getItems().addAll("Vue Tableau", "Vue Liste");
+        choixVue.getStyleClass().add("choixVue");
         choixVue.setValue("Vue Tableau");
         // Créer le contrôleur de changement de vue quand on s'occupera de la vue liste
 
 
         Button tachesArchiveesButton = new Button("Tâches archivées");
+        tachesArchiveesButton.getStyleClass().add("actionButton");
 
         HBox.setHgrow(nomAppli, Priority.ALWAYS);
 
         this.setPadding(new Insets(10));
-        this.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #ccc; -fx-border-width: 1px; -fx-border-radius: 5px;");
+        //this.getStyleClass().add("actionButton");
         this.setSpacing(10);
         this.setAlignment(Pos.CENTER_LEFT);
         this.getChildren().addAll(logo, nomAppli, choixVue, creerTacheButton, creerSectionButton, tachesArchiveesButton);
+        this.getStyleClass().add("entete");
     }
 }

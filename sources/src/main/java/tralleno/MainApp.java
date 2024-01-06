@@ -91,15 +91,15 @@ public class MainApp extends Application {
         VBox conteneurPrincipal = new VBox();
         VBox.setVgrow(vueTableau, Priority.ALWAYS);
         conteneurPrincipal.getChildren().addAll(vueBarreActions, vueTableau);
+        conteneurPrincipal.getStyleClass().add("conteneurPrincipal");
 
         // Création de la scène et ajout du conteneur principal
         Scene scene = new Scene(conteneurPrincipal, 800, 600);
+        scene.getStylesheets().add(getClass().getResource("/tralleno/trallenoStyle.css").toExternalForm());
         primaryStage.setScene(scene);
 
         // Affichage de la fenêtre principale
         primaryStage.show();
-
-
 
     }
 

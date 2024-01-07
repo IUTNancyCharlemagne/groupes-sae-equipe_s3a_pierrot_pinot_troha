@@ -13,7 +13,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tralleno.Controleurs.Archivage.ControlArchiverTache;
 import tralleno.Modele.ModeleBureau;
-import tralleno.Section.Section;
 import tralleno.Taches.Tache;
 
 import java.io.Serializable;
@@ -61,11 +60,15 @@ public class ControlModifTache implements EventHandler<MouseEvent>, Serializable
 
         // Préparation du formulaire
         Label titreTache = new Label("Titre de la tâche:");
+        titreTache.getStyleClass().add("titreChamp");
         Label labelDescription = new Label("Description:");
+        labelDescription.getStyleClass().add("titreChamp");
 
         // Et évidemment il faut que les champs soient pré-remplis
         TextField champTitre = new TextField(tacheAModifier.getTitre());
+        champTitre.getStyleClass().add("champTexteTache");
         TextField champDescription = new TextField(tacheAModifier.getDescription());
+        champDescription.getStyleClass().add("champTexteTache");
 
         // Concernant les sections, étant donné que le drag and drop a été implémenté, on peut pour l'instant se passer
         // de la modification de section via le menu de modification d'une tâche
@@ -81,10 +84,14 @@ public class ControlModifTache implements EventHandler<MouseEvent>, Serializable
 
         // Maintenant les dates de début et fin
         Label labelDateDebut = new Label("Date de début:");
+        labelDateDebut.getStyleClass().add("titreChamp");
         DatePicker dateDebut = new DatePicker();
+        dateDebut.getStyleClass().add("datePicker");
 
         Label labelDateFin = new Label("Date de fin:");
+        labelDateFin.getStyleClass().add("titreChamp");
         DatePicker dateFin = new DatePicker();
+        dateFin.getStyleClass().add("datePicker");
 
         // On met également les valeurs connues de la tâche à l'intérieur de chaque DatePicker
         dateDebut.setValue(this.tacheAModifier.getDateDebut());
@@ -93,6 +100,7 @@ public class ControlModifTache implements EventHandler<MouseEvent>, Serializable
         // HBox pour mettre les deux selecteurs de date sur la même ligne
         HBox choixDate = new HBox(10);
         choixDate.getChildren().addAll(labelDateDebut, dateDebut, labelDateFin, dateFin);
+        choixDate.getStyleClass().add("conteneurDates");
 
 
         // Vérification de la date de début et de fin
@@ -117,22 +125,26 @@ public class ControlModifTache implements EventHandler<MouseEvent>, Serializable
 
         // Pour les dépendances chronologiques
         Label tachesAvant = new Label("Tâches à faire avant :");
+        tachesAvant.getStyleClass().add("titreChamp");
         List<Tache> taches = this.modeleBureau.getTaches();
         taches.remove(this.tacheAModifier);
         ObservableList<Tache> tachesAFaireAvant = FXCollections.observableArrayList(taches);
         ComboBox<Tache> comboTaches = new ComboBox<>(tachesAFaireAvant);
-
+        comboTaches.getStyleClass().add("comboBox");
 
 
         // Bouton pour supprimer la tâche qu'on a selectionnée dans la viewlist
         Button supprimerTache = new Button("Supprimer tâche dépendante");
+        supprimerTache.getStyleClass().add("Btn");
 
         HBox dependances = new HBox(10);
         dependances.getChildren().addAll(comboTaches, supprimerTache);
+        dependances.getStyleClass().add("conteneurDependances");
 
         // La liste qui contient les tâches dont on veut la dépendance
         ListView<Tache> listViewTachesAvant = new ListView<>(); // Affiche les tâches sélectionnées pour la dépendance chronologique
         listViewTachesAvant.setPrefHeight(100);
+        listViewTachesAvant.getStyleClass().add("listeTachesAvant");
 
         List<Tache> dependancesTacheCourante = this.modeleBureau.getDependancesTache(); // Récupère la liste des dépendances de la tâche actuelle
         ObservableList<Tache> dependancesTache = FXCollections.observableArrayList(dependancesTacheCourante);
@@ -156,11 +168,14 @@ public class ControlModifTache implements EventHandler<MouseEvent>, Serializable
         });
 
         Button boutonModifierTache = new Button("Modifier Tâche");
+        boutonModifierTache.getStyleClass().add("Btn");
 
         Button boutonSupprimerTache = new Button("Supprimer la tâche");
         boutonSupprimerTache.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlSupprimerTache(this.modeleBureau, this.tacheAModifier, fenetreModificationTache));
+        boutonSupprimerTache.getStyleClass().add("Btn");
         Button boutonArchiverTache = new Button("Archiver la tâche");
         boutonArchiverTache.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlArchiverTache(this.modeleBureau, this.tacheAModifier, fenetreModificationTache));
+        boutonArchiverTache.getStyleClass().add("Btn");
 
         HBox actions = new HBox(10);
         actions.getChildren().addAll(boutonSupprimerTache, boutonArchiverTache);
@@ -231,6 +246,7 @@ public class ControlModifTache implements EventHandler<MouseEvent>, Serializable
         // On met le tout dans une Vbox qui est le formulaire
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
+        layout.getStyleClass().add("VBoxFormulaire");
 
         // choixSection, comboSection à ajouter aussi au layout
         layout.getChildren().addAll(titreTache, champTitre, labelDescription, champDescription,
@@ -240,6 +256,7 @@ public class ControlModifTache implements EventHandler<MouseEvent>, Serializable
 
         // On crée la nouvelle scène et on lui ajoute le formulaire
         Scene scene = new Scene(layout, 400, 400);
+        scene.getStylesheets().add(getClass().getResource("/tralleno/css/popupStyle.css").toExternalForm());
         fenetreModificationTache.setScene(scene);
         fenetreModificationTache.showAndWait();
 

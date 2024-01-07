@@ -2,12 +2,8 @@ package tralleno;
 
 import tralleno.Modele.ModeleBureau;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import tralleno.Vues.VueBarreActions;
 import tralleno.Vues.VuePrincipale;
-import tralleno.Vues.VueTableau;
 
 import java.io.*;
 
@@ -60,7 +56,7 @@ public class MainSerialiser extends Application{
 
         primaryStage.show();
 
-        vuePrincipale.getScene().getStylesheets().add(getClass().getResource("/tralleno/trallenoStyle.css").toExternalForm());
+        vuePrincipale.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/trallenoStyle.css").toExternalForm());
     }
 
 

@@ -52,28 +52,39 @@ public class ControlCreerTache implements EventHandler<MouseEvent>, Serializable
 
         // Préparation du formulaire
         Label titreTache = new Label("Titre de la tâche:");
+        titreTache.getStyleClass().add("titreChamp");
         TextField champTitre = new TextField();
+        champTitre.getStyleClass().add("champTexteTache");
 
         Label labelDescription = new Label("Description:");
+        labelDescription.getStyleClass().add("titreChamp");
         TextField champDescription = new TextField();
+        champDescription.getStyleClass().add("champTexteTache");
 
         Label choixSection = new Label("Section :");
+        choixSection.getStyleClass().add("titreChamp");
         // On récupère les noms des sections du modèle pour que l'utilisateur puisse faire son choix
         List<Section> listeSections = this.modeleBureau.getSections();
 
         ObservableList<Section> sections = FXCollections.observableArrayList(listeSections);
         ComboBox<Section> comboSection = new ComboBox<>(sections);
+        comboSection.getStyleClass().add("comboBox");
 
         // Maintenant les dates de début et fin
         Label labelDateDebut = new Label("Date de début:");
+        labelDateDebut.getStyleClass().add("titreChamp");
         DatePicker dateDebut = new DatePicker();
+        dateDebut.getStyleClass().add("datePicker");
 
         Label labelDateFin = new Label("Date de fin:");
+        labelDateFin.getStyleClass().add("titreChamp");
         DatePicker dateFin = new DatePicker();
+        dateFin.getStyleClass().add("datePicker");
 
         // HBox pour mettre les deux selecteurs de date sur la même ligne
         HBox choixDate = new HBox(10);
         choixDate.getChildren().addAll(labelDateDebut, dateDebut, labelDateFin, dateFin);
+        choixDate.getStyleClass().add("conteneurDates");
 
 
         // Vérification de la date de début et de fin
@@ -98,18 +109,23 @@ public class ControlCreerTache implements EventHandler<MouseEvent>, Serializable
 
         // Pour les dépendances chronologiques
         Label tachesAvant = new Label("Tâches à faire avant :");
+        tachesAvant.getStyleClass().add("titreChamp");
         List<Tache> taches = this.modeleBureau.getTaches();
         ObservableList<Tache> tachesAFaireAvant = FXCollections.observableArrayList(taches);
         ComboBox<Tache> comboTaches = new ComboBox<>(tachesAFaireAvant);
+        comboTaches.getStyleClass().add("comboBox");
 
         // Bouton pour supprimer la tâche qu'on a selectionnée dans la viewlist
         Button supprimerTache = new Button("Supprimer tâche dépendante");
+        supprimerTache.getStyleClass().add("Btn");
 
         HBox dependances = new HBox(10);
         dependances.getChildren().addAll(comboTaches, supprimerTache);
+        dependances.getStyleClass().add("conteneurDependances");
 
         ListView<Tache> listViewTachesAvant = new ListView<>(); // Affiche les tâches sélectionnées pour la dépendance chronologique
         listViewTachesAvant.setPrefHeight(100);
+        listViewTachesAvant.getStyleClass().add("listeTachesAvant");
 
 
 
@@ -131,6 +147,7 @@ public class ControlCreerTache implements EventHandler<MouseEvent>, Serializable
 
         // Puis le bouton final pour créer la tâche
         Button boutonCreerTache = new Button("Creer Tâche");
+        boutonCreerTache.getStyleClass().add("Btn");
 
         // avant d'activer le click sur le bouton, il faut que certains champs soient remplis
         // C'est à dire le nom et la description de la tâche
@@ -194,14 +211,15 @@ public class ControlCreerTache implements EventHandler<MouseEvent>, Serializable
         // On met le tout dans une Vbox qui est le conteneur du formulaire
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
+        layout.getStyleClass().add("VBoxFormulaire");
 
         layout.getChildren().addAll(titreTache, champTitre, labelDescription, champDescription,
                 choixSection, comboSection, choixDate,tachesAvant, dependances,
                 listViewTachesAvant, boutonCreerTache);
 
-
         // On crée la nouvelle scène et on lui ajoute le formulaire
         Scene scene = new Scene(layout, 400, 425);
+        scene.getStylesheets().add(getClass().getResource("/tralleno/css/popupStyle.css").toExternalForm());
         fenetreCreationTache.setScene(scene);
         fenetreCreationTache.showAndWait();
 

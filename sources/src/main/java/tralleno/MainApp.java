@@ -1,19 +1,11 @@
 package tralleno;
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Section.Section;
 import tralleno.Taches.Tache;
 import tralleno.Taches.TacheMere;
-import tralleno.Taches.TacheMere;
-import tralleno.Vues.VueBarreActions;
 import tralleno.Vues.VuePrincipale;
-import tralleno.Vues.VueTableau;
 
 public class MainApp extends Application {
 
@@ -84,7 +76,7 @@ public class MainApp extends Application {
 
 
 
-        vuePrincipale.getScene().getStylesheets().add(getClass().getResource("/tralleno/trallenoStyle.css").toExternalForm());
+        vuePrincipale.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/trallenoStyle.css").toExternalForm());
         primaryStage.setScene(vuePrincipale.getScene());
         // Affichage de la fenêtre principale
         primaryStage.show();

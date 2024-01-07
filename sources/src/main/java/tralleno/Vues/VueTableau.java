@@ -29,9 +29,9 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
      */
     public VueTableau(ModeleBureau modeleBureau) {
         super();
-        setPadding(new Insets(10));
+        //setPadding(new Insets(10));
         this.modeleBureau = modeleBureau;
-        setStyle("-fx-background-color: #add8e6;");
+        getStyleClass().add("vueTableau");
 
         actualiser(modeleBureau);
     }
@@ -65,6 +65,7 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
 
             HBox containerSections = new HBox(20);
             containerSections.setPadding(new Insets(10));
+            containerSections.getStyleClass().add("containerSections");
 
             List<Section> sections = ((ModeleBureau) s).getSections();
 

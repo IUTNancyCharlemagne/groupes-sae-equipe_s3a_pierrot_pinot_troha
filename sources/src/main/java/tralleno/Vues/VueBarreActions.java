@@ -19,12 +19,13 @@ import tralleno.Modele.ModeleBureau;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 
 /**
  * Représente graphiquement la barre de navigation en haut de l'application. Elle permet de créer une tâche, de créer une section
  * De changer de vue, d'accéder aux tâches/sections archivées
  */
-public class VueBarreActions extends HBox {
+public class VueBarreActions extends HBox implements Serializable {
     public static int TABLEAU = 0;
     public static int LISTE = 1;
 
@@ -51,28 +52,32 @@ public class VueBarreActions extends HBox {
         logo.setPreserveRatio(true);
 
         Label nomAppli = new Label("Tralleno");
-        nomAppli.setStyle("-fx-font-weight: bold;");
+        nomAppli.getStyleClass().add("nomAppli");
 
 
         Button creerTacheButton = new Button("Créer Tâche");
+        creerTacheButton.getStyleClass().add("actionButton");
         creerTacheButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlCreerTache(modeleBureau));
         Button creerSectionButton = new Button("Créer Section");
+        creerSectionButton.getStyleClass().add("actionButton");
         creerSectionButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlCreerSection(modeleBureau));
 
         ChoiceBox<String> choixVue = new ChoiceBox<>();
         choixVue.getItems().addAll("Vue Tableau", "Vue Liste");
+        choixVue.getStyleClass().add("choixVue");
         choixVue.setValue("Vue Tableau");
         choixVue.addEventHandler(ActionEvent.ACTION, new ControlVues(choixVue, vuePrincipale));
 
         Button tachesArchiveesButton = new Button("Archivage");
         tachesArchiveesButton.addEventHandler(ActionEvent.ACTION, new ControlVues(tachesArchiveesButton, vuePrincipale));
-
+        tachesArchiveesButton.getStyleClass().add("actionButton");
         HBox.setHgrow(nomAppli, Priority.ALWAYS);
 
         this.setPadding(new Insets(10));
-        this.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #ccc; -fx-border-width: 1px; -fx-border-radius: 5px;");
+        //this.getStyleClass().add("actionButton");
         this.setSpacing(10);
         this.setAlignment(Pos.CENTER_LEFT);
         this.getChildren().addAll(logo, nomAppli, choixVue, creerTacheButton, creerSectionButton, tachesArchiveesButton);
+        this.getStyleClass().add("entete");
     }
 }

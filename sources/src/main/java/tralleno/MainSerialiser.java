@@ -55,8 +55,12 @@ public class MainSerialiser extends Application{
         primaryStage.setTitle("Tralleno - SAE3.01 Logiciel d'organisation de tâches personnel");
 
         VuePrincipale vuePrincipale = new VuePrincipale(primaryStage, modeleBureau);
+
         primaryStage.setScene(vuePrincipale.getScene());
+
         primaryStage.show();
+
+        vuePrincipale.getScene().getStylesheets().add(getClass().getResource("/tralleno/trallenoStyle.css").toExternalForm());
     }
 
 

@@ -10,6 +10,8 @@ import tralleno.Modele.Sujet;
 import java.io.Serializable;
 
 public class VueListe extends VBox implements Observateur, Serializable {
+//    private final transient ComboBox<String> choixListe;
+//    private final transient ListView<String> vueListe;
 
 
 
@@ -18,7 +20,6 @@ public class VueListe extends VBox implements Observateur, Serializable {
     public VueListe(ModeleBureau modeleBureau) {
         this.modeleBureau = modeleBureau;
     }
-
     @Override
     public void actualiser(Sujet s) {
 

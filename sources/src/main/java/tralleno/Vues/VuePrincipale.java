@@ -9,10 +9,12 @@ import tralleno.Modele.ModeleBureau;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.Serializable;
+
 /**
  * Vue globale de l'application
  */
-public class VuePrincipale {
+public class VuePrincipale implements Serializable {
 
     /**
      * Constante qui correspond à la VueTableau
@@ -29,6 +31,12 @@ public class VuePrincipale {
      * Conteneur principal de l'application
      */
     private final BorderPane conteneurPrincipal;
+
+    /**
+     * Scène
+     */
+    private Scene scene;
+
 
     /**
      * A
@@ -143,7 +151,10 @@ public class VuePrincipale {
     }
 
     public Scene getScene() {
-        return new Scene(conteneurPrincipal, 800, 600);
+        if(scene == null){
+            scene = new Scene(conteneurPrincipal, 800, 600);
+        }
+        return scene;
     }
 }
 

@@ -16,13 +16,14 @@ import tralleno.Modele.ModeleBureau;
 import tralleno.Section.Section;
 import tralleno.Taches.Tache;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 /**
  * Classe qui gère la modification d'une tâche lorsque l'utilisateur clique sur le bouton modifier d'une tâche
  */
-public class ControlModifTache implements EventHandler<MouseEvent> {
+public class ControlModifTache implements EventHandler<MouseEvent>, Serializable {
 
     /**
      * Modèle qui comporte les données de l'application

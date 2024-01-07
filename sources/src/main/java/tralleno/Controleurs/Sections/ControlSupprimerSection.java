@@ -48,6 +48,7 @@ public class ControlSupprimerSection implements EventHandler<MouseEvent> {
     public void handle(MouseEvent mouseEvent) {
         this.modeleBureau.setSectionCourante(this.section);
         this.modeleBureau.supprimerSection();
+        if(fenetre != null)
         this.fenetre.close();
     }
 }

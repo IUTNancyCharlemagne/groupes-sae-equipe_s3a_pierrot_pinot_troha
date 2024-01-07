@@ -47,6 +47,7 @@ public class ControlSupprimerTache implements EventHandler<MouseEvent> {
     public void handle(MouseEvent mouseEvent) {
         this.modeleBureau.setTacheCourante(this.tacheASupprimer);
         this.modeleBureau.supprimerTache();
+        if(fenetre != null)
         this.fenetre.close();
     }
 }

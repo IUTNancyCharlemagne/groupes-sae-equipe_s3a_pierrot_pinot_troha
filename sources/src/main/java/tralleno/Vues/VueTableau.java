@@ -9,6 +9,7 @@ import tralleno.Modele.ModeleBureau;
 import tralleno.Modele.Sujet;
 import tralleno.Section.Section;
 import tralleno.Taches.Tache;
+import tralleno.Taches.TacheMere;
 
 import java.io.Serializable;
 import java.util.List;
@@ -40,21 +41,25 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
      * @param s
      */
     public void actualiser(Sujet s) {
-        System.out.println("LES SECTIONS : ");
-        for(Section dzad : this.modeleBureau.getSections()){
-            System.out.println(dzad);
-        }
-        System.out.println("LES SECTIONS ARCHIVEES : ");
-        for(Section sec : this.modeleBureau.getSectionsArchivees()){
-            System.out.println(sec);
-            System.out.println("taille " + this.modeleBureau.getSectionsArchivees().size());
-        }
+//        System.out.println("LES SECTIONS : ");
+//        for(Section dzad : this.modeleBureau.getSections()){
+//            System.out.println(dzad);
+//        }
+//        System.out.println("LES SECTIONS ARCHIVEES : ");
+//        for(Section sec : this.modeleBureau.getSectionsArchivees()){
+//            System.out.println(sec);
+//            System.out.println("taille " + this.modeleBureau.getSectionsArchivees().size());
+//        }
+//
+//        System.out.println("TACHE ARCHIVEES ");
+//        for(Tache t : this.modeleBureau.getTachesArchivees()){
+//            System.out.println(t);
+//
+//        }
 
-        System.out.println("TACHE ARCHIVEES ");
-        for(Tache t : this.modeleBureau.getTachesArchivees()){
-            System.out.println(t);
+//        TacheMere tache1 = (TacheMere) this.modeleBureau.getSections().get(1).getTaches().get(1);
+//        System.out.println(tache1.getSousTaches());
 
-        }
         if (s instanceof ModeleBureau) {
             setContent(null); // On efface le contenu existant
 

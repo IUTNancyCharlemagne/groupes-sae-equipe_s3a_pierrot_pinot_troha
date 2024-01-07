@@ -65,6 +65,7 @@ public class VueBarreActions extends HBox {
         choixVue.addEventHandler(ActionEvent.ACTION, new ControlVues(choixVue, vuePrincipale));
 
         Button tachesArchiveesButton = new Button("Archivage");
+        tachesArchiveesButton.addEventHandler(ActionEvent.ACTION, new ControlVues(tachesArchiveesButton, vuePrincipale));
 
         HBox.setHgrow(nomAppli, Priority.ALWAYS);
 

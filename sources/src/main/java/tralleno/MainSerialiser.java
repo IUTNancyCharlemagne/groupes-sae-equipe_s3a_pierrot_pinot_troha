@@ -37,10 +37,12 @@ public class MainSerialiser extends Application{
 
             // Désérialisation de l'objet
             MainSerialiser.modeleBureau = (ModeleBureau) fluxEntree.readObject();
+            ModeleBureau.IDTACHEACTUELLE=MainSerialiser.modeleBureau.getIdtacheactuelle();
+            ModeleBureau.IDSECTIONACTUELLE=MainSerialiser.modeleBureau.getIdsectionactuelle();
 
             fluxEntree.close();
             fichierEntree.close();
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.out.println("nouveau modele");
             MainSerialiser.modeleBureau=new ModeleBureau();
         }
@@ -67,6 +69,9 @@ public class MainSerialiser extends Application{
             ObjectOutputStream fluxSortie = new ObjectOutputStream(fichierSortie);
 
             // Sérialisation de l'objet
+            MainSerialiser.modeleBureau.setIdsectionactuelle(ModeleBureau.IDSECTIONACTUELLE);
+            MainSerialiser.modeleBureau.setIdtacheactuelle(ModeleBureau.IDTACHEACTUELLE);
+
             fluxSortie.writeObject(MainSerialiser.modeleBureau);
 
             fluxSortie.close();
@@ -86,6 +91,7 @@ public class MainSerialiser extends Application{
         //lunch(new String[]{});
         launch(args);
         MainSerialiser.serialiser();
+        System.out.println(MainSerialiser.modeleBureau.IDTACHEACTUELLE);
 
     }
 }

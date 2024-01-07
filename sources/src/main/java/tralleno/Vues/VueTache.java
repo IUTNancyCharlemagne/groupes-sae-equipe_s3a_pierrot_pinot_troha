@@ -107,6 +107,7 @@ public class VueTache extends TitledPane implements Observateur {
 
         // Écouteur pour le drag and drop des tâches/sous-tâches
         this.setOnDragDetected(event -> {
+            System.out.println("TACHE QUE JE DRAG : " + this.tache.getId());
             Dragboard dragboard = this.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
             // Si la tâche est une sous-tâche, si on la drag and drop dans une autre section, il faudra
@@ -144,9 +145,13 @@ public class VueTache extends TitledPane implements Observateur {
             Dragboard db = event.getDragboard();
             boolean success = false;
             if(!(modeleBureau.estSousTacheDe(this.tache, modeleBureau.getTacheCourante()))){
+
                 if (db.hasString()) {
                     // On vérifie d'abord que tâchecible != tâchedragged
+                    System.out.println(modeleBureau.getTacheCourante().getId());
+                    System.out.println(this.tache.getId());
                     if(modeleBureau.getTacheCourante().getId() != this.tache.getId()){
+                        System.out.println("ETHAN");
                         // Quand on crée une tâche, elle est tacheMere de base, sinon, cela va créer des problèmes de référence d'objets et
                         // des opérations inutiles. Ainsi, chaque VueTache est prête à en recevoir une autre.
                         // La tache qui est drag est la tacheCourante du modèle grâce au setDragDetected dans VueTache

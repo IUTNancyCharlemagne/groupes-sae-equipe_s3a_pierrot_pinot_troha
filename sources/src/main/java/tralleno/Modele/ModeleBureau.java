@@ -772,4 +772,14 @@ public class ModeleBureau implements Sujet, Serializable {
             System.out.println("jour entre datemax et datemin :"+ difjour);
         }
     }
+
+    private List<Tache> selectionTacheGantt;
+
+    public List<Tache> getSelectionTacheGantt() {
+        return selectionTacheGantt;
+    }
+
+    public void setSelectionTacheGantt(List<Tache> selectionTacheGantt) {
+        this.selectionTacheGantt = selectionTacheGantt;
+    }
 }

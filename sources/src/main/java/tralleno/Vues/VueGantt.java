@@ -1,12 +1,13 @@
 package tralleno.Vues;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Modele.Sujet;
@@ -19,22 +20,81 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javafx.scene.control.ScrollPane;
 import tralleno.Taches.Tache;
-
-import static javafx.scene.layout.BorderStroke.*;
 
 public class VueGantt extends ScrollPane implements Observateur, Serializable {
 
     private ModeleBureau modele;
+    public static boolean VALIDEEGANTT=false;
 
     public VueGantt(ModeleBureau modele) {
         super();
         this.modele = modele;
     }
-
     @Override
     public void actualiser(Sujet s) {
+
+        if(VALIDEEGANTT){
+            afficherGantt();
+        }else {
+            afficherSelecteurGantt();
+        }
+    }
+
+    public void afficherSelecteurGantt(){
+        VBox vb=new VBox();
+
+        vb.getStyleClass().add("VBoxFormulaire");
+        // Pour les dépendances chronologiques
+        Label tachesAvant = new Label("Tâches à faire avant :");
+        tachesAvant.getStyleClass().add("titreChamp");
+        List<Tache> taches = this.modele.getTaches();
+        ObservableList<Tache> tachesAFaireAvant = FXCollections.observableArrayList(taches);
+        ComboBox<Tache> comboTaches = new ComboBox<>(tachesAFaireAvant);
+        comboTaches.getStyleClass().add("comboBox");
+
+        // Bouton pour supprimer la tâche qu'on a selectionnée dans la viewlist
+        Button supprimerTache = new Button("Supprimer tâche dépendante");
+        supprimerTache.getStyleClass().add("Btn");
+
+        HBox dependances = new HBox(10);
+        dependances.getChildren().addAll(comboTaches, supprimerTache);
+        dependances.getStyleClass().add("conteneurDependances");
+
+        ListView<Tache> listViewTachesAvant = new ListView<>(); // Affiche les tâches sélectionnées pour la dépendance chronologique
+        listViewTachesAvant.setPrefHeight(100);
+        listViewTachesAvant.getStyleClass().add("listeTachesAvant");
+
+
+
+        // EventHandler pour que la liste des tâches select se mette à jour
+        comboTaches.setOnAction(event -> {
+            Tache tacheSelectionnee = comboTaches.getValue();
+            if (tacheSelectionnee != null && !listViewTachesAvant.getItems().contains(tacheSelectionnee)) {
+                listViewTachesAvant.getItems().add(tacheSelectionnee);
+            }
+        });
+
+        // Si on supprime une tâche qui est en dépendance chronologique
+        supprimerTache.setOnAction(event -> {
+            Tache tacheSelectionneViewList = listViewTachesAvant.getSelectionModel().getSelectedItem();
+            if (tacheSelectionneViewList != null) {
+                listViewTachesAvant.getItems().remove(tacheSelectionneViewList);
+            }
+        });
+
+        Button boutonGenererGantt=new Button("Generer Diagramme Gantt");
+        boutonGenererGantt.setOnAction(event ->{
+            VALIDEEGANTT=true;
+            modele.setSelectionTacheGantt(listViewTachesAvant.getItems());
+            modele.notifierObservateurs();
+        });
+        vb.getChildren().addAll(tachesAvant, dependances,
+                listViewTachesAvant,boutonGenererGantt);
+
+        this.setContent(vb);
+    }
+    public void afficherGantt() {
 
 
         LocalDate dateMin = LocalDate.MAX; //date min et max des taches selectionné, permet de savoir à partir de quel date on genere le diagramme
@@ -43,7 +103,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
 
         //creation de la liste de tache pour les test, il faut qu'il y ait une date de debut et de fin et que ce soit pas une sous tache
 
-        List<Tache> listTacheGantt = new ArrayList<>(this.modele.getTaches());
+        List<Tache> listTacheGantt = new ArrayList<>(this.modele.getSelectionTacheGantt());
 
 
         //on parcours la liste des taches et on enleve celles qui n'ont pas de date
@@ -60,28 +120,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 }
             }
 
-            //parcour de la liste pour trouver les dependances
-            ArrayList<Tache> listeDepTach;
-            for (Tache t : listTacheGantt) {
-
-                //System.out.println(t.getTitre() + "Debut: " + t.getDateDebut() + " Fin: " + t.getDateFin());
-                //System.out.println("Tache a faire avant:");
-                listeDepTach = (ArrayList<Tache>) this.modele.getDependances().get(t);
-                if (listeDepTach != null && !listeDepTach.isEmpty()) {
-                    for (Tache taDep : listeDepTach) {
-                        if (listTacheGantt.contains(taDep)) {
-                            //ici la tache t est une dependance de la tache taDep
-                            //System.out.println(taDep.getTitre());
-                        }
-                    }
-
-                }
-            }
-            //System.out.println("Date max = "+ dateMax);
-            //System.out.println("Date min = "+ dateMin);
-
             difjour = (int) ChronoUnit.DAYS.between(dateMin, dateMax) + 1;
-            //System.out.println("jour entre datemax et datemin :" + difjour);
         }
         if (!listTacheGantt.isEmpty()) {
 
@@ -89,6 +128,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
             //container est la horizontal box qui vas contenir tout le diagramme de gantt, on la remet immediatement a la place de l'ancienne dans la scrollpane
             HBox container = new HBox();
 
+            //stackpane pour mettre un canvas sur la hbox pour qu'on puisse dessiner les traits de dependances
             StackPane st = new StackPane();
             Canvas cv = new Canvas(1000, 1000);
             GraphicsContext gc = cv.getGraphicsContext2D();
@@ -116,8 +156,8 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
             Label tempLab;
             //largeur des rectangles et donc des colonnes
             double largeurBox = 100;
-            double hauteurRectangle = 20;
-            cv.setHeight(nbTache * hauteurRectangle);
+            double hauteurRectangle = 50;
+            cv.setHeight((nbTache + 1) * hauteurRectangle);
             cv.setWidth(difjour * largeurBox);
             //on va créer autant de colonne que de jours entre la dateMin et dateMax de la selection de tache
             for (int i = 0; i < difjour; i++) {
@@ -151,31 +191,41 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
             //les index nous indique quand commence et quand fini la tache
             int indexJdep, indexJfin;
             for (int i = 0; i < nbTache; i++) {
+                //i c'est l'index de la tache, c'est aussi l'index de la ligne (coordonées y)
+
+                //indexJdep c'est l'index X de la première date de la tache i et indexJfin index de la dernière date
                 indexJdep = (int) ChronoUnit.DAYS.between(dateMin, listTacheGantt.get(i).getDateDebut());
                 indexJfin = (int) ChronoUnit.DAYS.between(dateMin, listTacheGantt.get(i).getDateFin());
+
                 //on change la couleur des rectangles dans l'intervalle de date de la tache
+                //et on ajoute un label sur le premier rectangle pour avoir le titre de la tache
                 Label l = (Label) grilleJour[i][indexJdep].getChildren().get(1);
                 l.setText(listTacheGantt.get(i).getTitre());
-                pointTache.put(listTacheGantt.get(i), new Point2D(largeurBox * (indexJdep), hauteurRectangle * (i)));
+
+                //on sauvegarde les coordonées du point de depart de la tache en la calculant
+                pointTache.put(listTacheGantt.get(i), new Point2D(largeurBox * (indexJdep), hauteurRectangle * (i+0.5)));
                 for (int j = indexJdep; j < indexJfin + 1; j++) {
-                    //i c'est la date
-                    //j c'est la tache
+                    //i c'est la tache
+                    //j c'est la date
                     Rectangle r = (Rectangle) grilleJour[i][j].getChildren().get(0);
                     r.setFill(Color.RED);
+
+                    //grilleJour[i][j].setStyle("-fx-background-radius: 20px");
+
                 }
 
             }
+
+            //on vas parcourir les dependances de chaque tache pour tirer les traits de dependances
             ArrayList<Tache> listeDepTach;
             for (Tache t : listTacheGantt) {
 
-                //System.out.println(t.getTitre() + "Debut: " + t.getDateDebut() + " Fin: " + t.getDateFin());
-                //System.out.println("Tache a faire avant:");
                 listeDepTach = (ArrayList<Tache>) this.modele.getDependances().get(t);
                 if (listeDepTach != null && !listeDepTach.isEmpty()) {
                     for (Tache taDep : listeDepTach) {
                         if (listTacheGantt.contains(taDep)) {
                             //ici la tache t est une dependance de la tache taDep
-                            gc.strokeLine(pointTache.get(t).getX(), pointTache.get(t).getY(), pointTache.get(taDep).getX() + (taDep.getDuree()+1) * largeurBox, pointTache.get(taDep).getY());
+                            gc.strokeLine(pointTache.get(t).getX(), pointTache.get(t).getY(), pointTache.get(taDep).getX() + (taDep.getDuree() + 1) * largeurBox, pointTache.get(taDep).getY());
                         }
                     }
 
@@ -183,5 +233,6 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
             }
 
         }
+        VALIDEEGANTT=false;
     }
 }

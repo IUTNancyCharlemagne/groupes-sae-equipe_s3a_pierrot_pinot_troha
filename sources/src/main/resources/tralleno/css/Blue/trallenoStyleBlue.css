@@ -26,6 +26,14 @@
     -fx-font-size: 20px;
     -fx-text-fill: white;
     -fx-background-color: #007FA9; /* le même que le fond de l'entête */
+
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+}
+
+.nomAppli:hover{
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
 }
 
 .actionButton{

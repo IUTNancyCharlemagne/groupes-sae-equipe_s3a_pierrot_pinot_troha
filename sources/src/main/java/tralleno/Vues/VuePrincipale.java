@@ -71,7 +71,7 @@ public class VuePrincipale implements Serializable {
      */
     private final VueTableau vueTableau;
 
-    private final VueGantt vueGantt;
+//    private final VueGantt vueGantt;
     /**
      * Vue des tâches/Sections sous forme de Listes dépliantes
      */
@@ -100,8 +100,8 @@ public class VuePrincipale implements Serializable {
         this.vueListe = new VueListe(this.modeleBureau);
         this.modeleBureau.enregistrerObservateur(this.vueListe);
 
-        this.vueGantt = new VueGantt(this.modeleBureau);
-        this.modeleBureau.enregistrerObservateur(this.vueGantt);
+//        this.vueGantt = new VueGantt(this.modeleBureau);
+//        this.modeleBureau.enregistrerObservateur(this.vueGantt);
 
         // Initialisation du menu d'archivage
         vueArchivage = new VueArchivage(this.modeleBureau); // Crée le panneau d'archivage
@@ -127,7 +127,7 @@ public class VuePrincipale implements Serializable {
     public void changerVue(int mode) {
         switch (mode){
             case TABLEAU -> conteneurPrincipal.setCenter(this.vueTableau);
-            case LISTE -> conteneurPrincipal.setCenter(this.vueGantt);
+//            case LISTE -> conteneurPrincipal.setCenter(this.vueGantt);
         }
         this.modeleBureau.notifierObservateurs();
     }

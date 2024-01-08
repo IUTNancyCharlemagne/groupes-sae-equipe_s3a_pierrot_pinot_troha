@@ -345,7 +345,9 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
     public boolean isSupprimee_Section(Section s) {
-        return this.sections.contains(s) || this.sectionsArchivees.contains(s);
+        System.out.println("This.sections.contains(s) " + this.sections.contains(s));
+        System.out.println("this.sectionsArchivees.contains(s) " + this.sectionsArchivees.contains(s));
+        return !(this.sections.contains(s) || this.sectionsArchivees.contains(s));
     }
 
     /**
@@ -534,13 +536,16 @@ public class ModeleBureau implements Sujet, Serializable {
      * laquelle elle se trouvait avant d'être archivée
      */
     public void restaurerTache() {
+        System.out.println("COUCOU TRIPLE MONSTRE");
         Section sectionParente = this.tacheCourante.getSectionParente();
         this.sectionCourante = sectionParente;
         if (!isSupprimee_Section(sectionParente)) {
+            System.out.println("SECTION PAS SUPPRIMEE");
             if (!isArchivee_Section(sectionParente)) { //si la section est dans son état normal
                 ajouterTacheDansSection();
             } else { //si la section est archivée
                 //on restaure la section
+                System.out.println("COUCOU MONSTRE");
                 restaurerSection();
                 ajouterTacheDansSection();
             }
@@ -549,6 +554,8 @@ public class ModeleBureau implements Sujet, Serializable {
             this.sections.add(sectionParente);
             ajouterTacheDansSection();
         }
+        this.tachesArchivees.remove(this.tacheCourante);
+        this.notifierObservateurs();
     }
 
     /**
@@ -557,6 +564,7 @@ public class ModeleBureau implements Sujet, Serializable {
     public void restaurerSection() {
         this.sectionsArchivees.remove(this.sectionCourante);
         this.sections.add(this.sectionCourante);
+        this.notifierObservateurs();
     }
 
     /**

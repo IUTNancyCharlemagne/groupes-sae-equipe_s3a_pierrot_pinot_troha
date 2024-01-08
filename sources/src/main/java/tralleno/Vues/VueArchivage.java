@@ -9,6 +9,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import tralleno.Controleurs.Restauration.ControlRestaurerSection;
+import tralleno.Controleurs.Restauration.ControlRestaurerTache;
 import tralleno.Controleurs.Sections.ControlSupprimerSection;
 import tralleno.Controleurs.Taches.ControlSupprimerTache;
 import tralleno.Modele.ModeleBureau;
@@ -110,7 +112,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
                     supprimerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlSupprimerTache(this.modeleBureau, tache, null));
 
                     Button restaurerBouton = new Button("Restaurer");
-                    // Controleur restaurer
+                    restaurerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlRestaurerTache(this.modeleBureau, tache));
 
                     VBox boutons = new VBox();
                     boutons.getChildren().addAll(supprimerBouton, restaurerBouton);
@@ -131,7 +133,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
                     supprimerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlSupprimerSection(this.modeleBureau, section, null));
 
                     Button restaurerBouton = new Button("Restaurer");
-                    // Controleur restaurer
+                    restaurerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlRestaurerSection(this.modeleBureau, section));
 
                     VBox boutons = new VBox();
                     boutons.getChildren().addAll(supprimerBouton, restaurerBouton);

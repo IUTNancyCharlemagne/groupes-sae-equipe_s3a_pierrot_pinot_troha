@@ -6,6 +6,8 @@ import tralleno.Taches.TacheMere;
 import tralleno.Vues.Observateur;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -84,8 +86,8 @@ public class ModeleBureau implements Sujet, Serializable {
         this.dependances = new TreeMap<Tache, List<Tache>>();
         this.tachesArchivees = new ArrayList<Tache>();
         this.sectionsArchivees = new ArrayList<Section>();
-        idsectionactuelle=0;
-        idtacheactuelle=0;
+        idsectionactuelle = 0;
+        idtacheactuelle = 0;
     }
 
 
@@ -734,13 +736,19 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
     public void gentTest() {
+        LocalDate dateMin = LocalDate.MAX;
+        LocalDate dateMax = LocalDate.MIN;
         //creation de la liste de tache pour les test, il faut qu'il y ait une date de debut et de fin et que ce soit pas une sous tache
+
         List<Tache> listTacheGantt = this.getTaches();
         //on parcours la liste des taches et on enleve celle qui n'on pas de date
         if (!listTacheGantt.isEmpty()) {
             for (Tache t : listTacheGantt) {
                 if (t.getDateDebut() == null) {
                     listTacheGantt.remove(t);
+                } else {
+                    if (dateMin.isAfter(t.getDateDebut())) dateMin = t.getDateDebut();
+                    if (dateMax.isBefore(t.getDateFin())) dateMax = t.getDateFin();
                 }
             }
             ArrayList<Tache> listeDepTach;
@@ -749,7 +757,7 @@ public class ModeleBureau implements Sujet, Serializable {
                 System.out.println(t.getTitre() + "Debut: " + t.getDateDebut() + " Fin: " + t.getDateFin());
                 System.out.println("Tache a faire avant:");
                 listeDepTach = (ArrayList<Tache>) this.dependances.get(t);
-                if (listeDepTach!=null && !listeDepTach.isEmpty()) {
+                if (listeDepTach != null && !listeDepTach.isEmpty()) {
                     for (Tache taDep : listeDepTach) {
                         if (listTacheGantt.contains(taDep)) {
                             System.out.println(taDep.getTitre());
@@ -758,6 +766,10 @@ public class ModeleBureau implements Sujet, Serializable {
 
                 }
             }
+            System.out.println("Date max = "+ dateMax);
+            System.out.println("Date min = "+ dateMin);
+            int difjour= (int) ChronoUnit.DAYS.between(dateMin,dateMax)+1;
+            System.out.println("jour entre datemax et datemin :"+ difjour);
         }
     }
 }

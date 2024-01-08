@@ -1,10 +1,7 @@
 package tralleno.Vues;
 
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -20,6 +17,8 @@ import java.util.List;
 
 import javafx.scene.control.ScrollPane;
 import tralleno.Taches.Tache;
+
+import static javafx.scene.layout.BorderStroke.*;
 
 public class VueGantt extends ScrollPane implements Observateur, Serializable {
 
@@ -119,6 +118,8 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
             }
             //on ajoute la date en ba de la colonne
             boxJour.getChildren().add(new Label(" " + dateJour.toString() + " "));
+
+            boxJour.setSpacing(1);
            //finalement on ajoute la colonne a la hbox
             container.getChildren().add(boxJour);
 
@@ -129,6 +130,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
             indexJdep = (int) ChronoUnit.DAYS.between(dateMin, listTacheGantt.get(i).getDateDebut());
             indexJfin = (int) ChronoUnit.DAYS.between(dateMin, listTacheGantt.get(i).getDateFin());
             //on change la couleur des rectangles dans l'intervalle de date de la tache
+
             for (int j = indexJdep; j < indexJfin + 1; j++) {
                 //i c'est la date
                 //j c'est la tache

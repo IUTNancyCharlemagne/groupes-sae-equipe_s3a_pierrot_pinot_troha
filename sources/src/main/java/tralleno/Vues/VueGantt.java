@@ -1,5 +1,8 @@
 package tralleno.Vues;
 
+import javafx.geometry.Point2D;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -12,6 +15,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,6 +35,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
 
     @Override
     public void actualiser(Sujet s) {
+
 
         LocalDate dateMin = LocalDate.MAX; //date min et max des taches selectionné, permet de savoir à partir de quel date on genere le diagramme
         LocalDate dateMax = LocalDate.MIN;
@@ -81,7 +86,16 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
 
         //container est la horizontal box qui vas contenir tout le diagramme de gantt, on la remet immediatement a la place de l'ancienne dans la scrollpane
         HBox container = new HBox();
-        this.setContent(container);
+
+        StackPane st=new StackPane();
+        Canvas cv=new Canvas(1000,1000);
+        GraphicsContext gc= cv.getGraphicsContext2D();
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(1);
+        st.getChildren().addAll(container,cv);
+        this.setContent(st);
+
+
 
         //boxjour c'est la colonne qui correspond à une date du calendrier gantt
         VBox boxJour;
@@ -101,6 +115,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
         Label tempLab;
         //largeur des rectangles et donc des colonnes
         double largeurBox = 100;
+        double hauteurRectangle=20;
         //on va créer autant de colonne que de jours entre la dateMin et dateMax de la selection de tache
         for (int i = 0; i < difjour; i++) {
             //date du jour qui correspond a la colonne
@@ -111,7 +126,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
             //on va rajouter dans la colonne autant de rectangle que de tache
             for (int j = 0; j < nbTache; j++) {
                 temp = new StackPane();
-                tempRect=new Rectangle(largeurBox, 20);
+                tempRect=new Rectangle(largeurBox, hauteurRectangle);
                 tempRect.setFill(Color.WHITE);
                 tempLab=new Label();
                 temp.getChildren().addAll(tempRect,tempLab);
@@ -129,6 +144,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
             container.getChildren().add(boxJour);
 
         }
+        HashMap<Tache, Point2D> pointTache=new HashMap<>(nbTache);
         //les index nous indique quand commence et quand fini la tache
         int indexJdep, indexJfin;
         for (int i = 0; i < nbTache; i++) {
@@ -142,8 +158,25 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 //j c'est la tache
                 Rectangle r= (Rectangle) grilleJour[i][j].getChildren().get(0);
                 r.setFill(Color.RED);
+                pointTache.put(listTacheGantt.get(i),new Point2D(largeurBox*(j+0.5),hauteurRectangle*(i+0.5)));
             }
 
+        }
+        ArrayList<Tache> listeDepTach;
+        for (Tache t : listTacheGantt) {
+
+            //System.out.println(t.getTitre() + "Debut: " + t.getDateDebut() + " Fin: " + t.getDateFin());
+            //System.out.println("Tache a faire avant:");
+            listeDepTach = (ArrayList<Tache>) this.modele.getDependances().get(t);
+            if (listeDepTach != null && !listeDepTach.isEmpty()) {
+                for (Tache taDep : listeDepTach) {
+                    if (listTacheGantt.contains(taDep)) {
+                        //ici la tache t est une dependance de la tache taDep
+                        gc.strokeLine(pointTache.get(t).getX(),pointTache.get(t).getY(),pointTache.get(taDep).getX(),pointTache.get(taDep).getY());
+                    }
+                }
+
+            }
         }
     }
 }

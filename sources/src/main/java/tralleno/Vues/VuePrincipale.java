@@ -42,7 +42,9 @@ public class VuePrincipale implements Serializable {
     private final BorderPane conteneurPrincipal;
 
     /**
-     * Scène
+     * Scène qui joue l'attribut de Singleton, car lors du getScene qui est appelé de la VuePrincipale
+     * pour le primary stage, il faut que ce soit en permanence la même scène, et si elle n'a pas encore été instanciée, alors il faut l'instancier
+     * Car dans le main on fait appel plusieurs fois à getScene
      */
     private Scene scene;
 
@@ -191,7 +193,7 @@ public class VuePrincipale implements Serializable {
         return modeleBureau;
     }
 
-    public Scene getScene() {
+    public synchronized Scene getScene() {
         if(scene == null){
             scene = new Scene(conteneurPrincipal, 800, 600);
         }

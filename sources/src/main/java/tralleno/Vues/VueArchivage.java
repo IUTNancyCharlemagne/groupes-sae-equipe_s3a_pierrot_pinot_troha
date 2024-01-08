@@ -1,5 +1,6 @@
 package tralleno.Vues;
 
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -7,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import tralleno.Controleurs.Sections.ControlSupprimerSection;
@@ -26,7 +28,8 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
 
     private ModeleBureau modeleBureau;
 
-    private transient ComboBox<String> choixListe;
+    private transient Button tachesArchivees, sectionsArchivees;
+    private transient Button boutonCourant;
 
     private transient ListView<HBox> vueListe;
 
@@ -35,24 +38,35 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
         super();
         this.modeleBureau = modeleBureau;
 
-        // On crée une ComboBox qui permet de choisir entre la visualisation soit des tâches archivées soit des sections archivées.
-        this.choixListe = new ComboBox<>();
-        this.choixListe.getItems().addAll("Tâches Archivées", "Sections Archivées");
-        this.choixListe.setValue("Tâches Archivées");
+        // On crée deux boutons, pour voir les tâches archivées ou les sections archivées
+        //HBox boutons;
+        this.tachesArchivees = new Button("Tâches Archivées");
+        this.sectionsArchivees = new Button("Sections Archivées");
+        this.boutonCourant = this.tachesArchivees;
 
 
         this.vueListe = new ListView<>();
-        this.getChildren().addAll(choixListe, vueListe);
+        this.vueListe.getStyleClass().add("tousLesElementsArchives");
+        VBox.setVgrow(this.vueListe, Priority.ALWAYS);
+        this.getChildren().addAll(tachesArchivees, sectionsArchivees, vueListe);
 
         // 1er appel avant que la Vue soit sérialisée
-        choixListe.setOnAction(event -> mettreAJourLIsteArchivage());
+        this.tachesArchivees.setOnAction(event -> {
+            this.boutonCourant = this.tachesArchivees;
+            mettreAJourListeArchivage();
+        });
+        this.sectionsArchivees.setOnAction(event -> {
+            this.boutonCourant = this.sectionsArchivees;
+            mettreAJourListeArchivage();
+        });
 
         this.actualiser(this.modeleBureau);
+        this.getStyleClass().add("archivage");
     }
 
     @Override
     public void actualiser(Sujet s) {
-        mettreAJourLIsteArchivage();
+        mettreAJourListeArchivage();
     }
 
 
@@ -60,8 +74,10 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
         VBox vBox = new VBox();
 
         Label titreLabel = new Label(titre);
+        titreLabel.getStyleClass().add("titreTacheArchivee");
         String descriptionAbregee = description.length() > 20 ? description.substring(0, 20) + "..." : description;
         Label descriptionLabel = new Label(descriptionAbregee);
+        descriptionLabel.getStyleClass().add("descriptionTacheAbregee");
 
         titreLabel.setFont(Font.font("Arial", 14));
         descriptionLabel.setFont(Font.font("Arial", 10));
@@ -72,9 +88,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
         VBox texteBox = new VBox(titreLabel, descriptionLabel);
         texteBox.setPadding(new Insets(5));
         texteBox.setSpacing(5);
-
-        texteBox.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10px; " +
-                "-fx-border-color: black; -fx-border-width: 1px;");
+        texteBox.getStyleClass().add("texteBox");
 
         vBox.getChildren().add(texteBox);
 
@@ -86,41 +100,56 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
         // Il faut que la liste soit réinitialisée après la désérialisation des données de l'application
         // Parce que comme c'est un élément graphique on ne peut pas la sérialiser
         this.vueListe = new ListView<>();
-        this.choixListe = new ComboBox<>();
+        this.tachesArchivees = new Button("Tâches Archivées");
+        this.sectionsArchivees = new Button("Sections Archivées");
 
         // Il faut aussi rajouter le listener d'évenement
-        this.choixListe.setOnAction(event -> mettreAJourLIsteArchivage());
+        this.tachesArchivees.setOnAction(event -> {
+            this.boutonCourant = this.tachesArchivees;
+            mettreAJourListeArchivage();
+        });
+        this.sectionsArchivees.setOnAction(event -> {
+            this.boutonCourant = this.sectionsArchivees;
+            mettreAJourListeArchivage();
+        });
     }
 
 
 
-    private void mettreAJourLIsteArchivage(){
+    private void mettreAJourListeArchivage(){
         vueListe.getItems().clear();
-        String value = choixListe.getValue();
-        if(value != null){
-            if (choixListe.getValue().equals("Tâches Archivées")) {
+        if(this.boutonCourant != null){
+            if (this.boutonCourant.equals(this.tachesArchivees)) {
                 // On parcourt les tâches archivées du modèle pour les afficher sous forme d'élément graphique
                 ListIterator<Tache> iterateur = this.modeleBureau.getTachesArchivees().listIterator(this.modeleBureau.getTachesArchivees().size());
                 while(iterateur.hasPrevious()) {
                     Tache tache = iterateur.previous();
                     VBox tacheBox = creerTache(tache.getTitre(), tache.getDescription());
+                    tacheBox.getStyleClass().add("nomEtDescriptionTacheArchivee");
 
                     // Bouton pour supprimer la tâche
                     Button supprimerBouton = new Button("Supprimer");
                     supprimerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlSupprimerTache(this.modeleBureau, tache, null));
+                    supprimerBouton.getStyleClass().add("btnElementArchive");
 
                     Button restaurerBouton = new Button("Restaurer");
+                    restaurerBouton.getStyleClass().add("btnElementArchive");
                     // Controleur restaurer
 
                     VBox boutons = new VBox();
                     boutons.getChildren().addAll(supprimerBouton, restaurerBouton);
+                    boutons.setSpacing(2);
+                    boutons.getStyleClass().add("conteneurBoutons");
 
                     HBox element = new HBox();
                     element.getChildren().addAll(tacheBox, boutons);
+                    element.setPadding(new Insets(5));
+                    element.setSpacing(10);
+                    element.getStyleClass().add("tacheEtBoutons");
 
                     vueListe.getItems().add(element);
                 }
-            } else if (choixListe.getValue().equals("Sections Archivées")) {
+            } else if (this.boutonCourant.equals(this.sectionsArchivees)) {
                 ListIterator<Section> iterateur = this.modeleBureau.getSectionsArchivees().listIterator(this.modeleBureau.getSectionsArchivees().size());
                 while(iterateur.hasPrevious()) {
                     Section section = iterateur.previous();
@@ -144,6 +173,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
 
             }
         }
+
     }
 
 }

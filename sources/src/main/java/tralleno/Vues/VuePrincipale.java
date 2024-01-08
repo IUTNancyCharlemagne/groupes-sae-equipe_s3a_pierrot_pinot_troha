@@ -92,6 +92,7 @@ public class VuePrincipale implements Serializable {
 
         conteneurPrincipal = new BorderPane();
         conteneurPrincipal.setTop(vueBarreActions);
+        conteneurPrincipal.getTop().getStyleClass().add("BPTop_BarreAction");
 
         this.vueTableau = new VueTableau(this.modeleBureau);
         this.modeleBureau.enregistrerObservateur(vueTableau);
@@ -126,8 +127,14 @@ public class VuePrincipale implements Serializable {
 
     public void changerVue(int mode) {
         switch (mode){
-            case TABLEAU -> conteneurPrincipal.setCenter(this.vueTableau);
-            case LISTE -> conteneurPrincipal.setCenter(this.vueGantt);
+            case TABLEAU:
+                conteneurPrincipal.setCenter(this.vueTableau);
+                conteneurPrincipal.getCenter().getStyleClass().add("BPCenter_VueCentrale");
+                break;
+            case LISTE:
+                conteneurPrincipal.setCenter(this.vueGantt);
+                conteneurPrincipal.getCenter().getStyleClass().add("BPCenter_VueCentrale");
+                break;
         }
         this.modeleBureau.notifierObservateurs();
     }
@@ -136,6 +143,7 @@ public class VuePrincipale implements Serializable {
     public void afficherArchivage() {
         if (!vueArchivage.isVisible()) {
             conteneurPrincipal.setRight(vueArchivage); // Ajoute la VBox à droite du BorderPane
+            conteneurPrincipal.getRight().getStyleClass().add("BTRight_Archivage");
             afficherMenuTransition.play();
             vueArchivage.setVisible(true);
         }
@@ -169,17 +177,17 @@ public class VuePrincipale implements Serializable {
             case THEMEBASE:
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Base/trallenoStyleBase.css").toExternalForm());
-                this.themeCourant = THEMEBASE;
+                themeCourant = THEMEBASE;
                 break;
             case THEMEBLUE:
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Blue/trallenoStyleBlue.css").toExternalForm());
-                this.themeCourant = THEMEBLUE;
+                themeCourant = THEMEBLUE;
                 break;
             default:
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Base/trallenoStyleBase.css").toExternalForm());
-                this.themeCourant = THEMEBASE;
+                themeCourant = THEMEBASE;
                 break;
         }
     }

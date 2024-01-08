@@ -2,6 +2,7 @@ package tralleno.Vues;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.util.Duration;
 import tralleno.Modele.ModeleBureau;
 
@@ -24,6 +25,8 @@ public class VuePrincipale implements Serializable {
      * Constante qui correspond à la VueListe
      */
     public static final int LISTE = 2;
+    private static final int GANTT = 3;
+    private static final int SELECTGANTT=4;
 
     /**
      * Constante qui correspond au thème de base (nuances de gris)
@@ -72,6 +75,7 @@ public class VuePrincipale implements Serializable {
     private final VueTableau vueTableau;
 
     private final VueGantt vueGantt;
+    private final VueSelecteurGantt vueSelecteurGantt;
     /**
      * Vue des tâches/Sections sous forme de Listes dépliantes
      */
@@ -103,6 +107,9 @@ public class VuePrincipale implements Serializable {
         this.vueGantt = new VueGantt(this.modeleBureau);
         this.modeleBureau.enregistrerObservateur(this.vueGantt);
 
+        this.vueSelecteurGantt = new VueSelecteurGantt(this.modeleBureau,this);
+        this.modeleBureau.enregistrerObservateur(this.vueSelecteurGantt);
+
         // Initialisation du menu d'archivage
         vueArchivage = new VueArchivage(this.modeleBureau); // Crée le panneau d'archivage
         vueArchivage.setPrefWidth(320); // Définit la largeur du panneau d'archivage
@@ -127,7 +134,10 @@ public class VuePrincipale implements Serializable {
     public void changerVue(int mode) {
         switch (mode){
             case TABLEAU -> conteneurPrincipal.setCenter(this.vueTableau);
-            case LISTE -> conteneurPrincipal.setCenter(this.vueGantt);
+            case LISTE -> conteneurPrincipal.setCenter(this.vueSelecteurGantt);
+            case GANTT -> conteneurPrincipal.setCenter(this.vueGantt);
+            case SELECTGANTT -> conteneurPrincipal.setCenter(this.vueSelecteurGantt);
+
         }
         this.modeleBureau.notifierObservateurs();
     }

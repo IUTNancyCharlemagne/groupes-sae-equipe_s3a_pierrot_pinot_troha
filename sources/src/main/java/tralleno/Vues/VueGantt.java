@@ -116,6 +116,8 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
         //largeur des rectangles et donc des colonnes
         double largeurBox = 100;
         double hauteurRectangle=20;
+        cv.setHeight(nbTache*hauteurRectangle);
+        cv.setWidth(difjour*largeurBox);
         //on va créer autant de colonne que de jours entre la dateMin et dateMax de la selection de tache
         for (int i = 0; i < difjour; i++) {
             //date du jour qui correspond a la colonne
@@ -153,12 +155,12 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
             //on change la couleur des rectangles dans l'intervalle de date de la tache
             Label l= (Label) grilleJour[i][indexJdep].getChildren().get(1);
             l.setText(listTacheGantt.get(i).getTitre());
+            pointTache.put(listTacheGantt.get(i),new Point2D(largeurBox*(indexJdep),hauteurRectangle*(i)));
             for (int j = indexJdep; j < indexJfin + 1; j++) {
                 //i c'est la date
                 //j c'est la tache
                 Rectangle r= (Rectangle) grilleJour[i][j].getChildren().get(0);
                 r.setFill(Color.RED);
-                pointTache.put(listTacheGantt.get(i),new Point2D(largeurBox*(j+0.5),hauteurRectangle*(i+0.5)));
             }
 
         }
@@ -172,11 +174,12 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 for (Tache taDep : listeDepTach) {
                     if (listTacheGantt.contains(taDep)) {
                         //ici la tache t est une dependance de la tache taDep
-                        gc.strokeLine(pointTache.get(t).getX(),pointTache.get(t).getY(),pointTache.get(taDep).getX(),pointTache.get(taDep).getY());
+                        gc.strokeLine(pointTache.get(t).getX(),pointTache.get(t).getY(),pointTache.get(taDep).getX()+taDep.getDuree()*largeurBox,pointTache.get(taDep).getY());
                     }
                 }
 
             }
         }
+
     }
 }

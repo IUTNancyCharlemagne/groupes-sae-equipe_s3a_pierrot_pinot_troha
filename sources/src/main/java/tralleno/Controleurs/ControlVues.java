@@ -9,6 +9,9 @@ import javafx.scene.input.MouseEvent;
 import tralleno.Vues.VuePrincipale;
 import tralleno.Vues.VueTableau;
 
+import static tralleno.Vues.VuePrincipale.THEMEBASE;
+import static tralleno.Vues.VuePrincipale.THEMEBLUE;
+
 /**
  * Classe qui gère le changement de vues global, donc que ce soit pour changer la vue entre la vuetableau et la vueliste, ou encore la vue des tâches archivées
  * ou encore de la VueGantt
@@ -25,6 +28,10 @@ public class ControlVues implements EventHandler<ActionEvent> {
      */
     private Button boutonArchivage;
 
+    /**
+     * Correspond à la liste dépliante permettant à l'utilisateur de choisir le thème de l'application
+     */
+    private ChoiceBox<String> theme;
 
     /**
      * On va devoir changer le centre du borderpane de la vue principale selon le mode sélectionné
@@ -49,6 +56,10 @@ public class ControlVues implements EventHandler<ActionEvent> {
         this.vuePrincipale = vuePrincipale;
     }
 
+    public ControlVues(ChoiceBox<String> theme, VuePrincipale vuePrincipale, String contournement){
+        this.theme = theme;
+        this.vuePrincipale = vuePrincipale;
+    }
 
     @Override
     public void handle(ActionEvent actionEvent) {
@@ -66,6 +77,16 @@ public class ControlVues implements EventHandler<ActionEvent> {
             if(bouton.equals("Archivage")){
                 System.out.println("ARCHIVAGE");
                 this.vuePrincipale.afficherOuCacherArchivage();
+            }
+        } else if (actionEvent.getSource() == theme){
+            String themeChoisi = theme.getValue();
+            switch (themeChoisi){
+                case "Base":
+                    this.vuePrincipale.changerTheme(THEMEBASE);
+                    break;
+                case "Bleu":
+                    this.vuePrincipale.changerTheme(THEMEBLUE);
+                    break;
             }
         }
     }

@@ -1,0 +1,170 @@
+/* palette de couleurs
+#00334A
+#007FA9
+#82CFD8
+#9CD2D5
+#F0F0F0
+*/
+
+/* pour la couleur du fond de la page (on peut la voir quand il n'y a pas assez de tâches dans une section) */
+/* problème : ça oblige à définir les couleurs de fond de tous les éléments */
+{
+    -fx-background-color: #9CD2D5;
+    /*-fx-background-color: red;*/
+}
+
+.conteneurPrincipal{
+    /* je sais pas si ça va être utile mais on sait jamais */
+}
+
+.entete{
+    -fx-background-color: #007FA9;
+}
+
+.nomAppli{
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-background-color: #007FA9; /* le même que le fond de l'entête */
+}
+
+.actionButton{
+    -fx-border-color: #F0F0F0;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #007FA9;
+    -fx-text-fill: #F0F0F0;
+    -fx-font-weight: bold;
+}
+
+.actionButton:hover{
+    -fx-background-color: #F0F0F0;
+    -fx-text-fill: #00334A;
+}
+
+.choixVue {
+    -fx-border-color: #F0F0F0;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #007FA9;
+    -fx-text-fill: #F0F0F0;
+    -fx-font-weight: bold;
+}
+
+.choixVue .context-menu{
+    -fx-background-color: #9CD2D5;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-border-color: #F0F0F0;
+    -fx-border-radius: 5px;
+    -fx-pref-width: 102px;
+}
+
+.choixVue .menu-item {
+    -fx-background-color: #9CD2D5;
+    -fx-text-fill: #00334A;
+    -fx-background-radius: 5px;
+}
+
+.section{
+    -fx-background-color: #F0F0F0;
+    -fx-background-radius: 10px;
+}
+
+.nomSection{
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-alignment: center;
+    -fx-background-color: #F0F0F0; /* même couleur que le contour de la section */
+}
+
+.fond_titre_section{
+    -fx-background-color: #F0F0F0; /* même couleur que le contour de la section */
+}
+
+.modifier-button{
+    -fx-background-color: #007FA9;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #F0F0F0;
+}
+
+.modifier-button:hover{
+    -fx-background-color: #00334A;
+}
+
+.vueTableau{
+    /* pas forcément besoin mais utile pour débugger */
+}
+
+.containerSections{
+    -fx-background-color: #9CD2D5;
+}
+
+.vueTache{ /* TitlePane */
+    /* à mettre de la même couleur que le fond des sections */
+    -fx-background-color: #9CD2D5;
+    -fx-border-color: #9CD2D5;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.titled-pane .title {
+    -fx-background-color: #9CD2D5;
+}
+
+.titled-pane .title .arrow-button .arrow {
+    -fx-background-color: black;
+}
+
+.titled-pane > .content {
+    /* à mettre de la même couleur que le font de la descpription des tâche (.contenuTache) */
+    -fx-background-color: #F0F0F0;
+    /* à mettre avec comme pour la tâche en entière (.vueTache) */
+    -fx-background-radius: 10px;
+    -fx-border-width: 0px;
+
+}
+
+.titreTache{
+    -fx-background-color: #9CD2D5;
+}
+
+.enteteTache{
+    -fx-background-color: #9CD2D5;
+}
+
+.contenuTache{
+    -fx-background-color: #F0F0F0;
+    -fx-background-radius: 10px;
+    -fx-padding: 5px;
+}
+
+.sousTachesBox{
+    -fx-background-color: #F0F0F0;
+}
+
+.descriptionLabel{
+    -fx-background-color: #F0F0F0;
+}
+
+.scroll-bar {
+    -fx-background-color: #9CD2D5;
+    -fx-border-color: #9CD2D5;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #007FA9;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: #82CFD8;
+}
+
+/* à voir plus tard
+.comboChoix{
+    -fx-background-color: pink;
+    -fx-text-fill: purple;
+}
+*/

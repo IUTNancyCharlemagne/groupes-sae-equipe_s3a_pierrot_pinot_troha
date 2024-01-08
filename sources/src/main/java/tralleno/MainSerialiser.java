@@ -56,7 +56,7 @@ public class MainSerialiser extends Application{
 
         primaryStage.show();
 
-        vuePrincipale.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/trallenoStyle.css").toExternalForm());
+        vuePrincipale.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Blue/trallenoStyleBlue.css").toExternalForm());
     }
 
 

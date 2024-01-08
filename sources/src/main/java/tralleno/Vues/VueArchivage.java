@@ -45,57 +45,11 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
         this.getChildren().addAll(choixListe, vueListe);
 
 
-
-
         this.actualiser(this.modeleBureau);
     }
 
     @Override
     public void actualiser(Sujet s) {
-        vueListe.getItems().clear();
-        System.out.println("TRIPLE MONSTRE" + this.modeleBureau.getTachesArchivees().size());
-
-        setUpChoixListe();
-        actualiserSansEvent();
-    }
-
-
-    public VBox creerTache(String titre, String description){
-        VBox vBox = new VBox();
-
-        Label titreLabel = new Label(titre);
-        String descriptionAbregee = description.length() > 20 ? description.substring(0, 20) + "..." : description;
-        Label descriptionLabel = new Label(descriptionAbregee);
-
-        titreLabel.setFont(Font.font("Arial", 14));
-        descriptionLabel.setFont(Font.font("Arial", 10));
-
-        titreLabel.setWrapText(true);
-        descriptionLabel.setWrapText(true);
-
-        VBox texteBox = new VBox(titreLabel, descriptionLabel);
-        texteBox.setPadding(new Insets(5));
-        texteBox.setSpacing(5);
-
-        texteBox.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10px; " +
-                "-fx-border-color: black; -fx-border-width: 1px;");
-
-        vBox.getChildren().add(texteBox);
-
-        return vBox;
-    }
-
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        // Il faut que la liste soit réinitialisée après la désérialisation des données de l'application
-        // Parce que comme c'est un élément graphique on ne peut pas la sérialiser
-        this.vueListe = new ListView<>();
-        this.choixListe = new ComboBox<>();
-    }
-
-
-
-    private void setUpChoixListe(){
         vueListe.getItems().clear();
         choixListe.setOnAction(event -> {
             if (choixListe.getValue().equals("Tâches Archivées")) {
@@ -144,59 +98,101 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
 
             }
         });
+
+
     }
 
 
-    public void actualiserSansEvent(){
-        vueListe.getItems().clear();
-        if(choixListe.getValue() != null){
-            if (choixListe.getValue().equals("Tâches Archivées")) {
-                // On parcourt les tâches archivées du modèle pour les afficher sous forme d'élément graphique
-                ListIterator<Tache> iterateur = this.modeleBureau.getTachesArchivees().listIterator(this.modeleBureau.getTachesArchivees().size());
-                while(iterateur.hasPrevious()) {
-                    Tache tache = iterateur.previous();
-                    VBox tacheBox = creerTache(tache.getTitre(), tache.getDescription());
+    public VBox creerTache(String titre, String description){
+        VBox vBox = new VBox();
 
-                    // Bouton pour supprimer la tâche
-                    Button supprimerBouton = new Button("Supprimer");
-                    supprimerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlSupprimerTache(this.modeleBureau, tache, null));
+        Label titreLabel = new Label(titre);
+        String descriptionAbregee = description.length() > 20 ? description.substring(0, 20) + "..." : description;
+        Label descriptionLabel = new Label(descriptionAbregee);
 
-                    Button restaurerBouton = new Button("Restaurer");
-                    // Controleur restaurer
+        titreLabel.setFont(Font.font("Arial", 14));
+        descriptionLabel.setFont(Font.font("Arial", 10));
 
-                    VBox boutons = new VBox();
-                    boutons.getChildren().addAll(supprimerBouton, restaurerBouton);
+        titreLabel.setWrapText(true);
+        descriptionLabel.setWrapText(true);
 
-                    HBox element = new HBox();
-                    element.getChildren().addAll(tacheBox, boutons);
+        VBox texteBox = new VBox(titreLabel, descriptionLabel);
+        texteBox.setPadding(new Insets(5));
+        texteBox.setSpacing(5);
 
-                    vueListe.getItems().add(element);
-                }
-            } else if (choixListe.getValue().equals("Sections Archivées")) {
-                ListIterator<Section> iterateur = this.modeleBureau.getSectionsArchivees().listIterator(this.modeleBureau.getSectionsArchivees().size());
-                while(iterateur.hasPrevious()) {
-                    Section section = iterateur.previous();
-                    VBox tacheBox = creerTache(section.getNom(), "SECTION");
+        texteBox.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10px; " +
+                "-fx-border-color: black; -fx-border-width: 1px;");
 
-                    // Bouton pour supprimer la tâche
-                    Button supprimerBouton = new Button("Supprimer");
-                    supprimerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlSupprimerSection(this.modeleBureau, section, null));
+        vBox.getChildren().add(texteBox);
 
-                    Button restaurerBouton = new Button("Restaurer");
-                    // Controleur restaurer
-
-                    VBox boutons = new VBox();
-                    boutons.getChildren().addAll(supprimerBouton, restaurerBouton);
-
-                    HBox element = new HBox();
-                    element.getChildren().addAll(tacheBox, boutons);
-
-                    vueListe.getItems().add(element);
-                }
-            }
-        }
-
+        return vBox;
     }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        // Il faut que la liste soit réinitialisée après la désérialisation des données de l'application
+        // Parce que comme c'est un élément graphique on ne peut pas la sérialiser
+        this.vueListe = new ListView<>();
+        this.choixListe = new ComboBox<>();
+    }
+
+
+
+//    private void setUpChoixListe(){
+//
+//    }
+
+
+//    public void actualiserSansEvent(){
+//        vueListe.getItems().clear();
+//        if(choixListe.getValue() != null){
+//            if (choixListe.getValue().equals("Tâches Archivées")) {
+//                // On parcourt les tâches archivées du modèle pour les afficher sous forme d'élément graphique
+//                ListIterator<Tache> iterateur = this.modeleBureau.getTachesArchivees().listIterator(this.modeleBureau.getTachesArchivees().size());
+//                while(iterateur.hasPrevious()) {
+//                    Tache tache = iterateur.previous();
+//                    VBox tacheBox = creerTache(tache.getTitre(), tache.getDescription());
+//
+//                    // Bouton pour supprimer la tâche
+//                    Button supprimerBouton = new Button("Supprimer");
+//                    supprimerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlSupprimerTache(this.modeleBureau, tache, null));
+//
+//                    Button restaurerBouton = new Button("Restaurer");
+//                    // Controleur restaurer
+//
+//                    VBox boutons = new VBox();
+//                    boutons.getChildren().addAll(supprimerBouton, restaurerBouton);
+//
+//                    HBox element = new HBox();
+//                    element.getChildren().addAll(tacheBox, boutons);
+//
+//                    vueListe.getItems().add(element);
+//                }
+//            } else if (choixListe.getValue().equals("Sections Archivées")) {
+//                ListIterator<Section> iterateur = this.modeleBureau.getSectionsArchivees().listIterator(this.modeleBureau.getSectionsArchivees().size());
+//                while(iterateur.hasPrevious()) {
+//                    Section section = iterateur.previous();
+//                    VBox tacheBox = creerTache(section.getNom(), "SECTION");
+//
+//                    // Bouton pour supprimer la tâche
+//                    Button supprimerBouton = new Button("Supprimer");
+//                    supprimerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlSupprimerSection(this.modeleBureau, section, null));
+//
+//                    Button restaurerBouton = new Button("Restaurer");
+//                    // Controleur restaurer
+//
+//                    VBox boutons = new VBox();
+//                    boutons.getChildren().addAll(supprimerBouton, restaurerBouton);
+//
+//                    HBox element = new HBox();
+//                    element.getChildren().addAll(tacheBox, boutons);
+//
+//                    vueListe.getItems().add(element);
+//                }
+//            }
+//        }
+//
+//    }
 }
 
 

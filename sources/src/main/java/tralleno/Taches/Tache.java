@@ -5,6 +5,7 @@ import tralleno.Section.Section;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 
 /**
@@ -64,6 +65,7 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
         this.description=d;
         this.dateDebut=dD;
         this.dateFin=dF;
+        this.duree = (int) ChronoUnit.DAYS.between(dD, dF);
         this.id=ModeleBureau.getIDTACHEACTUELLE();
     }
 

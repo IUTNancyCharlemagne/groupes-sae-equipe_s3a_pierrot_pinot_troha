@@ -50,7 +50,7 @@ public class VuePrincipale implements Serializable {
 
 
     /**
-     * A
+     * Fenêtre de base de l'application
      */
     private final Stage primaryStage;
 
@@ -71,7 +71,7 @@ public class VuePrincipale implements Serializable {
      */
     private final VueTableau vueTableau;
 
-//    private final VueGantt vueGantt;
+    private final VueGantt vueGantt;
     /**
      * Vue des tâches/Sections sous forme de Listes dépliantes
      */
@@ -100,8 +100,8 @@ public class VuePrincipale implements Serializable {
         this.vueListe = new VueListe(this.modeleBureau);
         this.modeleBureau.enregistrerObservateur(this.vueListe);
 
-//        this.vueGantt = new VueGantt(this.modeleBureau);
-//        this.modeleBureau.enregistrerObservateur(this.vueGantt);
+        this.vueGantt = new VueGantt(this.modeleBureau);
+        this.modeleBureau.enregistrerObservateur(this.vueGantt);
 
         // Initialisation du menu d'archivage
         vueArchivage = new VueArchivage(this.modeleBureau); // Crée le panneau d'archivage
@@ -127,12 +127,14 @@ public class VuePrincipale implements Serializable {
     public void changerVue(int mode) {
         switch (mode){
             case TABLEAU -> conteneurPrincipal.setCenter(this.vueTableau);
-//            case LISTE -> conteneurPrincipal.setCenter(this.vueGantt);
+            case LISTE -> conteneurPrincipal.setCenter(this.vueGantt);
         }
         this.modeleBureau.notifierObservateurs();
     }
 
-    // Nouvelle méthode pour afficher le menu d'archivage avec animation
+    /**
+     * Nouvelle méthode pour afficher le menu d'archivage avec animation
+     */
     public void afficherArchivage() {
         if (!vueArchivage.isVisible()) {
             conteneurPrincipal.setRight(vueArchivage); // Ajoute la VBox à droite du BorderPane
@@ -140,8 +142,9 @@ public class VuePrincipale implements Serializable {
             vueArchivage.setVisible(true);
         }
     }
-
-    // Nouvelle méthode pour cacher le menu d'archivage avec animation
+    /**
+     * Nouvelle méthode pour cacher le menu d'archivage avec animation
+     */
     public void cacherArchivage() {
         if (vueArchivage.isVisible()) {
             cacherMenuTransition.play();
@@ -150,7 +153,9 @@ public class VuePrincipale implements Serializable {
         }
     }
 
-    // Méthode pour afficher ou cacher le menu d'archivage en fonction de son état actuel
+    /**
+     * Méthode pour afficher ou cacher le menu d'archivage en fonction de son état actuel
+     */
     public void afficherOuCacherArchivage() {
         if (vueArchivage.isVisible()) {
             cacherArchivage();

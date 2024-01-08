@@ -568,6 +568,28 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
     /**
+     * Méthode qui permet de retourner la liste des tâches pour lesquelles une dépendance avec la tâche actuelle est possible
+     * @param dateDebut
+     * @return
+     */
+    public List<Tache> getTachesDisponibles(LocalDate dateDebut){
+        List<Tache> tachesDisponibles = new ArrayList<Tache>();
+        if(!(dateDebut == null)){
+            List<Tache> taches = this.getTaches();
+            // puis si on est dans le cas où la tâche est en train d'être modifiée et pas encore créée, alors
+            if(this.tacheCourante != null){
+                taches.remove(this.tacheCourante);
+            }
+            for(Tache t : taches){
+                if(t.getDateFin().isBefore(dateDebut)){ // Si la date de fin de la tâche est avant la date de début de la tâche en paramètre
+                    tachesDisponibles.add(t);
+                }
+            }
+        }
+        return tachesDisponibles;
+    }
+
+    /**
      * Permet d'enregistrer un observateur à la liste
      *
      * @param observateur

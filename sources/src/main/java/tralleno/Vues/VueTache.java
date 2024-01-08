@@ -75,7 +75,7 @@ public class VueTache extends TitledPane implements Observateur {
 
         Button modifierButton = new Button("...");
         modifierButton.getStyleClass().add("modifier-button");
-        modifierButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlModifTache(modeleBureau, this.tache));
+        modifierButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlModifTache(modeleBureau, this.tache, this.tacheParente));
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -174,6 +174,10 @@ public class VueTache extends TitledPane implements Observateur {
                         // Il nous reste à ajouter la tâche qui est dragged dans la tâche sur laquelle elle a été dragged.
                         ((TacheMere) this.tache).ajouterSousTache(modeleBureau.getTacheCourante());
                         modeleBureau.getTacheCourante().setSectionParente(this.tache.getSectionParente());
+                        // On supprime également la date de la tâche quand elle est drop dans une autre car elle n'est qu'une sous-tâche
+                        modeleBureau.getTacheCourante().setDateDebut(null);
+                        modeleBureau.getTacheCourante().setDateFin(null);
+                        modeleBureau.getTacheCourante().setDuree(1);
                         modeleBureau.notifierObservateurs();
                         success = true;
                     }

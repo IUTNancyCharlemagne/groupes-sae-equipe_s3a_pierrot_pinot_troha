@@ -65,7 +65,10 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
         this.description=d;
         this.dateDebut=dD;
         this.dateFin=dF;
-        this.duree = (int) ChronoUnit.DAYS.between(dD, dF);
+        this.duree = 1;
+        if(!(dD == null && dF == null)){
+            this.duree = (int) ChronoUnit.DAYS.between(dD, dF);
+        }
         this.id=ModeleBureau.getIDTACHEACTUELLE();
     }
 

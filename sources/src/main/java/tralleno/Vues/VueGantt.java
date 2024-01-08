@@ -94,9 +94,11 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
         //grilleJour c'est la grille des jours de chaque tache, ex: grilleJour[1][2] c'est le jour index 2 (dateMin+2) de la tache index 1
         //si le jour est dans l'intervalle dateDebut dateFin de la tache qui correspond alors il faut le signifier (ici avec des rectangles de couleurs)
         //si on les sauvegarde pas dans un tableau à part c'est difficile de les retrouver quand on les modifies.
-        Rectangle[][] grilleJour = new Rectangle[nbTache][difjour];
+        StackPane[][] grilleJour = new StackPane[nbTache][difjour];
 
-        Rectangle temp;
+        StackPane temp;
+        Rectangle tempRect;
+        Label tempLab;
         //largeur des rectangles et donc des colonnes
         double largeurBox = 100;
         //on va créer autant de colonne que de jours entre la dateMin et dateMax de la selection de tache
@@ -108,8 +110,11 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
 
             //on va rajouter dans la colonne autant de rectangle que de tache
             for (int j = 0; j < nbTache; j++) {
-                temp = new Rectangle(largeurBox, 20);
-                temp.setFill(Color.WHITE);
+                temp = new StackPane();
+                tempRect=new Rectangle(largeurBox, 20);
+                tempRect.setFill(Color.WHITE);
+                tempLab=new Label();
+                temp.getChildren().addAll(tempRect,tempLab);
                 //on ajoute le rectangle dans la grille
                 grilleJour[j][i] = temp;
                 //et dans la colonne
@@ -130,11 +135,13 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
             indexJdep = (int) ChronoUnit.DAYS.between(dateMin, listTacheGantt.get(i).getDateDebut());
             indexJfin = (int) ChronoUnit.DAYS.between(dateMin, listTacheGantt.get(i).getDateFin());
             //on change la couleur des rectangles dans l'intervalle de date de la tache
-
+            Label l= (Label) grilleJour[i][indexJdep].getChildren().get(1);
+            l.setText(listTacheGantt.get(i).getTitre());
             for (int j = indexJdep; j < indexJfin + 1; j++) {
                 //i c'est la date
                 //j c'est la tache
-                grilleJour[i][j].setFill(Color.RED);
+                Rectangle r= (Rectangle) grilleJour[i][j].getChildren().get(0);
+                r.setFill(Color.RED);
             }
 
         }

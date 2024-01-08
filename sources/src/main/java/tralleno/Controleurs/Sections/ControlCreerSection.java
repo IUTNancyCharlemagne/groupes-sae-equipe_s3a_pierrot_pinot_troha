@@ -12,6 +12,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Section.Section;
+import tralleno.Vues.VuePrincipale;
 
 /**
  * Classe qui permet de gérer la création de section lorsque l'utilisateur le souhaite
@@ -45,9 +46,12 @@ public class ControlCreerSection implements EventHandler<MouseEvent> {
 
         // On demande le titre de la section
         Label nomSection = new Label("Nom de la section:");
+        nomSection.getStyleClass().add("titreChamp");
         TextField champNom = new TextField();
+        champNom.getStyleClass().add("champTexteTache");
 
         Button boutonCreerSection = new Button("Créer Section");
+        boutonCreerSection.getStyleClass().add("Btn");
 
         // On désactive la possibilité de cliquer sur créer si aucun nom n'est renseigné
         boutonCreerSection.disableProperty().bind(
@@ -72,9 +76,27 @@ public class ControlCreerSection implements EventHandler<MouseEvent> {
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
         layout.getChildren().addAll(nomSection, champNom, boutonCreerSection);
+        layout.getStyleClass().add("VBoxFormulaire");
 
         // On crée la nouvelle scène et on lui ajoute le formulaire
         Scene scene = new Scene(layout, 400, 150);
+
+        int themeApp = VuePrincipale.getThemeCourant();
+        switch (themeApp){
+            case 1:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Base/popupStyleBase.css").toExternalForm());
+                break;
+            case 2:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Blue/popupStyleBlue.css").toExternalForm());
+                break;
+            default:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Base/popupStyleBase.css").toExternalForm());
+                break;
+        }
+
         fenetreCreationSection.setScene(scene);
         fenetreCreationSection.showAndWait();
     }

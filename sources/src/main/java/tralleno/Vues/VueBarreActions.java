@@ -73,11 +73,17 @@ public class VueBarreActions extends HBox implements Serializable {
         tachesArchiveesButton.getStyleClass().add("actionButton");
         HBox.setHgrow(nomAppli, Priority.ALWAYS);
 
+        ChoiceBox<String> theme = new ChoiceBox<>();
+        theme.getItems().addAll("Base", "Bleu");
+        theme.getStyleClass().add("choixVue");
+        theme.setValue("Base");
+        theme.addEventHandler(ActionEvent.ACTION, new ControlVues(theme, vuePrincipale, "Contournement"));
+
         this.setPadding(new Insets(10));
         //this.getStyleClass().add("actionButton");
         this.setSpacing(10);
         this.setAlignment(Pos.CENTER_LEFT);
-        this.getChildren().addAll(logo, nomAppli, choixVue, creerTacheButton, creerSectionButton, tachesArchiveesButton);
+        this.getChildren().addAll(logo, nomAppli, choixVue, creerTacheButton, creerSectionButton, tachesArchiveesButton, theme);
         this.getStyleClass().add("entete");
     }
 }

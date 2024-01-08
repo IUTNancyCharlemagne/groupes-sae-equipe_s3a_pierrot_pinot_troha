@@ -76,7 +76,6 @@ public class MainApp extends Application {
 
 
 
-        vuePrincipale.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/trallenoStyle.css").toExternalForm());
         primaryStage.setScene(vuePrincipale.getScene());
         // Affichage de la fenêtre principale
         primaryStage.show();

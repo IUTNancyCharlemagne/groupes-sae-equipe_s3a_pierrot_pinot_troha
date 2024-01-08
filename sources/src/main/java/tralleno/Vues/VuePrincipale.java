@@ -2,7 +2,6 @@ package tralleno.Vues;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import tralleno.Modele.ModeleBureau;
 
@@ -26,6 +25,16 @@ public class VuePrincipale implements Serializable {
      */
     public static final int LISTE = 2;
 
+    /**
+     * Constante qui correspond au thème de base (nuances de gris)
+     */
+    public static final int THEMEBASE = 1;
+
+    /**
+     * Constante qui correspond au thème en bleu
+     */
+    public static final int THEMEBLUE = 2;
+
 
     /**
      * Conteneur principal de l'application
@@ -47,6 +56,8 @@ public class VuePrincipale implements Serializable {
      * Modèle qui contient les données de l'application
      */
     private final ModeleBureau modeleBureau;
+
+    private static int themeCourant;
 
     /**
      * Barre située en haut de l'application qui permet de créer des sections, tâches de changer de vue, d'accéder à l'archivage
@@ -105,6 +116,7 @@ public class VuePrincipale implements Serializable {
         cacherMenuTransition.setToX(0);
 
         changerVue(TABLEAU);
+        this.changerTheme(THEMEBASE);
     }
 
     public void changerVue(int mode) {
@@ -141,6 +153,31 @@ public class VuePrincipale implements Serializable {
         }
     }
 
+    /**
+     * Méthode qui permet de changer le thème de l'application
+     *
+     * @param theme numéro du thème choisi
+     */
+    public void changerTheme(int theme){
+        switch (theme){
+            case THEMEBASE:
+                this.getScene().getStylesheets().clear();
+                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Base/trallenoStyleBase.css").toExternalForm());
+                this.themeCourant = THEMEBASE;
+                break;
+            case THEMEBLUE:
+                this.getScene().getStylesheets().clear();
+                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Blue/trallenoStyleBlue.css").toExternalForm());
+                this.themeCourant = THEMEBLUE;
+                break;
+            default:
+                this.getScene().getStylesheets().clear();
+                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Base/trallenoStyleBase.css").toExternalForm());
+                this.themeCourant = THEMEBASE;
+                break;
+        }
+    }
+
 
     public Stage getPrimaryStage() {
         return primaryStage;
@@ -155,6 +192,13 @@ public class VuePrincipale implements Serializable {
             scene = new Scene(conteneurPrincipal, 800, 600);
         }
         return scene;
+    }
+
+    /**
+     * @return le numéro du thème courant
+     */
+    public static int getThemeCourant(){
+        return themeCourant;
     }
 }
 

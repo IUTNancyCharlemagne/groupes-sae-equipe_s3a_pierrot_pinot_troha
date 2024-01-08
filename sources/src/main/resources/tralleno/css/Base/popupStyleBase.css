@@ -1,0 +1,66 @@
+/* palette de couleurs
+#585858
+#7E7E7E
+#A3A3A3
+#CACACA
+#F0F0F0
+*/
+
+{
+    /*-fx-background-color: blue;*/
+}
+
+/* Créer Tâche et Modifier Tâche */
+
+.VBoxFormulaire{
+    -fx-background-color: #CACACA;
+    /*
+    -fx-border-width: 3px;
+    -fx-border-color: #7E7E7E;
+    -fx-border-radius: 6px;
+    */
+}
+
+.titreChamp{
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.champTexteTache{
+    -fx-background-color: #F0F0F0;
+    -fx-border-color: #7E7E7E;
+    -fx-border-width: 2px;
+    -fx-border-radius: 3px;
+}
+
+.comboBox{
+    -fx-background-color: #F0F0F0;
+}
+
+.conteneurDates{
+    -fx-background-color: #CACACA;
+}
+
+.datePicker{
+    /*-fx-background-color: purple;*/
+    -fx-border-width: 2px;
+    -fx-border-color: #7E7E7E;
+    -fx-border-radius: 5px;
+}
+
+.conteneurDependances{
+    -fx-background-color: #CACACA;
+}
+
+.Btn{
+    -fx-background-color: #A3A3A3;
+}
+
+.listeTachesAvant{
+    -fx-background-color: #F0F0F0;
+}
+
+.alert{
+    -fx-background-color: red;
+}

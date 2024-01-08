@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import tralleno.Controleurs.Archivage.ControlArchiverTache;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Taches.Tache;
+import tralleno.Vues.VuePrincipale;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -256,7 +257,21 @@ public class ControlModifTache implements EventHandler<MouseEvent>, Serializable
 
         // On crée la nouvelle scène et on lui ajoute le formulaire
         Scene scene = new Scene(layout, 400, 400);
-        scene.getStylesheets().add(getClass().getResource("/tralleno/css/popupStyle.css").toExternalForm());
+        int themeApp = VuePrincipale.getThemeCourant();
+        switch (themeApp){
+            case 1:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Base/popupStyleBase.css").toExternalForm());
+                break;
+            case 2:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Blue/popupStyleBlue.css").toExternalForm());
+                break;
+            default:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Base/popupStyleBase.css").toExternalForm());
+                break;
+        }
         fenetreModificationTache.setScene(scene);
         fenetreModificationTache.showAndWait();
 

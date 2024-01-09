@@ -7,7 +7,7 @@ public class VueTacheSelection extends Label{
     private Tache t;
 
     public VueTacheSelection(Tache tache){
-        super(tache.toString());
+        super(tache.toStringDate());
         this.t=tache;
     }
 

@@ -46,9 +46,11 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
         HBox boutonsTachesSection = new HBox();
         boutonsTachesSection.getStyleClass().add("boutonsTachesSection");
         this.tachesArchivees = new Button("Tâches Archivées");
+        this.tachesArchivees.setAlignment(Pos.CENTER);
         this.tachesArchivees.getStyleClass().clear();
         this.tachesArchivees.getStyleClass().add("BtnTacheSelected");
         this.sectionsArchivees = new Button("Sections Archivées");
+        this.sectionsArchivees.setAlignment(Pos.CENTER);
         this.sectionsArchivees.getStyleClass().clear();
         this.sectionsArchivees.getStyleClass().add("BtnSectionNotSelected");
         this.boutonCourant = this.tachesArchivees;
@@ -171,6 +173,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
                     supprimerBouton.getStyleClass().add("btnElementArchive");
 
                     Button restaurerBouton = new Button("Restaurer");
+                    restaurerBouton.setPadding(new Insets(4, 10, 4, 10));
                     restaurerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlRestaurerTache(this.modeleBureau, tache));
                     restaurerBouton.getStyleClass().add("btnElementArchive");
 
@@ -200,6 +203,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
                     supprimerBouton.getStyleClass().add("btnElementArchive");
 
                     Button restaurerBouton = new Button("Restaurer");
+                    restaurerBouton.setPadding(new Insets(4, 10, 4, 10));
                     restaurerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlRestaurerSection(this.modeleBureau, section));
                     restaurerBouton.getStyleClass().add("btnElementArchive");
 

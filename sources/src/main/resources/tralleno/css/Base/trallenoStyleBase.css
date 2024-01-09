@@ -238,6 +238,8 @@
     -fx-background-color: #CACACA;
     -fx-padding: 10 10 10 10;
     -fx-pref-width: 150px;
+    -fx-text-fill: #585858;
+    -fx-font-weight: bold;
 }
 
 .BtnSectionSelected{
@@ -253,6 +255,8 @@
     -fx-background-color: #CACACA;
     -fx-padding: 10 10 10 10;
     -fx-pref-width: 150px;
+    -fx-text-fill: #585858;
+    -fx-font-weight: bold;
 }
 
 .tacheEtBoutons{
@@ -329,4 +333,3 @@
 .gridSelectionGantt{
     -fx-background-color: blue;
 }
->>>>>>> e03147488e177f20e4c06494f8adccd7fa562cdc

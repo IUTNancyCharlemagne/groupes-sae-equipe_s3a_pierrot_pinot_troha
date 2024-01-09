@@ -104,14 +104,12 @@ public class ModeleBureau implements Sujet, Serializable {
     /**
      * Permet d'ajouter une tâche à la section courante (this.sectionCourante)
      */
-    public void ajouterTache() {
-        for (Section section : this.sections) {
-            if (section.equals(this.sectionCourante)) {
-                section.ajouterTache(this.tacheCourante);
-                this.tacheCourante.setSectionParente(this.sectionCourante);
-                break;
-            }
-        }
+    public void ajouterTache(int position) {
+        System.out.println("POSITION " + position);
+        this.sectionCourante.getTaches().add(position, this.tacheCourante);
+
+        this.tacheCourante.setSectionParente(this.sectionCourante);
+
         this.notifierObservateurs();
     }
 
@@ -206,12 +204,23 @@ public class ModeleBureau implements Sujet, Serializable {
      *
      * @param section
      */
-    public void changerSection(Section section) {
-        this.tacheCourante.getSectionParente().supprimerTache(this.tacheCourante); // On supprime la tâche de la section dans laquelle est est actuellement
-        // Puis on l'ajoute à la nouvelle section
-        this.sectionCourante = section;
-        this.ajouterTache();
-        this.tacheCourante.setSectionParente(section);
+    public void changerSection(Section section, int position) {
+        Section sectionParente = this.tacheCourante.getSectionParente();
+        if(section == this.tacheCourante.getSectionParente()){// Pour le drag and drop, il faut vérifier
+            int positionActuelle = sectionParente.getTaches().indexOf(this.tacheCourante);
+            if(positionActuelle < position && sectionParente.getTaches().contains(this.tacheCourante))
+                position -= 1;
+            this.tacheCourante.getSectionParente().getTaches().remove(this.tacheCourante);
+            sectionParente.getTaches().remove(this.tacheCourante);
+            sectionParente.getTaches().add(position, this.tacheCourante);
+        }else{
+            // Puis on l'ajoute à la nouvelle section
+            this.sectionCourante = section;
+            this.ajouterTache(position);
+            this.tacheCourante.setSectionParente(section);
+
+            sectionParente.getTaches().remove(this.tacheCourante); // On supprime la tâche de la section dans laquelle est est actuellement
+        }
 
         // Mettre à jour récursivement la section parente pour les sous-tâches
         mettreAJourSousTachesSection(this.tacheCourante, section);
@@ -286,6 +295,20 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
     /**
+     * Retourne la section associée à l'id passé en paramètre
+     * @param id
+     * @return
+     */
+    public Section getSectionParId(int id) {
+        for (Section section : sections) {
+            if(section.getId() == id){
+                return section;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Méthode récursive qui descend jusqu'en bas des sous-tâches d'une tâche
      * pour trouver la tâche qui correspond via l'id passé en paramètres.
      *
@@ -345,7 +368,9 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
     public boolean isSupprimee_Section(Section s) {
-        return this.sections.contains(s) || this.sectionsArchivees.contains(s);
+        System.out.println("This.sections.contains(s) " + this.sections.contains(s));
+        System.out.println("this.sectionsArchivees.contains(s) " + this.sectionsArchivees.contains(s));
+        return !(this.sections.contains(s) || this.sectionsArchivees.contains(s));
     }
 
     /**
@@ -368,12 +393,10 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
-
     /**
-     * Méthode qui permet de supprimer la tacheCourante, cela a pour conséquence de supprimer
-     * toutes les dépendances chronologiques qu'elle pourrait avoir avec des autres tâches
+     * Supprime toutes les dépendances chronologiques de la tâche courante
      */
-    public void supprimerTache() {
+    public void supprimerDependances(){
         Set<Tache> listeTachesQuiOntDesDependances = this.dependances.keySet();
         //on stock les tâches qui n'ont plus de dépendances dans cette liste pour les supprimer après le parcours de
         // la liste de tâches qui ont des dépendances sinon ça pose problème
@@ -404,6 +427,14 @@ public class ModeleBureau implements Sujet, Serializable {
         //on retire les dépendances de la tâche à supprimer
         this.dependances.remove(this.tacheCourante);
 
+    }
+
+    /**
+     * Méthode qui permet de supprimer la tacheCourante, cela a pour conséquence de supprimer
+     * toutes les dépendances chronologiques qu'elle pourrait avoir avec des autres tâches
+     */
+    public void supprimerTache() {
+        this.supprimerDependances();
         //on regarde si la section de la tâche est archivée ou si la tâche est archivée ou non
         if (isArchivee_Section(this.tacheCourante.getSectionParente())) { //si la section est archivée
             // La tâche n'est pas contenue directement dans sa section parente. Elle est uniquement dans tachesArchivees
@@ -534,13 +565,16 @@ public class ModeleBureau implements Sujet, Serializable {
      * laquelle elle se trouvait avant d'être archivée
      */
     public void restaurerTache() {
+        System.out.println("COUCOU TRIPLE MONSTRE");
         Section sectionParente = this.tacheCourante.getSectionParente();
         this.sectionCourante = sectionParente;
         if (!isSupprimee_Section(sectionParente)) {
+            System.out.println("SECTION PAS SUPPRIMEE");
             if (!isArchivee_Section(sectionParente)) { //si la section est dans son état normal
                 ajouterTacheDansSection();
             } else { //si la section est archivée
                 //on restaure la section
+                System.out.println("COUCOU MONSTRE");
                 restaurerSection();
                 ajouterTacheDansSection();
             }
@@ -549,6 +583,8 @@ public class ModeleBureau implements Sujet, Serializable {
             this.sections.add(sectionParente);
             ajouterTacheDansSection();
         }
+        this.tachesArchivees.remove(this.tacheCourante);
+        this.notifierObservateurs();
     }
 
     /**
@@ -557,6 +593,34 @@ public class ModeleBureau implements Sujet, Serializable {
     public void restaurerSection() {
         this.sectionsArchivees.remove(this.sectionCourante);
         this.sections.add(this.sectionCourante);
+        this.notifierObservateurs();
+    }
+
+    /**
+     * Méthode qui permet de retourner la liste des tâches pour lesquelles une dépendance avec la tâche actuelle est possible
+     * @param dateDebut
+     * @return
+     */
+    public List<Tache> getTachesDisponibles(LocalDate dateDebut){
+        List<Tache> tachesDisponibles = new ArrayList<Tache>();
+        System.out.println("Date debut dans getTachesDisponibles  " + dateDebut);
+        if(!(dateDebut == null)){
+            System.out.println("Date début : " + dateDebut);
+            List<Tache> taches = this.getTaches();
+            System.out.println("Taille getTaches " + taches.size() );
+            // puis si on est dans le cas où la tâche est en train d'être modifiée et pas encore créée, alors
+            if(this.tacheCourante != null){
+                taches.remove(this.tacheCourante);
+            }
+            for(Tache t : taches){
+                if(t.getDateFin().isBefore(dateDebut)){
+                    System.out.println(t.getDateFin() + " is before ? " + dateDebut);// Si la date de fin de la tâche est avant la date de début de la tâche en paramètre
+                    tachesDisponibles.add(t);
+                }
+            }
+        }
+        System.out.println("Taille tachesDisponibles : " + tachesDisponibles.size());
+        return tachesDisponibles;
     }
 
     /**

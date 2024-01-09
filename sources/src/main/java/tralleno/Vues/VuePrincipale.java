@@ -53,7 +53,7 @@ public class VuePrincipale implements Serializable {
 
 
     /**
-     * A
+     * Fenêtre de base de l'application
      */
     private final Stage primaryStage;
 
@@ -142,7 +142,9 @@ public class VuePrincipale implements Serializable {
         this.modeleBureau.notifierObservateurs();
     }
 
-    // Nouvelle méthode pour afficher le menu d'archivage avec animation
+    /**
+     * Nouvelle méthode pour afficher le menu d'archivage avec animation
+     */
     public void afficherArchivage() {
         if (!vueArchivage.isVisible()) {
             conteneurPrincipal.setRight(vueArchivage); // Ajoute la VBox à droite du BorderPane
@@ -151,8 +153,9 @@ public class VuePrincipale implements Serializable {
             vueArchivage.setVisible(true);
         }
     }
-
-    // Nouvelle méthode pour cacher le menu d'archivage avec animation
+    /**
+     * Nouvelle méthode pour cacher le menu d'archivage avec animation
+     */
     public void cacherArchivage() {
         if (vueArchivage.isVisible()) {
             cacherMenuTransition.play();
@@ -161,7 +164,9 @@ public class VuePrincipale implements Serializable {
         }
     }
 
-    // Méthode pour afficher ou cacher le menu d'archivage en fonction de son état actuel
+    /**
+     * Méthode pour afficher ou cacher le menu d'archivage en fonction de son état actuel
+     */
     public void afficherOuCacherArchivage() {
         if (vueArchivage.isVisible()) {
             cacherArchivage();

@@ -50,14 +50,18 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
         ArrayList<Tache> listTache = (ArrayList<Tache>) this.modele.getTaches();
         int colonne = 0;
         int ligne = 0;
-        Label templab;
+        VBox tempVB;
+        Label tempLabSection;
+        Label tempLabTitre;
         CheckBox tempCheck;
 
         ArrayList<Tache> listeTacheSelectionne= (ArrayList<Tache>) this.modele.getSelectionTacheGantt();
 
         for (Tache t : listTache) {
 
-            templab=new VueTacheSelection(t);
+            tempVB=new VBox();
+            tempLabSection=new Label(t.getSectionParente().getNom());
+            tempLabTitre=new Label(t.getTitre());
             tempCheck=new CheckBox();
             templab.setMinWidth(100);
             templab.setFont(new Font(25));

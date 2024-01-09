@@ -275,3 +275,20 @@
     -fx-text-fill: #585858;
     -fx-font-weight: bold;
 }
+.checkboxSelectionTacheGantt{
+
+    -fx-border-color: #585858 ;
+
+    -fx-padding: 1 1 1 1;
+}
+.checkboxSelectionTacheGantt:selected .box{
+    -fx-background-color: #585858;
+}
+.checkboxSelectionTacheGantt .box{
+    -fx-background-color: #CACACA;
+}
+
+.boutonGenererGantt{
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}

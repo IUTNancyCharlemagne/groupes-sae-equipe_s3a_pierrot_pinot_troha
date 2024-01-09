@@ -43,25 +43,32 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
             this.vp.changerVue(3);
         });
         //gp.setGridLinesVisible(true);
-        gp.setVgap(4);
+        gp.setVgap(5);
+        gp.setHgap(5);
         gp.setPadding(new Insets(10));
         gp.getStyleClass().add("gridSelectionGantt");
         b.getStyleClass().add("boutonGenererGantt");
         ArrayList<Tache> listTache = (ArrayList<Tache>) this.modele.getTaches();
         int colonne = 0;
         int ligne = 0;
-        Label templab;
+        VBox tempVB;
+        Label tempLabSection;
+        Label tempLabTitre;
         CheckBox tempCheck;
 
         ArrayList<Tache> listeTacheSelectionne= (ArrayList<Tache>) this.modele.getSelectionTacheGantt();
 
         for (Tache t : listTache) {
 
-            templab=new VueTacheSelection(t);
+            tempVB=new VBox();
+            tempLabSection=new Label(t.getSectionParente().getNom());
+            tempLabTitre=new Label(t.getTitre());
             tempCheck=new CheckBox();
-            templab.setMinWidth(100);
-            templab.setFont(new Font(25));
-            templab.getStyleClass().add("labelSelectionTacheGantt");
+            tempVB.getChildren().addAll(tempLabTitre,tempLabSection);
+            tempVB.setMinWidth(100);
+            tempVB.getStyleClass().add("containerSelectionTacheGantt");
+            tempLabSection.getStyleClass().add("labelSelectionTacheSectionGantt");
+            tempLabTitre.getStyleClass().add("labelSelectionTacheTitreGantt");
             tempCheck.getStyleClass().add("checkboxSelectionTacheGantt");
             tempCheck.setGraphicTextGap(ligne);
             if(listeTacheSelectionne.contains(t)){
@@ -76,7 +83,7 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
                     this.modele.removeSelectionTacheGantt(tacheCheck);
                 }
             });
-            gp.add(templab, colonne, ligne);
+            gp.add(tempVB, colonne, ligne);
             gp.add(tempCheck,colonne+1,ligne);
             ligne++;
         }

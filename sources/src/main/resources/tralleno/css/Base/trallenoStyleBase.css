@@ -294,3 +294,39 @@
     -fx-font-weight: bold;
     -fx-background-color: #CACACA;
 }
+.checkboxSelectionTacheGantt{
+
+    -fx-border-color: #585858 ;
+
+    -fx-padding: 1 1 1 1;
+}
+.checkboxSelectionTacheGantt:selected .box{
+    -fx-background-color: #585858;
+}
+.checkboxSelectionTacheGantt .box{
+    -fx-background-color: #CACACA;
+}
+
+.boutonGenererGantt{
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+.containerSelectionTacheGantt{
+    -fx-padding:0.5em;
+    -fx-spacing: 0.5em;
+    -fx-border-color: #585858;
+    -fx-border-width: 1px;
+}
+.labelSelectionTacheSectionGantt{
+
+    -fx-text-fill: green;
+}
+.labelSelectionTacheTitreGantt{
+    -fx-font-size: 1.5em;
+    -fx-text-fill: yellow;
+
+}
+.gridSelectionGantt{
+    -fx-background-color: blue;
+}
+>>>>>>> e03147488e177f20e4c06494f8adccd7fa562cdc

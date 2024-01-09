@@ -613,10 +613,13 @@ public class ModeleBureau implements Sujet, Serializable {
                 taches.remove(this.tacheCourante);
             }
             for(Tache t : taches){
-                if(t.getDateFin().isBefore(dateDebut)){
-                    System.out.println(t.getDateFin() + " is before ? " + dateDebut);// Si la date de fin de la tâche est avant la date de début de la tâche en paramètre
-                    tachesDisponibles.add(t);
+                if(t.getDateFin() != null){
+                    if(t.getDateFin().isBefore(dateDebut)){
+                        System.out.println(t.getDateFin() + " is before ? " + dateDebut);// Si la date de fin de la tâche est avant la date de début de la tâche en paramètre
+                        tachesDisponibles.add(t);
+                    }
                 }
+
             }
         }
         System.out.println("Taille tachesDisponibles : " + tachesDisponibles.size());

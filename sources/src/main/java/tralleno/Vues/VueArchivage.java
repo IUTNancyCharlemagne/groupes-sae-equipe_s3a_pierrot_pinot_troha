@@ -2,6 +2,7 @@ package tralleno.Vues;
 
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -51,8 +52,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
         this.sectionsArchivees.getStyleClass().add("BtnArchivageNotSelected");
         this.boutonCourant = this.tachesArchivees;
         boutonsTachesSection.getChildren().addAll(this.tachesArchivees, this.sectionsArchivees);
-        boutonsTachesSection.setSpacing(30);
-        boutonsTachesSection.setPadding(new Insets(0, 30, 0, 30));
+
 
         this.vueListe = new ListView<>();
         this.vueListe.getStyleClass().add("tousLesElementsArchives");
@@ -133,14 +133,14 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
     public void changerClasseCSSBoutons(){
         if(this.boutonCourant.equals(this.tachesArchivees)){
             this.tachesArchivees.getStyleClass().clear();
-            this.tachesArchivees.getStyleClass().add("BtnArchivageNotSelected");
+            this.tachesArchivees.getStyleClass().add("BtnTacheNotSelected");
             this.sectionsArchivees.getStyleClass().clear();
-            this.sectionsArchivees.getStyleClass().add("BtnArchivageSelected");
+            this.sectionsArchivees.getStyleClass().add("BtnSectionSelected");
         }else{
             this.tachesArchivees.getStyleClass().clear();
-            this.tachesArchivees.getStyleClass().add("BtnArchivageSelected");
+            this.tachesArchivees.getStyleClass().add("BtnTacheSelected");
             this.sectionsArchivees.getStyleClass().clear();
-            this.sectionsArchivees.getStyleClass().add("BtnArchivageNotSelected");
+            this.sectionsArchivees.getStyleClass().add("BtnSectionNotSelected");
         }
     }
 
@@ -182,20 +182,28 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
                 ListIterator<Section> iterateur = this.modeleBureau.getSectionsArchivees().listIterator(this.modeleBureau.getSectionsArchivees().size());
                 while(iterateur.hasPrevious()) {
                     Section section = iterateur.previous();
-                    VBox tacheBox = creerTache(section.getNom(), "SECTION");
+                    VBox tacheBox = creerTache(section.getNom(), "");
+                    tacheBox.getStyleClass().add("titreTacheArchivee");
 
                     // Bouton pour supprimer la tâche
                     Button supprimerBouton = new Button("Supprimer");
                     supprimerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlSupprimerSection(this.modeleBureau, section, null));
+                    supprimerBouton.getStyleClass().add("btnElementArchive");
 
                     Button restaurerBouton = new Button("Restaurer");
                     restaurerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlRestaurerSection(this.modeleBureau, section));
+                    restaurerBouton.getStyleClass().add("btnElementArchive");
 
                     VBox boutons = new VBox();
                     boutons.getChildren().addAll(supprimerBouton, restaurerBouton);
+                    boutons.setSpacing(2);
+                    boutons.getStyleClass().add("conteneurBoutons");
 
                     HBox element = new HBox();
                     element.getChildren().addAll(tacheBox, boutons);
+                    element.setPadding(new Insets(5));
+                    element.setSpacing(10);
+                    element.getStyleClass().add("tacheEtBoutons");
 
                     vueListe.getItems().add(element);
                 }

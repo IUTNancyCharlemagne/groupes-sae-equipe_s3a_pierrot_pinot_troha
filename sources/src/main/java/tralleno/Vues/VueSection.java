@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.input.*;
 import javafx.scene.layout.VBox;
@@ -38,12 +39,14 @@ public class VueSection extends VBox implements Observateur, Serializable {
         this.section = section;
 
         setMinHeight(50);
-        setPrefWidth(200);
+        setPrefWidth(250);
+
         setSpacing(10);
         setPadding(new Insets(10));
         getStyleClass().add("section");
 
 
+        System.out.println("LARGEUR : " + this.section.getNom() + " " + this.getWidth());
         actualiser(modele);
 
     }
@@ -61,7 +64,7 @@ public class VueSection extends VBox implements Observateur, Serializable {
         String nom = section.getNom();
 
         String nomAbrege = nom.length() > 30 ? nom.substring(0, 30) + "..." : nom;
-        Label labelSection = new Label(nom);
+        Label labelSection = new Label(nomAbrege);
         labelSection.setAlignment(Pos.CENTER);
         labelSection.getStyleClass().add("nomSection");
 
@@ -90,6 +93,7 @@ public class VueSection extends VBox implements Observateur, Serializable {
             Dragboard dragboard = sect.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
             content.putString((String.valueOf(section.getId()))); // Ajoutez ici l'identifiant de la section
+            content.putImage(sect.snapshot(new SnapshotParameters(), null));
             dragboard.setContent(content);
             event.consume();
         });
@@ -148,7 +152,7 @@ public class VueSection extends VBox implements Observateur, Serializable {
         // On récupère la position de la souris
         double mouseY = event.getY();
 
-        // On récupère la liste de chause VueTache dans la VueSection
+        // On récupère la liste de chauque VueTache dans la VueSection
         ObservableList<Node> tachesVisuelles = this.getChildren();
 
         // Et on les parcourt pour trouver l'endroit d'insertion

@@ -1,10 +1,7 @@
 package tralleno.Vues;
 
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -25,7 +22,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ListIterator;
-import java.util.Set;
 
 public class VueArchivage extends VBox implements Observateur, Serializable{
 

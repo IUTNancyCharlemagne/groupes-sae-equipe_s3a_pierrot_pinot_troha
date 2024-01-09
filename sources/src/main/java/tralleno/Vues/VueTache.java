@@ -51,6 +51,7 @@ public class VueTache extends TitledPane implements Observateur {
      */
     public VueTache(Tache tache, ModeleBureau modeleBureau, TacheMere tacheParente) {
         super();
+        setPrefWidth(150);
         this.setExpanded(true);
         this.tache = tache;
         this.sousTachesBox = new VBox();
@@ -70,8 +71,9 @@ public class VueTache extends TitledPane implements Observateur {
         ModeleBureau modeleBureau = (ModeleBureau) s;
 
         Label titreLabel = new Label(tache.getTitre());
+        titreLabel.setMaxWidth(150);
+        titreLabel.setWrapText(false);
         titreLabel.setFont(Font.font(14));
-        titreLabel.setWrapText(true);
         titreLabel.getStyleClass().add("titreTache");
 
         Button modifierButton = new Button("...");
@@ -92,8 +94,9 @@ public class VueTache extends TitledPane implements Observateur {
         contenuTache.getStyleClass().add("contenuTache");
 
         Label descriptionLabel = new Label(tache.getDescription());
+        descriptionLabel.setMaxWidth(150);
+        descriptionLabel.setWrapText(false);
         descriptionLabel.getStyleClass().add("descriptionLabel");
-        descriptionLabel.setWrapText(true);
 
         contenuTache.getChildren().addAll(descriptionLabel, sousTachesBox);
         this.setContent(contenuTache);
@@ -110,6 +113,7 @@ public class VueTache extends TitledPane implements Observateur {
                 VBox.setMargin(vueSousTache, new Insets(0, 0, 5, 0)); // marge : haut, droite, bas, gauche
             }
         }
+
 
 
         // Écouteur pour le drag and drop des tâches/sous-tâches

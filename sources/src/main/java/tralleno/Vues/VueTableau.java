@@ -2,6 +2,7 @@ package tralleno.Vues;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
@@ -62,12 +63,60 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
                 sectionPane.getChildren().add(vueSection);
                 sectionPane.setMaxHeight(Region.USE_PREF_SIZE);
 
+
+
                 containerSections.getChildren().add(sectionPane);
             }
 
             setContent(containerSections);
+
+            // Pour pouvoir glisser déposer les sections contenues dans les Pane
+            setOnDragOver(event -> {
+                if (event.getGestureSource() instanceof Pane) { // Comme les sections sont dans les Pane parce que c'était obligé faut vérifier Pane et pas VueSection (-30 minutes...)
+                    event.acceptTransferModes(TransferMode.MOVE);
+                    event.consume();
+                }
+            });
+
+            // setOnDragDrop pour le déplacement des sections
+            setOnDragDropped(event -> {
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+
+                if (db.hasString()) {
+                    Section section = this.modeleBureau.getSectionParId(Integer.valueOf(db.getString()));
+                    this.modeleBureau.setSectionCourante(section);
+                    int targetIndex = determinerPositionInsertion(event);
+                    modeleBureau.deplacerSection(targetIndex);
+                    success = true;
+                }
+
+                event.setDropCompleted(success);
+                event.consume();
+            });
         }
+
+
     }
 
+    /**
+     * Méthode qui détermine l'index à laquelle la section est drop
+     * @param event
+     * @return
+     */
+    private int determinerPositionInsertion(DragEvent event) {
+        double mouseX = event.getX();
+        List<Section> sections = modeleBureau.getSections();
+        double sectionWidth = 250;
+
+        for (int i = 0; i < sections.size(); i++) {
+            double sectionX = i * sectionWidth;
+            if (mouseX < sectionX) {
+                return i - 1;
+            }
+        }
+        // sinon la taille
+        return sections.size();
+    }
 }
 

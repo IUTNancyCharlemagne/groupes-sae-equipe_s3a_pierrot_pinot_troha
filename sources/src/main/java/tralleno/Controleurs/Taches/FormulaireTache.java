@@ -3,6 +3,7 @@ package tralleno.Controleurs.Taches;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -236,6 +237,8 @@ public class FormulaireTache implements Serializable {
             // Puis le bouton final pour créer la tâche
             boutonActionTache.setText("Créer");
             boutonActionTache.getStyleClass().add("Btn");
+            VBox boutonContainer = new VBox(boutonActionTache);
+            boutonContainer.setAlignment(Pos.CENTER);
 
             // avant d'activer le click sur le bouton, il faut que certains champs soient remplis
             // C'est à dire le nom et la description de la tâche
@@ -248,7 +251,7 @@ public class FormulaireTache implements Serializable {
 
             layout.getChildren().addAll(titreTache, champTitre, labelDescription, champDescription,
                     choixSection, comboSection, choixDate,tachesAvant, dependances,
-                    listViewTachesAvant, boutonActionTache);
+                    listViewTachesAvant, boutonContainer);
 
         }else{
 
@@ -267,12 +270,15 @@ public class FormulaireTache implements Serializable {
 
             boutonActionTache.setText("Modifier");
             boutonActionTache.getStyleClass().add("Btn");
+            VBox boutonContainer = new VBox(boutonActionTache);
+            boutonContainer.setAlignment(Pos.CENTER);
 
             Button boutonSupprimerTache = new Button("Supprimer la tâche");
             boutonSupprimerTache.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlSupprimerTache(modeleBureau, tacheAModifier, fenetreActionTache));
             boutonSupprimerTache.getStyleClass().add("Btn");
 
             HBox actions = new HBox(10);
+            actions.setAlignment(Pos.CENTER);
             actions.getChildren().add(boutonSupprimerTache);
 
 
@@ -302,7 +308,7 @@ public class FormulaireTache implements Serializable {
             }else{
                 layout.getChildren().addAll(titreTache, champTitre, labelDescription, champDescription,
                         choixDate,tachesAvant, dependances,
-                        listViewTachesAvant, actions, boutonActionTache);
+                        listViewTachesAvant, actions, boutonContainer);
             }
 
 

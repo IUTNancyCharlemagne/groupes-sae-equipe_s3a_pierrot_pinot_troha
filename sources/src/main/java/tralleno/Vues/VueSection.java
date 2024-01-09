@@ -1,11 +1,11 @@
 package tralleno.Vues;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.VBox;
 import tralleno.Controleurs.Sections.ControlModifSection;
 import tralleno.Modele.ModeleBureau;
@@ -85,22 +85,26 @@ public class VueSection extends VBox implements Observateur, Serializable {
         }
 
 
+        // Drag and drop pour déplacer les sections entre elles et modifier leur place sur le tableau
+        sect.setOnDragDetected(event -> {
+            Dragboard dragboard = sect.startDragAndDrop(TransferMode.MOVE);
+            ClipboardContent content = new ClipboardContent();
+            content.putString((String.valueOf(section.getId()))); // Ajoutez ici l'identifiant de la section
+            dragboard.setContent(content);
+            event.consume();
+        });
+
+
+
         // gestion du drag over, quand on passe la tâche au dessus de la vueSection.
         // Avec ça on peut empecher le dépot d'une tâche à certains endroits
         this.setOnDragOver(event -> {
             if (event.getGestureSource() instanceof VueTache) {
-                // Vérifie si la section sur laquelle on veut dropper est la même que la section parente de la tâche
-                // SI c'est le cas on interdit le drop (car aucune utilité et complique)
-                // Donc on vérifie si la tâche est directement contenue dans la section
-                // Si c'est le cas, elle n'est pas sous-tâche, et n'a donc pas d'intérêt à être déplacée
-                // En revanche si c'est la sous-tâche d'une tâche de la section, on peut la déplacer
-                if ((modeleBureau.getTacheCourante().getSectionParente().getId() == this.section.getId()) && (this.section.getTaches().contains(modeleBureau.getTacheCourante()))) {
-                    event.acceptTransferModes(TransferMode.NONE); // Rejette le drop si c'est dans la même section
-                    event.consume();
-                } else { // Sinon on accepte de recevoir des tâches
+                // Lorsqu'on essaye de déplacer une tâche qui est déjà à la fin, à la fin... (pas logique)
+                    // Sinon on accepte de recevoir des tâches
                     event.acceptTransferModes(TransferMode.MOVE);
+                    int cibleIndex = determinerPositionMettreTache(event);
                     event.consume();
-                }
             }
         });
 
@@ -115,8 +119,15 @@ public class VueSection extends VBox implements Observateur, Serializable {
                     TacheMere tacheParente = (TacheMere) modeleBureau.getTacheParId(idTacheParente);
                     tacheParente.supprimerSousTache(modeleBureau.getTacheCourante());
                 }
-                modeleBureau.changerSection(section);
-
+                // On récupère l'index de l'endroit dans la section où la tâche est déposée
+                int cibleIndex = determinerPositionMettreTache(event);
+                if (cibleIndex != -1) {
+                    // Si c'est différent de -1 ça veut dire qu'il y a une position spécifique, donc on ajoute à la bonne position avec une méthode du modèle (pour le notifier observateurs)
+                    modeleBureau.changerSection(section, cibleIndex);
+                } else {
+                    // Sinon, on ajoute à la fin de la section, donc à l'index = à la taille (en dernière place)
+                    modeleBureau.changerSection(section, this.section.getTaches().size());
+                }
                 success = true;
             }
 
@@ -124,4 +135,39 @@ public class VueSection extends VBox implements Observateur, Serializable {
             event.consume();
         });
     }
+
+    /**
+     * Permet de déteminer la position dans la section à laquelle la tâche devra être insérée
+     * @param event
+     * @return
+     */
+    private int determinerPositionMettreTache(DragEvent event) {
+        // au cas où on trouve rien on le met à -1
+        int index = -1;
+
+        // On récupère la position de la souris
+        double mouseY = event.getY();
+
+        // On récupère la liste de chause VueTache dans la VueSection
+        ObservableList<Node> tachesVisuelles = this.getChildren();
+
+        // Et on les parcourt pour trouver l'endroit d'insertion
+        for (int i = 0; i < tachesVisuelles.size(); i++) {
+            Node tacheVisuelle = tachesVisuelles.get(i);
+
+            double tacheY = tacheVisuelle.getBoundsInParent().getMinY();
+
+            if (mouseY < tacheY) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1) {
+            index = tachesVisuelles.size();
+        }
+
+        return index - 1;
+    }
+
 }

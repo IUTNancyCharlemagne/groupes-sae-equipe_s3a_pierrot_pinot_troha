@@ -66,6 +66,13 @@ public class FormulaireTache implements Serializable {
         choixDate.getChildren().addAll(labelDateDebut, dateDebut, labelDateFin, dateFin);
         choixDate.getStyleClass().add("conteneurDates");
 
+        if(tacheAModifier != null){ // On doit le faire avant l'afficher de tachesDisponibles()
+            // On pré-remplit aussi les dates
+            // On met également les valeurs connues de la tâche à l'intérieur de chaque DatePicker
+            dateDebut.setValue(tacheAModifier.getDateDebut());
+            dateFin.setValue(tacheAModifier.getDateFin());
+        }
+
 
         // Vérification de la date de début et de fin
         dateDebut.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -92,6 +99,7 @@ public class FormulaireTache implements Serializable {
         List<Tache> taches = modeleBureau.getTachesDisponibles(dateDebut.getValue());
         ObservableList<Tache> tachesAFaireAvant = FXCollections.observableArrayList(taches);
         ComboBox<Tache> comboTaches = new ComboBox<>(tachesAFaireAvant);
+        comboTaches.setPrefWidth(100);
         comboTaches.getStyleClass().add("comboBox");
 
         // Bouton pour supprimer la tâche qu'on a selectionnée dans la viewlist
@@ -121,8 +129,6 @@ public class FormulaireTache implements Serializable {
                 listViewTachesAvant.getItems().removeIf(tache -> tache.getDateFin().isAfter(nouvelleDateDebut));
             }
         });
-
-
 
 
         // EventHandler pour que la liste des tâches select se mette à jour
@@ -186,7 +192,7 @@ public class FormulaireTache implements Serializable {
 
                     // On récupère la section choisie en tant qu'objet
                     modeleBureau.setSectionCourante(sectionChoisie);
-                    modeleBureau.ajouterTache();
+                    modeleBureau.ajouterTache(sectionChoisie.getTaches().size());
                 }
 
 
@@ -252,10 +258,7 @@ public class FormulaireTache implements Serializable {
             champDescription.setText(tacheAModifier.getDescription());
             champDescription.getStyleClass().add("champTexteTache");
 
-            // On pré-remplit aussi les dates
-            // On met également les valeurs connues de la tâche à l'intérieur de chaque DatePicker
-            dateDebut.setValue(tacheAModifier.getDateDebut());
-            dateFin.setValue(tacheAModifier.getDateFin());
+
 
 
             List<Tache> dependancesTacheCourante = modeleBureau.getDependancesTache(); // Récupère la liste des dépendances de la tâche actuelle

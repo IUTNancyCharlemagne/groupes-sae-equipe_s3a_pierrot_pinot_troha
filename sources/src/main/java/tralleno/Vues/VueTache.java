@@ -178,6 +178,7 @@ public class VueTache extends TitledPane implements Observateur {
                         modeleBureau.getTacheCourante().setDateDebut(null);
                         modeleBureau.getTacheCourante().setDateFin(null);
                         modeleBureau.getTacheCourante().setDuree(1);
+                        modeleBureau.supprimerDependances();// Car une sous-tâche ne peut pas avoir de dépendances
                         modeleBureau.notifierObservateurs();
                         success = true;
                     }

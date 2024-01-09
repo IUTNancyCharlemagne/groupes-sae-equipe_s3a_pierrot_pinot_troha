@@ -115,7 +115,7 @@
 }
 
 .vueTableau{
-    -fx-background-color: black;
+    -fx-background-color: #CACACA;
 }
 
 .containerSections{
@@ -187,30 +187,45 @@
 /* Archivage */
 
 .archivage{
-    /*-fx-background-color: black;*/
+    -fx-background-color: #A3A3A3;
     -fx-border-width: 3px;
-    -fx-border-color: blue;
+    -fx-border-color: #7E7E7E;
 }
 
 .tousLesElementsArchives{
-    -fx-background-color: red;
+    -fx-background-color: #A3A3A3;
 }
 
-.tousLesElementsArchives .list-cell{ /* fond de chaque cellule de la vBox */
-    -fx-background-color: black;
+.tousLesElementsArchives .list-view .virtual-flow {
+    -fx-cell-background: blue;
+}
+.tousLesElementsArchives .list-cell{ /* fond de chaque cellule de la vBox (ListView) */
+    -fx-background-color: #A3A3A3;
 }
 
-.choixElementsArchives{
-    -fx-border-color: #F0F0F0;
+.boutonsTachesSection{
+    -fx-background-color: #CACACA;
+}
+
+.BtnArchivageSelected{
+    -fx-background-color: #A3A3A3;
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
-    -fx-background-color: #7E7E7E;
+    -fx-border-color: #A3A3A3;
     -fx-text-fill: #F0F0F0;
     -fx-font-weight: bold;
+    -fx-padding: 0 10 0 10;
+}
+
+.BtnArchivageNotSelected{
+    -fx-background-color: #CACACA;
+    -fx-border-color: #A3A3A3;
+    -fx-padding: 0 10 0 10;
 }
 
 .tacheEtBoutons{
-    -fx-background-color: yellow;
+    -fx-background-color: #CACACA;
+    -fx-background-radius: 5px;
 }
 
 .nomEtDescriptionTacheArchivee{
@@ -218,23 +233,34 @@
 }
 
 .conteneurBoutons{
-    -fx-background-color: black;
+    /*-fx-background-color: black;*/
 }
 
 .btnElementArchive{
-    -fx-background-color: green;
+    -fx-background-color: #7E7E7E;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F0F0F0;
+}
+
+.btnElementArchive:hover{
+    -fx-background-color: #A3A3A3;
 }
 
 .texteBox{
-    -fx-background-color: orange;
+    -fx-background-color: #CACACA;
     -fx-pref-width: 190px;
-    -fx-pref-height: 200px;
+    -fx-pref-height: 55px;
+    -fx-border-color: #7E7E7E;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
 }
 
 .titreTacheArchivee{
-    -fx-background-color: brown;
+    -fx-text-fill: #585858;
+    -fx-font-weight: bold;
 }
 
 .descriptionTacheAbregee{
-    -fx-background-color: pink;
+    -fx-text-fill: #585858;
+    -fx-font-weight: bold;
 }

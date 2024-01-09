@@ -39,25 +39,39 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
         this.modeleBureau = modeleBureau;
 
         // On crée deux boutons, pour voir les tâches archivées ou les sections archivées
-        //HBox boutons;
+        HBox boutonsTachesSection = new HBox();
+        boutonsTachesSection.getStyleClass().add("boutonsTachesSection");
         this.tachesArchivees = new Button("Tâches Archivées");
+        this.tachesArchivees.getStyleClass().clear();
+        this.tachesArchivees.getStyleClass().add("BtnArchivageSelected");
         this.sectionsArchivees = new Button("Sections Archivées");
+        this.sectionsArchivees.getStyleClass().clear();
+        this.sectionsArchivees.getStyleClass().add("BtnArchivageNotSelected");
         this.boutonCourant = this.tachesArchivees;
-
+        boutonsTachesSection.getChildren().addAll(this.tachesArchivees, this.sectionsArchivees);
+        boutonsTachesSection.setSpacing(30);
+        boutonsTachesSection.setPadding(new Insets(0, 30, 0, 30));
 
         this.vueListe = new ListView<>();
         this.vueListe.getStyleClass().add("tousLesElementsArchives");
         VBox.setVgrow(this.vueListe, Priority.ALWAYS);
-        this.getChildren().addAll(tachesArchivees, sectionsArchivees, vueListe);
+        this.getChildren().addAll(boutonsTachesSection, vueListe);
 
         // 1er appel avant que la Vue soit sérialisée
         this.tachesArchivees.setOnAction(event -> {
+            if(!(this.boutonCourant.equals(this.tachesArchivees))){
+                this.changerClasseCSSBoutons();
+            }
             this.boutonCourant = this.tachesArchivees;
             mettreAJourListeArchivage();
         });
         this.sectionsArchivees.setOnAction(event -> {
+            if(!(this.boutonCourant.equals(this.sectionsArchivees))){
+                this.changerClasseCSSBoutons();
+            }
             this.boutonCourant = this.sectionsArchivees;
             mettreAJourListeArchivage();
+
         });
 
         this.actualiser(this.modeleBureau);
@@ -114,6 +128,19 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
         });
     }
 
+    public void changerClasseCSSBoutons(){
+        if(this.boutonCourant.equals(this.tachesArchivees)){
+            this.tachesArchivees.getStyleClass().clear();
+            this.tachesArchivees.getStyleClass().add("BtnArchivageNotSelected");
+            this.sectionsArchivees.getStyleClass().clear();
+            this.sectionsArchivees.getStyleClass().add("BtnArchivageSelected");
+        }else{
+            this.tachesArchivees.getStyleClass().clear();
+            this.tachesArchivees.getStyleClass().add("BtnArchivageSelected");
+            this.sectionsArchivees.getStyleClass().clear();
+            this.sectionsArchivees.getStyleClass().add("BtnArchivageNotSelected");
+        }
+    }
 
 
     private void mettreAJourListeArchivage(){

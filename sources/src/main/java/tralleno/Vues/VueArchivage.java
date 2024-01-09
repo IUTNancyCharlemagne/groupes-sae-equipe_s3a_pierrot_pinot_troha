@@ -20,6 +20,7 @@ import tralleno.Modele.ModeleBureau;
 import tralleno.Modele.Sujet;
 import tralleno.Section.Section;
 import tralleno.Taches.Tache;
+import javafx.scene.control.ScrollPane;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -34,7 +35,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
     private transient Button tachesArchivees, sectionsArchivees;
     private transient Button boutonCourant;
 
-    private transient ListView<HBox> vueListe;
+    private transient VBox vueListe;
 
 
     public VueArchivage(ModeleBureau modeleBureau){
@@ -46,18 +47,26 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
         boutonsTachesSection.getStyleClass().add("boutonsTachesSection");
         this.tachesArchivees = new Button("Tâches Archivées");
         this.tachesArchivees.getStyleClass().clear();
-        this.tachesArchivees.getStyleClass().add("BtnArchivageSelected");
+        this.tachesArchivees.getStyleClass().add("BtnTacheSelected");
         this.sectionsArchivees = new Button("Sections Archivées");
         this.sectionsArchivees.getStyleClass().clear();
-        this.sectionsArchivees.getStyleClass().add("BtnArchivageNotSelected");
+        this.sectionsArchivees.getStyleClass().add("BtnSectionNotSelected");
         this.boutonCourant = this.tachesArchivees;
         boutonsTachesSection.getChildren().addAll(this.tachesArchivees, this.sectionsArchivees);
 
 
-        this.vueListe = new ListView<>();
-        this.vueListe.getStyleClass().add("tousLesElementsArchives");
+        this.vueListe = new VBox();
+        this.vueListe.setPadding(new Insets(15, 3, 0, 3));
+        this.vueListe.setSpacing(5);
+        this.vueListe.getStyleClass().add("listeElementArchive");
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.getStyleClass().add("ScrollPaneArchivage");
+        scrollPane.setContent(this.vueListe);
+
+        //this.vueListe.getStyleClass().add("tousLesElementsArchives");
         VBox.setVgrow(this.vueListe, Priority.ALWAYS);
-        this.getChildren().addAll(boutonsTachesSection, vueListe);
+        this.getChildren().addAll(boutonsTachesSection, scrollPane);
 
         // 1er appel avant que la Vue soit sérialisée
         this.tachesArchivees.setOnAction(event -> {
@@ -115,7 +124,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
         in.defaultReadObject();
         // Il faut que la liste soit réinitialisée après la désérialisation des données de l'application
         // Parce que comme c'est un élément graphique on ne peut pas la sérialiser
-        this.vueListe = new ListView<>();
+        this.vueListe = new VBox();
         this.tachesArchivees = new Button("Tâches Archivées");
         this.sectionsArchivees = new Button("Sections Archivées");
 
@@ -146,7 +155,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
 
 
     private void mettreAJourListeArchivage(){
-        vueListe.getItems().clear();
+        vueListe.getChildren().clear();
         if(this.boutonCourant != null){
             if (this.boutonCourant.equals(this.tachesArchivees)) {
                 // On parcourt les tâches archivées du modèle pour les afficher sous forme d'élément graphique
@@ -176,7 +185,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
                     element.setSpacing(10);
                     element.getStyleClass().add("tacheEtBoutons");
 
-                    vueListe.getItems().add(element);
+                    vueListe.getChildren().add(element);
                 }
             } else if (this.boutonCourant.equals(this.sectionsArchivees)) {
                 ListIterator<Section> iterateur = this.modeleBureau.getSectionsArchivees().listIterator(this.modeleBureau.getSectionsArchivees().size());
@@ -205,7 +214,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
                     element.setSpacing(10);
                     element.getStyleClass().add("tacheEtBoutons");
 
-                    vueListe.getItems().add(element);
+                    vueListe.getChildren().add(element);
                 }
 
             }

@@ -171,8 +171,7 @@
 }
 
 .scroll-bar {
-    -fx-background-color: #CACACA;
-    -fx-border-color: #CACACA;
+    -fx-padding: 2px;
 }
 
 .scroll-bar .thumb {
@@ -182,6 +181,8 @@
 .scroll-bar .increment-button,
 .scroll-bar .decrement-button {
     -fx-background-color: #A3A3A3;
+    -fx-padding: 3px;
+    -fx-background-radius: 2px;
 }
 
 /* Archivage */
@@ -192,11 +193,19 @@
     -fx-border-color: #7E7E7E;
 }
 
-.tousLesElementsArchives{
+.archivage > *{
     -fx-background-color: #A3A3A3;
 }
 
-.tousLesElementsArchives .list-cell{ /* fond de chaque cellule de la vBox (ListView) */
+.ScrollPaneArchivage > *{
+    -fx-background-color: #A3A3A3;
+}
+
+.listeElementArchive{
+    -fx-background-color: #A3A3A3;
+}
+
+.listeElementArchive > *{
     -fx-background-color: #A3A3A3;
 }
 
@@ -237,10 +246,6 @@
 .tacheEtBoutons{
     -fx-background-color: #CACACA;
     -fx-background-radius: 5px;
-}
-
-.nomEtDescriptionTacheArchivee{
-    -fx-background-color: purple;
 }
 
 .conteneurBoutons{

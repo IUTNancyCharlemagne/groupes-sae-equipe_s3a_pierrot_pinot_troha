@@ -118,7 +118,7 @@ public abstract class Tache implements Comparable<Tache>, Serializable {
     public void setDateDebut(LocalDate dateDebut) {
         this.dateDebut = dateDebut;
 
-        if (this.dateDebut != null) {
+        if (this.dateDebut != null && this.dateFin != null) {
             this.duree = (int) ChronoUnit.DAYS.between(this.dateDebut, this.dateFin);
         }
     }
@@ -129,7 +129,7 @@ public abstract class Tache implements Comparable<Tache>, Serializable {
 
     public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
-        if (this.dateDebut != null) {
+        if (this.dateDebut != null && this.dateFin != null) {
             this.duree = (int) ChronoUnit.DAYS.between(this.dateDebut, this.dateFin);
         }
     }

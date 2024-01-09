@@ -1,6 +1,7 @@
 package tralleno.Vues;
 
 import javafx.geometry.Insets;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
@@ -116,6 +117,7 @@ public class VueTache extends TitledPane implements Observateur {
             System.out.println("TACHE QUE JE DRAG : " + this.tache.getId());
             Dragboard dragboard = this.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
+            content.putImage(this.snapshot(new SnapshotParameters(), null));
             // Si la tâche est une sous-tâche, si on la drag and drop dans une autre section, il faudra
             // qu'elle soit supprimée des sous-tâches de sa tâche mère.
             // Donc si la tacheParente vaut null ça veut dire que la tâche actuelle n'a pas de tâcheMere

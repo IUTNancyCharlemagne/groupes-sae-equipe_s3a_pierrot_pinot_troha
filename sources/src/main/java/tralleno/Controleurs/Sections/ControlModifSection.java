@@ -2,6 +2,7 @@ package tralleno.Controleurs.Sections;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -68,12 +69,15 @@ public class ControlModifSection implements EventHandler<MouseEvent> {
         Button archiverSection = new Button("Archiver");
         archiverSection.getStyleClass().add("Btn");
         archiverSection.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlArchiverSection(this.modeleBureau, this.section, fenetreModificationSection));
-        HBox actions = new HBox(10);
 
+        HBox actions = new HBox(10);
         actions.getChildren().addAll(supprimerSection, archiverSection);
+        actions.setAlignment(Pos.CENTER);
 
         Button boutonModifierSection = new Button("Modifier Section");
         boutonModifierSection.getStyleClass().add("Btn");
+        VBox boutonContainer = new VBox(boutonModifierSection);
+        boutonContainer.setAlignment(Pos.CENTER);
 
         // Lorsque le bouton modifier est cliqué, alors on récupère le nouveau nom de la section
         // Et on modifie la section
@@ -84,7 +88,7 @@ public class ControlModifSection implements EventHandler<MouseEvent> {
 
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
-        layout.getChildren().addAll(nomSection, champNom, actions, boutonModifierSection);
+        layout.getChildren().addAll(nomSection, champNom, actions, boutonContainer);
         layout.getStyleClass().add("VBoxFormulaire");
 
         Scene scene = new Scene(layout, 400, 170);

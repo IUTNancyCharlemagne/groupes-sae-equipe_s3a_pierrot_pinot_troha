@@ -9,10 +9,12 @@
 /* pour la couleur du fond de la page (on peut la voir quand il n'y a pas assez de tâches dans une section) */
 /* problème : ça oblige à définir les couleurs de fond de tous les éléments */
 {
-    -fx-background-color: #CACACA
-;
 /*-fx-background-color: red;*/
 /*-fx-background-color: linear-gradient(to bottom, #FF0018, #FFA52C, #FFFF41, #008018, #0000F9, #86007D);*/
+    /*-fx-background-color: #CACACA;*/
+    -fx-background-color: #A3A3A3;
+    /*-fx-background-color: red;*/
+    /*-fx-background-color: linear-gradient(to bottom, #FF0018, #FFA52C, #FFFF41, #008018, #0000F9, #86007D);*/
 }
 
 
@@ -32,11 +34,24 @@
     /* je sais pas si ça va être utile mais on sait jamais */
 }
 
+
+.entete *{
+    -fx-background-color: #CACACA;
+}
 .entete {
     -fx-background-color: #7E7E7E;
 }
 
-.nomAppli {
+
+.vueTableau *{
+    -fx-background-color: #CACACA;
+}
+
+.vueTableau {
+    -fx-background-color: #CACACA;
+}
+
+.nomAppli{
     -fx-font-weight: bold;
     -fx-font-size: 20px;
     -fx-text-fill: white;
@@ -97,7 +112,6 @@
 .nomSection {
     -fx-font-weight: bold;
     -fx-font-size: 20px;
-    -fx-alignment: center;
     -fx-background-color: #F0F0F0; /* même couleur que le contour de la section */
 }
 
@@ -120,6 +134,9 @@
 }
 
 .containerSections {
+=======
+.containerSections{
+>>>>>>> 4ce970588b4ea1e439e39356bb603f63be7c03b9
     -fx-background-color: #CACACA;
 }
 
@@ -186,6 +203,10 @@
     -fx-background-radius: 2px;
 }
 
+.ScrollPaneArchivage *{
+    -fx-background-color: #A3A3A3; /* Couleur de fond de la piste */
+}
+
 /* Archivage */
 
 .archivage {
@@ -194,11 +215,19 @@
     -fx-border-color: #7E7E7E;
 }
 
+<<<<<<< HEAD
 .archivage > * {
     -fx-background-color: #A3A3A3;
 }
 
 .ScrollPaneArchivage > * {
+=======
+.archivage *{
+    -fx-background-color: #A3A3A3;
+}
+
+.ScrollPaneArchivage *{
+>>>>>>> 4ce970588b4ea1e439e39356bb603f63be7c03b9
     -fx-background-color: #A3A3A3;
 }
 
@@ -206,7 +235,11 @@
     -fx-background-color: #A3A3A3;
 }
 
+<<<<<<< HEAD
 .listeElementArchive > * {
+=======
+.listeElementArchive *{
+>>>>>>> 4ce970588b4ea1e439e39356bb603f63be7c03b9
     -fx-background-color: #A3A3A3;
 }
 
@@ -249,8 +282,9 @@
     -fx-background-radius: 5px;
 }
 
-.conteneurBoutons {
     /*-fx-background-color: black;*/
+.conteneurBoutons{
+    -fx-background-color: #CACACA;
 }
 
 .btnElementArchive {
@@ -275,11 +309,13 @@
 .titreTacheArchivee {
     -fx-text-fill: #585858;
     -fx-font-weight: bold;
+    -fx-background-color: #CACACA;
 }
 
 .descriptionTacheAbregee {
     -fx-text-fill: #585858;
     -fx-font-weight: bold;
+    -fx-background-color: #CACACA;
 }
 
 .checkboxSelectionTacheGantt {
@@ -323,6 +359,7 @@
 .gridSelectionGantt {
     -fx-background-color: blue;
 }
+<<<<<<< HEAD
 
 .rectangleGantt {
     -fx-fill: #CACACA;
@@ -355,6 +392,6 @@
     -fx-background-radius: 0 0.5em 0.5em 0;
 }
 
-.stackPaneRectanglePremierDernier{
+.stackPaneRectanglePremierDernier {
     -fx-background-radius: 0.5em 0.5em 0.5em 0.5em;
 }

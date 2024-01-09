@@ -25,10 +25,8 @@ import tralleno.Taches.Tache;
 public class VueGantt extends ScrollPane implements Observateur, Serializable {
 
     private ModeleBureau modele;
-    public static boolean VALIDEEGANTT = false;
 
     /**
-     *
      * @param modele modele a partir duquel il va chercher les données
      */
     public VueGantt(ModeleBureau modele) {
@@ -44,61 +42,6 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
         afficherGantt();
     }
 
-    public void afficherSelecteurGantt() {
-        System.out.println("afficherselecteur");
-        VBox vb = new VBox();
-
-        vb.getStyleClass().add("VBoxFormulaire");
-        // Pour les dépendances chronologiques
-        Label tachesAvant = new Label("Tâches à faire avant :");
-        tachesAvant.getStyleClass().add("titreChamp");
-        List<Tache> taches = this.modele.getTaches();
-        ObservableList<Tache> tachesAFaireAvant = FXCollections.observableArrayList(taches);
-        ComboBox<Tache> comboTaches = new ComboBox<>(tachesAFaireAvant);
-        comboTaches.getStyleClass().add("comboBox");
-
-        // Bouton pour supprimer la tâche qu'on a selectionnée dans la viewlist
-        Button supprimerTache = new Button("Supprimer tâche dépendante");
-        supprimerTache.getStyleClass().add("Btn");
-
-        HBox dependances = new HBox(10);
-        dependances.getChildren().addAll(comboTaches, supprimerTache);
-        dependances.getStyleClass().add("conteneurDependances");
-
-        ListView<Tache> listViewTachesAvant = new ListView<>(); // Affiche les tâches sélectionnées pour la dépendance chronologique
-        listViewTachesAvant.setPrefHeight(100);
-        listViewTachesAvant.getStyleClass().add("listeTachesAvant");
-
-
-        // EventHandler pour que la liste des tâches select se mette à jour
-        comboTaches.setOnAction(event -> {
-            Tache tacheSelectionnee = comboTaches.getValue();
-            if (tacheSelectionnee != null && !listViewTachesAvant.getItems().contains(tacheSelectionnee)) {
-                listViewTachesAvant.getItems().add(tacheSelectionnee);
-            }
-        });
-
-        // Si on supprime une tâche qui est en dépendance chronologique
-        supprimerTache.setOnAction(event -> {
-            Tache tacheSelectionneViewList = listViewTachesAvant.getSelectionModel().getSelectedItem();
-            if (tacheSelectionneViewList != null) {
-                listViewTachesAvant.getItems().remove(tacheSelectionneViewList);
-            }
-        });
-
-        Button boutonGenererGantt = new Button("Generer Diagramme Gantt");
-        boutonGenererGantt.setOnAction(event -> {
-            VALIDEEGANTT = true;
-            if (!listViewTachesAvant.getItems().isEmpty()) {
-                modele.setSelectionTacheGantt(new ArrayList<>(listViewTachesAvant.getItems()));
-            }
-            afficherGantt();
-        });
-        vb.getChildren().addAll(tachesAvant, dependances,
-                listViewTachesAvant, boutonGenererGantt);
-
-        this.setContent(vb);
-    }
 
     /**
      * affiche le tableau de gantt à partir de la liste selectionTacheGantt du modele
@@ -147,11 +90,13 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 //graphic context sert a dessiner les traits sur le canvas
                 GraphicsContext gc = cv.getGraphicsContext2D();
                 gc.setStroke(Color.BLACK);
-                gc.setLineWidth(1);
+                int lineWidth = 1;
+                gc.setLineWidth(lineWidth);
                 //le stackpane est constitué du hbox et par dessus le canvas
                 st.getChildren().addAll(container, cv);
                 this.setContent(st);
 
+                int spacingEntreTache = 1;
 
                 //boxjour c'est la colonne qui correspond à une date du calendrier gantt, on va l'initialiser dans la boucle (un pour chaque jour )
                 VBox boxJour;
@@ -189,11 +134,14 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                     //on met dans un stackpane un rectangle puis un label pour mettre un titre de date si besoin
                     for (int j = 0; j < nbTache; j++) {
                         temp = new StackPane();
+                        temp.getStyleClass().add("stackPaneRectangleGantt");
                         tempRect = new Rectangle(largeurBox, hauteurRectangle);
                         tempRect.setFill(Color.WHITE);
+                        tempRect.getStyleClass().add("rectangleGantt");
 
                         //label pour le nom de la tache
                         tempLab = new Label();
+                        tempLab.getStyleClass().add("titreTacheGantt");
 
                         temp.getChildren().addAll(tempRect, tempLab);
                         //on ajoute le rectangle dans la grille
@@ -203,10 +151,12 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
 
                     }
                     //on ajoute la date en ba de la colonne
-                    boxJour.getChildren().add(new Label(" " + dateJour.toString() + " "));
+                    tempLab = new Label(" " + dateJour.toString() + " ");
+                    tempLab.getStyleClass().add("dateTacheGantt");
+                    boxJour.getChildren().add(tempLab);
 
                     //un espace entre les elements des colonnes pour qu'on puisse facilement differencier les differentes colonnes
-                    boxJour.setSpacing(1);
+                    boxJour.setSpacing(spacingEntreTache);
                     //finalement on ajoute la colonne a la hbox
                     container.getChildren().add(boxJour);
 
@@ -228,6 +178,14 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                     Label l = (Label) grilleJour[i][indexJdep].getChildren().get(1);
                     l.setText(listTacheGantt.get(i).getTitre());
 
+                    if (indexJfin == indexJdep) {
+                        grilleJour[i][indexJdep].getStyleClass().add("stackPaneRectanglePremierDernier");
+                    } else {
+                        grilleJour[i][indexJdep].getStyleClass().add("stackPaneRectanglePremier");
+                        grilleJour[i][indexJfin].getStyleClass().add("stackPaneRectangleDernier");
+                    }
+
+                    System.out.println(grilleJour[i][indexJfin].getStyleClass());
                     //on sauvegarde les coordonées du point de depart de la tache en la calculant
                     pointTache.put(listTacheGantt.get(i), new Point2D(largeurBox * (indexJdep), hauteurRectangle * (i + 0.5)));
                     for (int j = indexJdep; j < indexJfin + 1; j++) {
@@ -235,7 +193,9 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                         //j c'est la date
                         Rectangle r = (Rectangle) grilleJour[i][j].getChildren().get(0);
                         r.setFill(Color.RED);
+                        r.getStyleClass().add("rectangleGanttActif");
 
+                        grilleJour[i][j].getStyleClass().add("stackpaneRectangleGanttActif");
                         //grilleJour[i][j].setStyle("-fx-background-radius: 20px");
 
                     }
@@ -252,7 +212,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                             if (listTacheGantt.contains(taDep)) {
                                 //ici la tache t est une dependance de la tache taDep
                                 //on prend le point de depart + la duree de la tache * la largeur de chaque jour pour que le trait de dependances parte de l'avant de la tache a faire avant
-                                gc.strokeLine(pointTache.get(t).getX(), pointTache.get(t).getY(), pointTache.get(taDep).getX() + (taDep.getDuree() + 1) * largeurBox, pointTache.get(taDep).getY());
+                                gc.strokeLine(pointTache.get(t).getX(), pointTache.get(t).getY() + (listTacheGantt.indexOf(t) * spacingEntreTache), pointTache.get(taDep).getX() + (taDep.getDuree() + 1) * largeurBox, pointTache.get(taDep).getY() + (listTacheGantt.indexOf(taDep) * spacingEntreTache));
                             }
                         }
 

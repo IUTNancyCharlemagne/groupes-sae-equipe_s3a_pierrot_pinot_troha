@@ -9,33 +9,34 @@
 /* pour la couleur du fond de la page (on peut la voir quand il n'y a pas assez de tâches dans une section) */
 /* problème : ça oblige à définir les couleurs de fond de tous les éléments */
 {
-    -fx-background-color: #CACACA;
-    /*-fx-background-color: red;*/
-    /*-fx-background-color: linear-gradient(to bottom, #FF0018, #FFA52C, #FFFF41, #008018, #0000F9, #86007D);*/
+    -fx-background-color: #CACACA
+;
+/*-fx-background-color: red;*/
+/*-fx-background-color: linear-gradient(to bottom, #FF0018, #FFA52C, #FFFF41, #008018, #0000F9, #86007D);*/
 }
 
 
-.BPTop_BarreAction{
+.BPTop_BarreAction {
     /* je sais pas si ça va être utile mais on sait jamais */
 }
 
-.BTRight_Archivage{
+.BTRight_Archivage {
     /* je sais pas si ça va être utile mais on sait jamais */
 }
 
-.BPCenter_VueCentrale{
+.BPCenter_VueCentrale {
     /* je sais pas si ça va être utile mais on sait jamais */
 }
 
-.conteneurPrincipal{
+.conteneurPrincipal {
     /* je sais pas si ça va être utile mais on sait jamais */
 }
 
-.entete{
+.entete {
     -fx-background-color: #7E7E7E;
 }
 
-.nomAppli{
+.nomAppli {
     -fx-font-weight: bold;
     -fx-font-size: 20px;
     -fx-text-fill: white;
@@ -45,12 +46,12 @@
     -fx-scale-y: 1;
 }
 
-.nomAppli:hover{
+.nomAppli:hover {
     -fx-scale-x: 1.2;
     -fx-scale-y: 1.2;
 }
 
-.actionButton{
+.actionButton {
     -fx-border-color: #F0F0F0;
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
@@ -59,7 +60,7 @@
     -fx-font-weight: bold;
 }
 
-.actionButton:hover{
+.actionButton:hover {
     -fx-background-color: #F0F0F0;
     -fx-text-fill: #585858;
 }
@@ -73,7 +74,7 @@
     -fx-font-weight: bold;
 }
 
-.choixVue .context-menu{
+.choixVue .context-menu {
     -fx-background-color: #CACACA;
     -fx-background-radius: 5px;
     -fx-border-width: 2px;
@@ -88,41 +89,41 @@
     -fx-background-radius: 5px;
 }
 
-.section{
+.section {
     -fx-background-color: #F0F0F0;
     -fx-background-radius: 10px;
 }
 
-.nomSection{
+.nomSection {
     -fx-font-weight: bold;
     -fx-font-size: 20px;
     -fx-alignment: center;
     -fx-background-color: #F0F0F0; /* même couleur que le contour de la section */
 }
 
-.fond_titre_section{
+.fond_titre_section {
     -fx-background-color: #F0F0F0; /* même couleur que le contour de la section */
 }
 
-.modifier-button{
+.modifier-button {
     -fx-background-color: #A3A3A3;
     -fx-background-radius: 5px;
     -fx-text-fill: #F0F0F0;
 }
 
-.modifier-button:hover{
+.modifier-button:hover {
     -fx-background-color: #7E7E7E;
 }
 
-.vueTableau{
+.vueTableau {
     -fx-background-color: #CACACA;
 }
 
-.containerSections{
+.containerSections {
     -fx-background-color: #CACACA;
 }
 
-.vueTache{ /* TitlePane */
+.vueTache { /* TitlePane */
     /* à mettre de la même couleur que le fond des sections */
     -fx-background-color: #CACACA;
     -fx-border-color: #CACACA;
@@ -148,25 +149,25 @@
 
 }
 
-.titreTache{
+.titreTache {
     -fx-background-color: #CACACA;
 }
 
-.enteteTache{
+.enteteTache {
     -fx-background-color: #CACACA;
 }
 
-.contenuTache{
+.contenuTache {
     -fx-background-color: #F0F0F0;
     -fx-background-radius: 10px;
     -fx-padding: 5px;
 }
 
-.sousTachesBox{
+.sousTachesBox {
     -fx-background-color: #F0F0F0;
 }
 
-.descriptionLabel{
+.descriptionLabel {
     -fx-background-color: #F0F0F0;
 }
 
@@ -187,33 +188,33 @@
 
 /* Archivage */
 
-.archivage{
+.archivage {
     -fx-background-color: #A3A3A3;
     -fx-border-width: 3px;
     -fx-border-color: #7E7E7E;
 }
 
-.archivage > *{
+.archivage > * {
     -fx-background-color: #A3A3A3;
 }
 
-.ScrollPaneArchivage > *{
+.ScrollPaneArchivage > * {
     -fx-background-color: #A3A3A3;
 }
 
-.listeElementArchive{
+.listeElementArchive {
     -fx-background-color: #A3A3A3;
 }
 
-.listeElementArchive > *{
+.listeElementArchive > * {
     -fx-background-color: #A3A3A3;
 }
 
-.boutonsTachesSection{
+.boutonsTachesSection {
     -fx-background-color: #CACACA;
 }
 
-.BtnTacheSelected{
+.BtnTacheSelected {
     -fx-background-color: #A3A3A3;
     -fx-text-fill: #F0F0F0;
     -fx-font-weight: bold;
@@ -222,13 +223,13 @@
     -fx-background-radius: 0 5 0 0;
 }
 
-.BtnTacheNotSelected{
+.BtnTacheNotSelected {
     -fx-background-color: #CACACA;
     -fx-padding: 10 10 10 10;
     -fx-pref-width: 150px;
 }
 
-.BtnSectionSelected{
+.BtnSectionSelected {
     -fx-background-color: #A3A3A3;
     -fx-text-fill: #F0F0F0;
     -fx-font-weight: bold;
@@ -237,32 +238,32 @@
     -fx-background-radius: 5 0 0 0;
 }
 
-.BtnSectionNotSelected{
+.BtnSectionNotSelected {
     -fx-background-color: #CACACA;
     -fx-padding: 10 10 10 10;
     -fx-pref-width: 150px;
 }
 
-.tacheEtBoutons{
+.tacheEtBoutons {
     -fx-background-color: #CACACA;
     -fx-background-radius: 5px;
 }
 
-.conteneurBoutons{
+.conteneurBoutons {
     /*-fx-background-color: black;*/
 }
 
-.btnElementArchive{
+.btnElementArchive {
     -fx-background-color: #7E7E7E;
     -fx-font-weight: bold;
     -fx-text-fill: #F0F0F0;
 }
 
-.btnElementArchive:hover{
+.btnElementArchive:hover {
     -fx-background-color: #A3A3A3;
 }
 
-.texteBox{
+.texteBox {
     -fx-background-color: #CACACA;
     -fx-pref-width: 190px;
     -fx-pref-height: 55px;
@@ -271,47 +272,89 @@
     -fx-border-radius: 5px;
 }
 
-.titreTacheArchivee{
+.titreTacheArchivee {
     -fx-text-fill: #585858;
     -fx-font-weight: bold;
 }
 
-.descriptionTacheAbregee{
+.descriptionTacheAbregee {
     -fx-text-fill: #585858;
     -fx-font-weight: bold;
 }
-.checkboxSelectionTacheGantt{
 
-    -fx-border-color: #585858 ;
+.checkboxSelectionTacheGantt {
+
+    -fx-border-color: #585858;
 
     -fx-padding: 1 1 1 1;
 }
-.checkboxSelectionTacheGantt:selected .box{
+
+.checkboxSelectionTacheGantt:selected .box {
     -fx-background-color: #585858;
 }
-.checkboxSelectionTacheGantt .box{
+
+.checkboxSelectionTacheGantt .box {
     -fx-background-color: #CACACA;
 }
 
-.boutonGenererGantt{
+.boutonGenererGantt {
     -fx-background-color: red;
     -fx-text-fill: white;
 }
-.containerSelectionTacheGantt{
-    -fx-padding:0.5em;
+
+.containerSelectionTacheGantt {
+    -fx-padding: 0.5em;
     -fx-spacing: 0.5em;
     -fx-border-color: #585858;
     -fx-border-width: 1px;
 }
-.labelSelectionTacheSectionGantt{
+
+.labelSelectionTacheSectionGantt {
 
     -fx-text-fill: green;
 }
-.labelSelectionTacheTitreGantt{
+
+.labelSelectionTacheTitreGantt {
     -fx-font-size: 1.5em;
     -fx-text-fill: yellow;
 
 }
-.gridSelectionGantt{
+
+.gridSelectionGantt {
     -fx-background-color: blue;
+}
+
+.rectangleGantt {
+    -fx-fill: #CACACA;
+}
+
+.titreTacheGantt {
+    -fx-text-fill: green;
+}
+
+.dateTacheGantt {
+    -fx-text-fill: red;
+}
+
+.rectangleGanttActif {
+    -fx-fill: transparent;
+}
+
+.stackPaneRectangleGantt {
+}
+
+.stackpaneRectangleGanttActif {
+    -fx-background-color: red;
+}
+
+.stackPaneRectanglePremier {
+    -fx-background-radius: 0.5em 0 0 0.5em;
+}
+
+.stackPaneRectangleDernier {
+    -fx-background-radius: 0 0.5em 0.5em 0;
+}
+
+.stackPaneRectanglePremierDernier{
+    -fx-background-radius: 0.5em 0.5em 0.5em 0.5em;
 }

@@ -849,4 +849,14 @@ public class ModeleBureau implements Sujet, Serializable {
     public void setSelectionTacheGantt(List<Tache> selectionTacheGantt) {
         this.selectionTacheGantt = selectionTacheGantt;
     }
+    public void addSelectionTacheGantt(Tache t){
+        if(t!=null){
+            this.selectionTacheGantt.add(t);
+        }
+    }
+    public void removeSelectionTacheGantt(Tache t ){
+        if(t!=null){
+            this.selectionTacheGantt.remove(t);
+        }
+    }
 }

@@ -207,9 +207,9 @@ public class ModeleBureau implements Sujet, Serializable {
     public void changerSection(Section section, int position) {
         Section sectionParente = this.tacheCourante.getSectionParente();
         if(section == this.tacheCourante.getSectionParente()){// Pour le drag and drop, il faut vérifier
-            if(position == section.getTaches().size()){
+            int positionActuelle = sectionParente.getTaches().indexOf(this.tacheCourante);
+            if(positionActuelle < position && sectionParente.getTaches().contains(this.tacheCourante))
                 position -= 1;
-            }
             this.tacheCourante.getSectionParente().getTaches().remove(this.tacheCourante);
             sectionParente.getTaches().remove(this.tacheCourante);
             sectionParente.getTaches().add(position, this.tacheCourante);
@@ -835,5 +835,15 @@ public class ModeleBureau implements Sujet, Serializable {
             int difjour= (int) ChronoUnit.DAYS.between(dateMin,dateMax)+1;
             System.out.println("jour entre datemax et datemin :"+ difjour);
         }
+    }
+
+    private List<Tache> selectionTacheGantt;
+
+    public List<Tache> getSelectionTacheGantt() {
+        return selectionTacheGantt;
+    }
+
+    public void setSelectionTacheGantt(List<Tache> selectionTacheGantt) {
+        this.selectionTacheGantt = selectionTacheGantt;
     }
 }

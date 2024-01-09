@@ -12,7 +12,7 @@ import java.util.Calendar;
  * Classe représentant une tâche, se déclinant en deux type de tâches. TacheFille, étant une tâche ne possèdant pas de sous-tâche
  * Et TacheMere, possèdant des sous-tâches
  */
-public abstract class Tache implements Comparable<Tache>, Serializable{
+public abstract class Tache implements Comparable<Tache>, Serializable {
 
     /**
      * Référence de la section dans laquelle une tâche est contenue
@@ -29,12 +29,12 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
     /**
      * Dates de début et de fin de la tâche
      */
-    protected LocalDate dateDebut,dateFin;
+    protected LocalDate dateDebut, dateFin;
 
     /**
      * Durée de la tâche (déduite des dates de début et de fin)
      */
-    protected int duree ; //duree en jour
+    protected int duree; //duree en jour
 
     /**
      * Description textuelle de la tâche
@@ -44,44 +44,47 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
 
     /**
      * Construit une tâche à partir de son titre et de sa description
+     *
      * @param t titre de la tâche
      * @param d description de la tâche
      */
-    public Tache(String t,String d){
-        this.titre=t;
-        this.description=d;
-        this.id= ModeleBureau.getIDTACHEACTUELLE();
+    public Tache(String t, String d) {
+        this.titre = t;
+        this.description = d;
+        this.id = ModeleBureau.getIDTACHEACTUELLE();
     }
 
     /**
      * Construit une tâche à partir de son titre, sa description, ses dates de début et de fin
+     *
      * @param t
      * @param d
      * @param dD
      * @param dF
      */
-    public Tache(String t,String d,LocalDate dD,LocalDate dF){
-        this.titre=t;
-        this.description=d;
-        this.dateDebut=dD;
-        this.dateFin=dF;
+    public Tache(String t, String d, LocalDate dD, LocalDate dF) {
+        this.titre = t;
+        this.description = d;
+        this.dateDebut = dD;
+        this.dateFin = dF;
         this.duree = 1;
-        if(!(dD == null && dF == null)){
+        if (!(dD == null && dF == null)) {
             this.duree = (int) ChronoUnit.DAYS.between(dD, dF);
         }
-        this.id=ModeleBureau.getIDTACHEACTUELLE();
+        this.id = ModeleBureau.getIDTACHEACTUELLE();
     }
 
     /**
      * Construit une tâche par copie de la tâche passée en paramètre
+     *
      * @param t
      */
     public Tache(Tache t) {
-        this.titre=t.getTitre();
-        this.description=t.getDescription();
-        this.dateDebut=t.getDateDebut();
-        this.dateFin=t.getDateFin();
-        this.id=t.getId();
+        this.titre = t.getTitre();
+        this.description = t.getDescription();
+        this.dateDebut = t.getDateDebut();
+        this.dateFin = t.getDateFin();
+        this.id = t.getId();
     }
 
     public Section getSectionParente() {
@@ -114,6 +117,10 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
 
     public void setDateDebut(LocalDate dateDebut) {
         this.dateDebut = dateDebut;
+
+        if (this.dateDebut != null) {
+            this.duree = (int) ChronoUnit.DAYS.between(this.dateDebut, this.dateFin);
+        }
     }
 
     public LocalDate getDateFin() {
@@ -122,6 +129,9 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
 
     public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
+        if (this.dateDebut != null) {
+            this.duree = (int) ChronoUnit.DAYS.between(this.dateDebut, this.dateFin);
+        }
     }
 
     public int getDuree() {
@@ -142,6 +152,7 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
 
     /**
      * Compare deux tâches selon leur id. Nécessaire pour la manière dont elles peuvent être triées.
+     *
      * @param t the object to be compared.
      * @return
      */
@@ -152,9 +163,10 @@ public abstract class Tache implements Comparable<Tache>, Serializable{
 
     /**
      * Retourne le titre de la tâche ainsi que le nom de la section à laquelle elle appartient
+     *
      * @return String
      */
-    public String toString(){
+    public String toString() {
         String aff = this.titre + " - " + this.sectionParente.getNom() + "\n";
         return aff;
     }

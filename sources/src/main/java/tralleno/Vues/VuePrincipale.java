@@ -2,6 +2,7 @@ package tralleno.Vues;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.util.Duration;
 import tralleno.Modele.ModeleBureau;
 
@@ -24,6 +25,8 @@ public class VuePrincipale implements Serializable {
      * Constante qui correspond à la VueListe
      */
     public static final int LISTE = 2;
+    private static final int GANTT = 3;
+    private static final int SELECTGANTT=4;
 
     /**
      * Constante qui correspond au thème de base (nuances de gris)
@@ -72,6 +75,7 @@ public class VuePrincipale implements Serializable {
     private final VueTableau vueTableau;
 
     private final VueGantt vueGantt;
+    private final VueSelecteurGantt vueSelecteurGantt;
     /**
      * Vue des tâches/Sections sous forme de Listes dépliantes
      */
@@ -92,6 +96,7 @@ public class VuePrincipale implements Serializable {
 
         conteneurPrincipal = new BorderPane();
         conteneurPrincipal.setTop(vueBarreActions);
+        conteneurPrincipal.getTop().getStyleClass().add("BPTop_BarreAction");
 
         this.vueTableau = new VueTableau(this.modeleBureau);
         this.modeleBureau.enregistrerObservateur(vueTableau);
@@ -102,6 +107,9 @@ public class VuePrincipale implements Serializable {
 
         this.vueGantt = new VueGantt(this.modeleBureau);
         this.modeleBureau.enregistrerObservateur(this.vueGantt);
+
+        this.vueSelecteurGantt = new VueSelecteurGantt(this.modeleBureau,this);
+        this.modeleBureau.enregistrerObservateur(this.vueSelecteurGantt);
 
         // Initialisation du menu d'archivage
         vueArchivage = new VueArchivage(this.modeleBureau); // Crée le panneau d'archivage
@@ -127,7 +135,9 @@ public class VuePrincipale implements Serializable {
     public void changerVue(int mode) {
         switch (mode){
             case TABLEAU -> conteneurPrincipal.setCenter(this.vueTableau);
-            case LISTE -> conteneurPrincipal.setCenter(this.vueGantt);
+            case LISTE -> conteneurPrincipal.setCenter(this.vueSelecteurGantt);
+            case GANTT -> conteneurPrincipal.setCenter(this.vueGantt);
+            case SELECTGANTT -> conteneurPrincipal.setCenter(this.vueSelecteurGantt);
         }
         this.modeleBureau.notifierObservateurs();
     }
@@ -138,6 +148,7 @@ public class VuePrincipale implements Serializable {
     public void afficherArchivage() {
         if (!vueArchivage.isVisible()) {
             conteneurPrincipal.setRight(vueArchivage); // Ajoute la VBox à droite du BorderPane
+            conteneurPrincipal.getRight().getStyleClass().add("BTRight_Archivage");
             afficherMenuTransition.play();
             vueArchivage.setVisible(true);
         }
@@ -174,17 +185,17 @@ public class VuePrincipale implements Serializable {
             case THEMEBASE:
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Base/trallenoStyleBase.css").toExternalForm());
-                this.themeCourant = THEMEBASE;
+                themeCourant = THEMEBASE;
                 break;
             case THEMEBLUE:
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Blue/trallenoStyleBlue.css").toExternalForm());
-                this.themeCourant = THEMEBLUE;
+                themeCourant = THEMEBLUE;
                 break;
             default:
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Base/trallenoStyleBase.css").toExternalForm());
-                this.themeCourant = THEMEBASE;
+                themeCourant = THEMEBASE;
                 break;
         }
     }

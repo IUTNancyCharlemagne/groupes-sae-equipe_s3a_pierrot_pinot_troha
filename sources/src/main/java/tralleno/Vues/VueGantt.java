@@ -90,13 +90,8 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 StackPane st = new StackPane();
                 st.setPadding(new Insets(20));
 
-
-                Canvas cv = new Canvas(1000, 1000);
                 //graphic context sert a dessiner les traits sur le canvas
-                GraphicsContext gc = cv.getGraphicsContext2D();
-                gc.setStroke(Color.BLACK);
                 int lineWidth = 1;
-                gc.setLineWidth(lineWidth);
 
                 this.setContent(st);
 
@@ -118,9 +113,6 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 double hauteurRectangle = 50;
 
                 //on ajuste la taille du canvas en fonction de largeurBox et du nombre de jour, et de hauteurRectangle et du nombre de tache +1 pour la date qui serat en bas de chaque vbox
-                cv.setHeight((nbTache + 1) * hauteurRectangle);
-                cv.setWidth((difjour) * largeurBox);
-                gc.fillOval(0,0,10,10);
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
                 //grille ou on vas mettres les taches
@@ -129,13 +121,13 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 gridGantt.getStyleClass().add("gridGantt");
                 //on ajoute les dates en bas de la grille
                 VBox tempVBox;
-                for (int i = 0; i < difjour; i++) {
-                    if(i%2==0){
-                        tempVBox=new VBox();
+                for (int i = 0; i < difjour+24; i++) {
+                    if (i % 2 == 0) {
+                        tempVBox = new VBox();
                         tempVBox.getStyleClass().add("vboxGrilleGantt");
                         tempVBox.setMinWidth(largeurBox);
                         tempVBox.setMaxWidth(largeurBox);
-                        gridGantt.add(tempVBox,i,0,1,nbTache+1);
+                        gridGantt.add(tempVBox, i, 0, 1, nbTache + 1);
                     }
                     dateJour = (dateMin.plusDays(i));
                     tempLab = new Label(" " + dateJour.format(formatter) + " ");
@@ -164,8 +156,8 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                     temp = new StackPane();
                     temp.getStyleClass().add("stackPaneTacheGantt");
                     //on met une taille fixe pour que ça ne depasse pas si le titre est plus long
-                    temp.setMinSize(largeurBox * (indexJfin-indexJdep + 1), hauteurRectangle);
-                    temp.setMaxSize(largeurBox * (indexJfin-indexJdep + 1), hauteurRectangle);
+                    temp.setMinSize(largeurBox * (indexJfin - indexJdep + 1), hauteurRectangle);
+                    temp.setMaxSize(largeurBox * (indexJfin - indexJdep + 1), hauteurRectangle);
                     //label pour le nom de la tache
                     tempLab = new Label(tActuelle.getTitre());
                     tempLab.getStyleClass().add("titreTacheGantt");
@@ -175,7 +167,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                     temp.getChildren().add(tempLab);
                     gridGantt.add(temp, indexJdep, i, tActuelle.getDuree() + 1, 1);
 
-                   //on sauvegarde les coordonées du point de depart de la tache en la calculant
+                    //on sauvegarde les coordonées du point de depart de la tache en la calculant
                     pointTache.put(tActuelle, new Point2D(largeurBox * (indexJdep), hauteurRectangle * (i + 0.5)));
 
                 }
@@ -183,7 +175,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 //on vas parcourir les dependances de chaque tache pour tirer les traits de dependances
                 ArrayList<Tache> listeDepTach;
                 Line tempLine;
-                int dureeDepart,dureeArrive,xDepart,yDepart,xArrive,yArrive;
+                int dureeDepart,  xDepart, yDepart, xArrive, yArrive;
                 for (Tache t : listTacheGantt) {
 
                     listeDepTach = (ArrayList<Tache>) this.modele.getDependances().get(t);
@@ -193,22 +185,20 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                                 //ici la tache t est une dependance de la tache taDep
                                 //on prend le point de depart + la duree de la tache * la largeur de chaque jour pour que le trait de dependances parte de l'avant de la tache a faire avant
                                 //gc.strokeLine(pointTache.get(t).getX(), pointTache.get(t).getY() + (listTacheGantt.indexOf(t) * spacingEntreTache), pointTache.get(taDep).getX() + (taDep.getDuree() + 1) * largeurBox, pointTache.get(taDep).getY() + (listTacheGantt.indexOf(taDep) * spacingEntreTache));
-                                dureeDepart=taDep.getDuree();
-                                xDepart= (int) ChronoUnit.DAYS.between(dateMin, taDep.getDateDebut());
-                                xArrive= (int) ChronoUnit.DAYS.between(dateMin, t.getDateDebut());
-                                yDepart=listTacheGantt.indexOf(taDep);
-                                yArrive=listTacheGantt.indexOf(t);
-                                Line diagonalLine = new Line(0, 0, largeurBox*(xArrive-xDepart-dureeDepart-1),hauteurRectangle*(yArrive-yDepart)); // Adjust the coordinates as needed
+                                dureeDepart = taDep.getDuree();
+                                xDepart = (int) ChronoUnit.DAYS.between(dateMin, taDep.getDateDebut());
+                                xArrive = (int) ChronoUnit.DAYS.between(dateMin, t.getDateDebut());
+                                yDepart = listTacheGantt.indexOf(taDep);
+                                yArrive = listTacheGantt.indexOf(t);
+                                Line diagonalLine = new Line(0, 0, largeurBox * (xArrive - xDepart - dureeDepart - 1), hauteurRectangle * (yArrive - yDepart)); // Adjust the coordinates as needed
                                 diagonalLine.setStrokeWidth(4);
                                 diagonalLine.getStyleClass().add("ligneGantt");
-                                System.out.println("la tache est "+taDep.getTitre());
-                                System.out.println("xarrive"+xArrive+" xdepart"+xDepart+" duree1"+dureeDepart);
-                                gridGantt.add(diagonalLine, xDepart+dureeDepart+1,yDepart,xArrive-xDepart+dureeDepart,yArrive-yDepart+1);
+                                gridGantt.add(diagonalLine, xDepart + dureeDepart + 1, yDepart, xArrive - xDepart + dureeDepart, yArrive - yDepart + 1);
                             }
                         }
                     }
                 }
-                st.getChildren().addAll(gridGantt, cv);
+                st.getChildren().addAll(gridGantt );
             }
         }
     }

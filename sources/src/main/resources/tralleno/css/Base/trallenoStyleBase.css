@@ -455,3 +455,8 @@
 .modifier-button:hover {
     -fx-background-color: #7E7E7E;
 }
+.ligneGantt{
+    -fx-stroke: red;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-width: 0.1em;
+}

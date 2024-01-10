@@ -97,15 +97,35 @@ public class ControlModifSection implements EventHandler<MouseEvent> {
         switch (themeApp){
             case 1:
                 scene.getStylesheets().clear();
-                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Base/popupStyleBase.css").toExternalForm());
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/popupStyleBrouillard.css").toExternalForm());
                 break;
             case 2:
                 scene.getStylesheets().clear();
-                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Blue/popupStyleBlue.css").toExternalForm());
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Ocean/popupStyleOcean.css").toExternalForm());
+                break;
+            case 3:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Crepuscule/popupStyleCrepuscule.css").toExternalForm());
+                break;
+            case 4:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Foret/popupStyleForet.css").toExternalForm());
+                break;
+            case 5:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Nuit/popupStyleNuit.css").toExternalForm());
+                break;
+            case 6:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Plage/popupStylePlage.css").toExternalForm());
+                break;
+            case 7:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Pride/popupStylePride.css").toExternalForm());
                 break;
             default:
                 scene.getStylesheets().clear();
-                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Base/popupStyleBase.css").toExternalForm());
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/popupStyleBrouillard.css").toExternalForm());
                 break;
         }
 

@@ -104,12 +104,21 @@ public class VueSection extends VBox implements Observateur, Serializable {
         // Avec ça on peut empecher le dépot d'une tâche à certains endroits
         this.setOnDragOver(event -> {
             if (event.getGestureSource() instanceof VueTache) {
+                if (!this.getStyleClass().contains("hovered")) {
+                    this.getStyleClass().add("hovered");
+                }
                 // Lorsqu'on essaye de déplacer une tâche qui est déjà à la fin, à la fin... (pas logique)
                     // Sinon on accepte de recevoir des tâches
                     event.acceptTransferModes(TransferMode.MOVE);
-                    int cibleIndex = determinerPositionMettreTache(event);
                     event.consume();
             }
+        });
+
+        this.setOnDragExited(event -> {
+            if (!this.contains(event.getX(), event.getY())) {
+                this.getStyleClass().remove("hovered");
+            }
+            event.consume();
         });
 
         // Gestion du drop pour récupérer la tâche

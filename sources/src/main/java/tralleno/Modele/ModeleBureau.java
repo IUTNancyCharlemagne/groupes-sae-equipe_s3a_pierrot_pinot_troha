@@ -871,5 +871,6 @@ public class ModeleBureau implements Sujet, Serializable {
     }
     public void clearSelectionTacheGantt(){
         this.selectionTacheGantt.clear();
+        System.out.println(this.selectionTacheGantt);
     }
 }

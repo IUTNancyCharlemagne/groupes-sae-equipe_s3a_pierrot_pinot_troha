@@ -62,7 +62,15 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
         ArrayList<Tache> listeTacheSelectionne = (ArrayList<Tache>) this.modele.getSelectionTacheGantt();
         ArrayList<CheckBox> listeCheckBox = new ArrayList<>();
 
-        boolean allBoxChecked=true;
+        boolean allBoxChecked = true;
+        System.out.println("liste dans listetache"+listTache);
+        if (listTache.isEmpty()) {
+            this.modele.clearSelectionTacheGantt();
+            System.out.println("liste selection apres clear"+this.modele.getSelectionTacheGantt());
+
+            allBoxChecked=false;
+        }
+
         for (Tache t : listTache) {
 
             tempVB = new VBox();
@@ -80,8 +88,8 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
 
             if (listeTacheSelectionne.contains(t)) {
                 tempCheck.setSelected(true);
-            }else {
-                allBoxChecked=false;
+            } else {
+                allBoxChecked = false;
             }
 
             listeCheckBox.add(tempCheck);

@@ -63,10 +63,8 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
         ArrayList<CheckBox> listeCheckBox = new ArrayList<>();
 
         boolean allBoxChecked = true;
-        System.out.println("liste dans listetache"+listTache);
         if (listTache.isEmpty()) {
             this.modele.clearSelectionTacheGantt();
-            System.out.println("liste selection apres clear"+this.modele.getSelectionTacheGantt());
 
             allBoxChecked=false;
         }

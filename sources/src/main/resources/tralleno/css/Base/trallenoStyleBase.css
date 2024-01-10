@@ -9,8 +9,8 @@
 /* pour la couleur du fond de la page (on peut la voir quand il n'y a pas assez de tâches dans une section) */
 /* problème : ça oblige à définir les couleurs de fond de tous les éléments */
 {
-    /*background-color: #CACACA;*/
-    -fx-background-color: #A3A3A3;
+    -fx-background-color: #CACACA;
+    /*-fx-background-color: #A3A3A3;*/
     /*-fx-background-color: red;*/
 }
 
@@ -280,7 +280,7 @@
     -fx-background-radius: 5px;
 }
 
-. conteneurBoutons {
+.conteneurBoutons {
     -fx-background-color: #CACACA;
 }
 
@@ -407,30 +407,29 @@
 /* Vue Gantt */
 
 .vueGantt *{
-    -fx-background-color: #CACACA;
+    -fx-background-color: #F0F0F0;
+}
+
+.gridGantt{
+    -fx-background-color: #F0F0F0;
 }
 
 .rectangleGantt {
-    -fx-fill: #F0F0F0;
+    -fx-fill: purple;
 }
 
 .titreTacheGantt {
     -fx-text-fill: #F0F0F0;
     -fx-font-weight: bold;
-    -fx-background-color: red;
+    -fx-font-size: 1.5em;
+    -fx-background-color: rgba(0, 0, 0, 0);
 }
 
 .dateTacheGantt {
-    -fx-text-fill: red;
+    -fx-text-fill: #585858;
 }
 
 .stackPaneTacheGantt {
-    -fx-background-color: red;
-
+    -fx-background-color: #A3A3A3;
     -fx-background-radius: 0.5em 0.5em 0.5em 0.5em;
-}
-
-.gridGantt {
-
-    -fx-background-color: #CACACA;
 }

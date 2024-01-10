@@ -10,6 +10,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.ListView;
 import javafx.collections.FXCollections;
+import javafx.stage.Screen;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Modele.Sujet;
 import tralleno.Section.Section;
@@ -27,7 +28,7 @@ public class VueListe extends ScrollPane implements Observateur, Serializable {
     public VueListe(ModeleBureau modeleBureau) {
         super();
         this.modeleBureau = modeleBureau;
-//        getStyleClass().add("vueListe");
+        setStyle("-fx-border-color: red; -fx-border-width: 1px;");
         actualiser(modeleBureau);
     }
 
@@ -36,6 +37,13 @@ public class VueListe extends ScrollPane implements Observateur, Serializable {
             setContent(null); // Effacer le contenu existant
 
             VBox sectionsVBox = new VBox();
+            sectionsVBox.setSpacing(10);
+            sectionsVBox.setPadding(new Insets(20));
+            sectionsVBox.setFillWidth(true); // Permettre à la VBox de remplir toute la largeur disponible
+
+            // Liaison bidirectionnelle des propriétés prefWidth du ScrollPane et de la VBox
+            sectionsVBox.prefWidthProperty().bind(this.widthProperty());
+            sectionsVBox.setStyle("-fx-background-color: white;");
             List<Section> sections = ((ModeleBureau) s).getSections();
 
             for (Section section : sections) {
@@ -46,6 +54,5 @@ public class VueListe extends ScrollPane implements Observateur, Serializable {
             setContent(sectionsVBox);
         }
     }
-
 }
 

@@ -41,12 +41,10 @@ public class VueSection extends VBox implements Observateur, Serializable {
         setMinHeight(50);
         setPrefWidth(250);
 
-        setSpacing(10);
+        setSpacing(18);
         setPadding(new Insets(10));
         getStyleClass().add("section");
 
-
-        System.out.println("LARGEUR : " + this.section.getNom() + " " + this.getWidth());
         actualiser(modele);
 
     }
@@ -83,7 +81,7 @@ public class VueSection extends VBox implements Observateur, Serializable {
 
         // Puis pour chaque tâche que la section contient, on crée une VueTache
         for (Tache t : this.section.getTaches()) {
-            VueTache vueTache = new VueTache(t, modeleBureau, null);
+            VueTache vueTache = new VueTache(t, modeleBureau, null, false);
             getChildren().add(vueTache);
         }
 
@@ -182,5 +180,6 @@ public class VueSection extends VBox implements Observateur, Serializable {
 
         return index - 1;
     }
+
 
 }

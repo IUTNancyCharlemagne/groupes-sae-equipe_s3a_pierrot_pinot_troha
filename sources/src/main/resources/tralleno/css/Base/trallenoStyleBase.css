@@ -9,10 +9,9 @@
 /* pour la couleur du fond de la page (on peut la voir quand il n'y a pas assez de tâches dans une section) */
 /* problème : ça oblige à définir les couleurs de fond de tous les éléments */
 {
-    /*-fx-background-color: #CACACA;*/
+    /*background-color: #CACACA;*/
     -fx-background-color: #A3A3A3;
     /*-fx-background-color: red;*/
-    /*-fx-background-color: linear-gradient(to bottom, #FF0018, #FFA52C, #FFFF41, #008018, #0000F9, #86007D);*/
 }
 
 
@@ -32,7 +31,7 @@
     /* je sais pas si ça va être utile mais on sait jamais */
 }
 
-.entete *{
+.entete * {
     -fx-background-color: #CACACA;
 }
 
@@ -40,7 +39,7 @@
     -fx-background-color: #7E7E7E;
 }
 
-.vueTableau *{
+.vueTableau * {
     -fx-background-color: #CACACA;
 }
 
@@ -48,7 +47,7 @@
     -fx-background-color: #CACACA;
 }
 
-.nomAppli{
+.nomAppli {
     -fx-font-weight: bold;
     -fx-font-size: 20px;
     -fx-text-fill: white;
@@ -131,7 +130,11 @@
     -fx-background-color: #7E7E7E;
 }
 
-.containerSections{
+.vueTableau {
+    -fx-background-color: #CACACA;
+}
+
+.containerSections {
     -fx-background-color: #CACACA;
 }
 
@@ -200,14 +203,13 @@
     -fx-background-color: #7E7E7E;
 }
 
-.scroll-bar .increment-button,
 .scroll-bar .decrement-button {
     -fx-background-color: #A3A3A3;
     -fx-padding: 3px;
     -fx-background-radius: 2px;
 }
 
-.ScrollPaneArchivage *{
+.ScrollPaneArchivage * {
     -fx-background-color: #A3A3A3; /* Couleur de fond de la piste */
 }
 
@@ -219,11 +221,11 @@
     -fx-border-color: #7E7E7E;
 }
 
-.archivage *{
+.archivage * {
     -fx-background-color: #A3A3A3;
 }
 
-.ScrollPaneArchivage *{
+.ScrollPaneArchivage * {
     -fx-background-color: #A3A3A3;
 }
 
@@ -231,7 +233,7 @@
     -fx-background-color: #A3A3A3;
 }
 
-.listeElementArchive *{
+.listeElementArchive * {
     -fx-background-color: #A3A3A3;
 }
 
@@ -278,7 +280,7 @@
     -fx-background-radius: 5px;
 }
 
-.conteneurBoutons{
+. conteneurBoutons {
     -fx-background-color: #CACACA;
 }
 
@@ -422,25 +424,13 @@
     -fx-text-fill: red;
 }
 
-.rectangleGanttActif {
-    -fx-fill: transparent;
-}
-
-.stackPaneRectangleGantt {
-}
-
-.stackpaneRectangleGanttActif {
+.stackPaneTacheGantt {
     -fx-background-color: red;
-}
 
-.stackPaneRectanglePremier {
-    -fx-background-radius: 0.5em 0 0 0.5em;
-}
-
-.stackPaneRectangleDernier {
-    -fx-background-radius: 0 0.5em 0.5em 0;
-}
-
-.stackPaneRectanglePremierDernier {
     -fx-background-radius: 0.5em 0.5em 0.5em 0.5em;
+}
+
+.gridGantt {
+
+    -fx-background-color: #CACACA;
 }

@@ -2,7 +2,9 @@ package tralleno.Vues;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
@@ -85,7 +87,6 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 StackPane st = new StackPane();
 
                 //container est la horizontal box qui vas contenir tout le diagramme de gantt
-                HBox container = new HBox();
 
                 Canvas cv = new Canvas(1000, 1000);
                 //graphic context sert a dessiner les traits sur le canvas
@@ -94,13 +95,12 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 int lineWidth = 1;
                 gc.setLineWidth(lineWidth);
                 //le stackpane est constitué du hbox et par dessus le canvas
-                st.getChildren().addAll(container, cv);
+
                 this.setContent(st);
 
                 int spacingEntreTache = 1;
 
                 //boxjour c'est la colonne qui correspond à une date du calendrier gantt, on va l'initialiser dans la boucle (un pour chaque jour )
-                VBox boxJour;
 
                 //dateJour c'est la date qui correspondra au jour de la colonne boxJour
                 LocalDate dateJour;
@@ -111,10 +111,8 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 //grilleJour c'est la grille des jours de chaque tache, ex: grilleJour[1][2] c'est le jour index 2 (dateMin+2) de la tache index 1
                 //si le jour est dans l'intervalle dateDebut dateFin de la tache qui correspond alors il faut le signifier (ici avec des rectangles de couleurs)
                 //si on les sauvegarde pas dans un tableau à part c'est difficile de les retrouver quand on les modifies.
-                StackPane[][] grilleJour = new StackPane[nbTache][difjour];
 
                 StackPane temp;
-                Rectangle tempRect;
                 Label tempLab;
                 //largeur des rectangles et donc des colonnes
                 double largeurBox = 100;
@@ -124,82 +122,47 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 cv.setHeight((nbTache + 1) * hauteurRectangle);
                 cv.setWidth(difjour * largeurBox);
 
-                //on va créer autant de colonne que de jours entre la dateMin et dateMax de la selection de tache
+                GridPane gridGantt = new GridPane();
+                gridGantt.setVgap(spacingEntreTache);
+                gridGantt.getStyleClass().add("gridGantt");
                 for (int i = 0; i < difjour; i++) {
-                    //date du jour qui correspond a la colonne
                     dateJour = (dateMin.plusDays(i));
-                    boxJour = new VBox();
-                    boxJour.setMaxWidth(largeurBox);
-
-                    //on va rajouter dans la colonne autant de rectangle que de tache
-                    //on met dans un stackpane un rectangle puis un label pour mettre un titre de date si besoin
-                    for (int j = 0; j < nbTache; j++) {
-                        temp = new StackPane();
-                        temp.getStyleClass().add("stackPaneRectangleGantt");
-                        tempRect = new Rectangle(largeurBox, hauteurRectangle);
-                        tempRect.setFill(Color.WHITE);
-                        tempRect.getStyleClass().add("rectangleGantt");
-
-                        //label pour le nom de la tache
-                        tempLab = new Label();
-                        tempLab.getStyleClass().add("titreTacheGantt");
-
-                        temp.getChildren().addAll(tempRect, tempLab);
-                        //on ajoute le rectangle dans la grille
-                        grilleJour[j][i] = temp;
-                        //et dans la colonne
-                        boxJour.getChildren().add(temp);
-
-                    }
-                    //on ajoute la date en ba de la colonne
                     tempLab = new Label(" " + dateJour.toString() + " ");
                     tempLab.getStyleClass().add("dateTacheGantt");
-                    boxJour.getChildren().add(tempLab);
-
-                    //un espace entre les elements des colonnes pour qu'on puisse facilement differencier les differentes colonnes
-                    boxJour.setSpacing(spacingEntreTache);
-                    //finalement on ajoute la colonne a la hbox
-                    container.getChildren().add(boxJour);
-
+                    tempLab.setMinWidth(largeurBox);
+                    gridGantt.add(tempLab, i, nbTache);
                 }
+
                 //on calcule et on sauvegarde les points de depart de chaque tache sur le canvas pour pouvoir dessiner les traits de dependances
                 HashMap<Tache, Point2D> pointTache = new HashMap<>(nbTache);
 
                 //les index nous indique quand commence et quand fini la tache
                 int indexJdep, indexJfin;
+                Tache tActuelle;
                 for (int i = 0; i < nbTache; i++) {
+                    tActuelle = listTacheGantt.get(i);
                     //i c'est l'index de la tache, c'est aussi l'index de la ligne (coordonées y)
 
                     //indexJdep c'est l'index X de la première date de la tache i et indexJfin index de la dernière date
-                    indexJdep = (int) ChronoUnit.DAYS.between(dateMin, listTacheGantt.get(i).getDateDebut());
-                    indexJfin = (int) ChronoUnit.DAYS.between(dateMin, listTacheGantt.get(i).getDateFin());
+                    indexJdep = (int) ChronoUnit.DAYS.between(dateMin, tActuelle.getDateDebut());
+                    indexJfin = (int) ChronoUnit.DAYS.between(dateMin, tActuelle.getDateFin());
 
                     //on change la couleur des rectangles dans l'intervalle de date de la tache
                     //et on ajoute un label sur le premier rectangle pour avoir le titre de la tache
-                    Label l = (Label) grilleJour[i][indexJdep].getChildren().get(1);
-                    l.setText(listTacheGantt.get(i).getTitre());
+                    temp = new StackPane();
+                    temp.getStyleClass().add("stackPaneTacheGantt");
+                    temp.setMinSize(largeurBox * (tActuelle.getDuree() + 1), hauteurRectangle);
+                    //label pour le nom de la tache
+                    tempLab = new Label(tActuelle.getTitre());
+                    tempLab.getStyleClass().add("titreTacheGantt");
 
-                    if (indexJfin == indexJdep) {
-                        grilleJour[i][indexJdep].getStyleClass().add("stackPaneRectanglePremierDernier");
-                    } else {
-                        grilleJour[i][indexJdep].getStyleClass().add("stackPaneRectanglePremier");
-                        grilleJour[i][indexJfin].getStyleClass().add("stackPaneRectangleDernier");
-                    }
+                    temp.setAlignment(Pos.CENTER_LEFT);
+                    temp.setPadding(new Insets(5));
+                    temp.getChildren().add(tempLab);
+                    gridGantt.add(temp, indexJdep, i, tActuelle.getDuree() + 1, 1);
 
-                    System.out.println(grilleJour[i][indexJfin].getStyleClass());
-                    //on sauvegarde les coordonées du point de depart de la tache en la calculant
-                    pointTache.put(listTacheGantt.get(i), new Point2D(largeurBox * (indexJdep), hauteurRectangle * (i + 0.5)));
-                    for (int j = indexJdep; j < indexJfin + 1; j++) {
-                        //i c'est la tache
-                        //j c'est la date
-                        Rectangle r = (Rectangle) grilleJour[i][j].getChildren().get(0);
-                        r.setFill(Color.RED);
-                        r.getStyleClass().add("rectangleGanttActif");
-
-                        grilleJour[i][j].getStyleClass().add("stackpaneRectangleGanttActif");
-                        //grilleJour[i][j].setStyle("-fx-background-radius: 20px");
-
-                    }
+                   //on sauvegarde les coordonées du point de depart de la tache en la calculant
+                    pointTache.put(tActuelle, new Point2D(largeurBox * (indexJdep), hauteurRectangle * (i + 0.5)));
 
                 }
 
@@ -220,8 +183,10 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                     }
                 }
 
+                st.getChildren().addAll(gridGantt, cv);
             }
 
         }
+
     }
 }

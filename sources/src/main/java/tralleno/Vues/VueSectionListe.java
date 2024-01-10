@@ -23,19 +23,32 @@ import java.io.Serializable;
 public class VueSectionListe extends TitledPane implements Observateur, Serializable {
     private final Section section;
 
+    private VBox sectionContent;
+
     public VueSectionListe(ModeleBureau modele, Section section) {
         super();
         this.section = section;
-        setExpanded(true); // Déplier le TitledPane par défaut si nécessaire
+        setExpanded(true);
 
         this.getStyleClass().add("vueSectionListe");
 
-        VBox sectionContent = new VBox();
+        VBox content = new VBox();
+        content.setSpacing(15);
+        content.setPadding(Insets.EMPTY);
+
+        sectionContent = new VBox();
         sectionContent.setSpacing(15);
-        sectionContent.setPadding(new Insets(10));
-        setContent(sectionContent);
+        sectionContent.setPadding(new Insets(15));
+        sectionContent.setMinHeight(50);
+
+
+
+        content.getChildren().add(sectionContent); // Ajout de la VBox dans la VBox principale
+
+        setContent(content); // Utilisation de la VBox principale comme contenu du TitledPane
 
         actualiser(modele);
+
     }
 
     @Override
@@ -59,21 +72,20 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
 
         sect.getChildren().add(labelSection);
 
+        sectionContent.getChildren().clear();
+
         for (Tache t : this.section.getTaches()) {
-            VueTacheListe vueTacheListe = new VueTacheListe(t, modeleBureau, null);
-            ((VBox) getContent()).getChildren().add(vueTacheListe);
+            VueTache vueTacheListe = new VueTache(t, modeleBureau, null, true);
+            sectionContent.getChildren().add(vueTacheListe);
         }
 
         // gestion du drag over, quand on passe la tâche au dessus de la vueSection.
         // Avec ça on peut empecher le dépot d'une tâche à certains endroits
-        this.setOnDragOver(event -> {
-            if (event.getGestureSource() instanceof VueTacheListe) {
-                if (!this.getStyleClass().contains("hovered")) {
-                    this.getStyleClass().add("hovered");
-                }
+        sectionContent.setOnDragOver(event -> {
+            if (event.getGestureSource() instanceof VueTache) {
                 // Lorsqu'on essaye de déplacer une tâche qui est déjà à la fin, à la fin... (pas logique)
                 // Sinon on accepte de recevoir des tâches
-                System.out.println(this.determinerPositionMettreTache(event));
+                System.out.println("POSITION SELON METHODE DRAG OVER : " + determinerPositionMettreTache(event));
                 event.acceptTransferModes(TransferMode.MOVE);
                 event.consume();
             }
@@ -81,7 +93,7 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
 
 
         // Gestion du drop pour récupérer la tâche
-        this.setOnDragDropped(event -> {
+        sectionContent.setOnDragDropped(event -> {
             Dragboard db = event.getDragboard();
             boolean success = false;
 
@@ -106,65 +118,14 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
             event.setDropCompleted(success);
             event.consume();
         });
+
     }
 
-//    /**
-//     * Permet de déteminer la position dans la section à laquelle la tâche devra être insérée
-//     * @param event
-//     * @return
-//     */
-//    private int determinerPositionMettreTache(DragEvent event) {
-//        // au cas où on trouve rien on le met à -1
-//        int index = -1;
-//
-//        // On récupère la position de la souris
-//        double mouseY = event.getY();
-//
-//        // On récupère la liste de chauque VueTache dans la VueSection
-//        ObservableList<Node> tachesVisuelles = this.getChildren();
-//
-//        // Et on les parcourt pour trouver l'endroit d'insertion
-//        for (int i = 0; i < tachesVisuelles.size(); i++) {
-//            Node tacheVisuelle = tachesVisuelles.get(i);
-//
-//            double tacheY = tacheVisuelle.getBoundsInParent().getMinY();
-//
-//            if (mouseY < tacheY) {
-//                index = i;
-//                break;
-//            }
-//        }
-//
-//        if (index == -1) {
-//            index = tachesVisuelles.size();
-//        }
-//
-//        return index - 1;
-//    }
-
-//    private int determinerPositionMettreTache(DragEvent event) {
-//        int index = -1;
-//        double mouseY = event.getY();
-//
-//        ObservableList<Node> tachesVisuelles = ((VBox) getContent()).getChildren();
-//
-//        for (int i = 0; i < tachesVisuelles.size(); i++) {
-//            Node tacheVisuelle = tachesVisuelles.get(i);
-//            double tacheY = tacheVisuelle.localToScene(tacheVisuelle.getBoundsInLocal()).getMinY();
-//
-//            if (mouseY < tacheY) {
-//                index = i;
-//                break;
-//            }
-//        }
-//
-//        if (index == -1) {
-//            index = tachesVisuelles.size();
-//        }
-//
-//        return index + 1;
-//    }
-
+    /**
+     * Permet de déteminer la position dans la section à laquelle la tâche devra être insérée
+     * @param event
+     * @return
+     */
     private int determinerPositionMettreTache(DragEvent event) {
         // au cas où on trouve rien on le met à -1
         int index = -1;
@@ -173,7 +134,7 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
         double mouseY = event.getY();
 
         // On récupère la liste de chauque VueTache dans la VueSection
-        ObservableList<Node> tachesVisuelles = this.getChildren();
+        ObservableList<Node> tachesVisuelles = this.sectionContent.getChildren();
 
         // Et on les parcourt pour trouver l'endroit d'insertion
         for (int i = 0; i < tachesVisuelles.size(); i++) {
@@ -191,7 +152,7 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
             index = tachesVisuelles.size();
         }
 
-        return index - 1;
+        return index;
     }
 }
 

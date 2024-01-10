@@ -15,11 +15,9 @@ import tralleno.Modele.ModeleBureau;
 import tralleno.Section.Section;
 import tralleno.Taches.Tache;
 import tralleno.Taches.TacheMere;
-import tralleno.Vues.VuePrincipale;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

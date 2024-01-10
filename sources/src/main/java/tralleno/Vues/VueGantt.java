@@ -189,10 +189,23 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                                 xArrive = (int) ChronoUnit.DAYS.between(dateMin, t.getDateDebut());
                                 yDepart = listTacheGantt.indexOf(taDep);
                                 yArrive = listTacheGantt.indexOf(t);
-                                Line diagonalLine = new Line(0, 0, largeurBox * (xArrive - xDepart - dureeDepart - 1), hauteurRectangle * (yArrive - yDepart)); // Adjust the coordinates as needed
-                                diagonalLine.setStrokeWidth(4);
-                                diagonalLine.getStyleClass().add("ligneGantt");
-                                gridGantt.add(diagonalLine, xDepart + dureeDepart + 1, yDepart, xArrive - xDepart + dureeDepart, yArrive - yDepart + 1);
+                                if(yDepart>yArrive){
+                                    Line diagonalLine = new Line(0, 0, largeurBox * (xArrive - xDepart - dureeDepart - 1), hauteurRectangle * (yArrive - yDepart)); // Adjust the coordinates as needed
+                                    diagonalLine.setStrokeWidth(4);
+                                    diagonalLine.getStyleClass().add("ligneGantt");
+
+                                    int rowspan = xArrive - xDepart + dureeDepart;
+                                    gridGantt.add(diagonalLine, xDepart + dureeDepart + 1, yArrive, rowspan, yDepart-yArrive+ 1);
+
+                                }else {
+                                    Line diagonalLine = new Line(0, 0, largeurBox * (xArrive - xDepart - dureeDepart - 1), hauteurRectangle * (yArrive - yDepart)); // Adjust the coordinates as needed
+                                    diagonalLine.setStrokeWidth(4);
+                                    diagonalLine.getStyleClass().add("ligneGantt");
+
+                                    int rowspan = xArrive - xDepart + dureeDepart;
+                                    gridGantt.add(diagonalLine, xDepart + dureeDepart + 1, yDepart, rowspan, yArrive - yDepart + 1);
+                                }
+
                             }
                         }
                     }

@@ -38,16 +38,16 @@ public class VueSection extends VBox implements Observateur, Serializable {
         super();
         this.section = section;
 
-        setMinHeight(50);
-        setPrefWidth(250);
+        this.setMinHeight(50);
+        this.setPrefWidth(250);
 
-        setSpacing(10);
-        setPadding(new Insets(10));
-        getStyleClass().add("section");
+        this.setSpacing(10);
+        this.setPadding(new Insets(10));
+        this.getStyleClass().add("section");
 
 
         System.out.println("LARGEUR : " + this.section.getNom() + " " + this.getWidth());
-        actualiser(modele);
+        this.actualiser(modele);
 
     }
 

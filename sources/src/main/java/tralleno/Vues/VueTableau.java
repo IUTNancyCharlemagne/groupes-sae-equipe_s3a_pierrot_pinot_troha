@@ -33,9 +33,8 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
      */
     public VueTableau(ModeleBureau modeleBureau) {
         super();
-        //setPadding(new Insets(10));
         this.modeleBureau = modeleBureau;
-        getStyleClass().add("vueTableau");
+        this.getStyleClass().add("vueTableau");
 
         actualiser(modeleBureau);
     }

@@ -133,12 +133,12 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                     tempLab = new Label(" " + dateJour.format(formatter) + " ");
                     tempLab.getStyleClass().add("dateTacheGantt");
                     tempLab.setMinWidth(largeurBox);
+                    tempLab.setMaxWidth(largeurBox);
                     tempLab.setAlignment(Pos.CENTER);
                     gridGantt.add(tempLab, i, nbTache);
                 }
 
                 //on calcule et on sauvegarde les points de depart de chaque tache sur le canvas pour pouvoir dessiner les traits de dependances
-                HashMap<Tache, Point2D> pointTache = new HashMap<>(nbTache);
 
                 //les index nous indique quand commence et quand fini la tache
                 int indexJdep, indexJfin;
@@ -157,18 +157,17 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                     temp.getStyleClass().add("stackPaneTacheGantt");
                     //on met une taille fixe pour que ça ne depasse pas si le titre est plus long
                     temp.setMinSize(largeurBox * (indexJfin - indexJdep + 1), hauteurRectangle);
-                    temp.setMaxSize(largeurBox * (indexJfin - indexJdep + 1), hauteurRectangle);
+                    //temp.setMaxSize(largeurBox * (indexJfin - indexJdep + 1), hauteurRectangle);
                     //label pour le nom de la tache
                     tempLab = new Label(tActuelle.getTitre());
                     tempLab.getStyleClass().add("titreTacheGantt");
+                    tempLab.setMaxWidth(largeurBox*(tActuelle.getDuree()+1));
 
                     temp.setAlignment(Pos.CENTER_LEFT);
                     temp.setPadding(new Insets(5));
                     temp.getChildren().add(tempLab);
                     gridGantt.add(temp, indexJdep, i, tActuelle.getDuree() + 1, 1);
 
-                    //on sauvegarde les coordonées du point de depart de la tache en la calculant
-                    pointTache.put(tActuelle, new Point2D(largeurBox * (indexJdep), hauteurRectangle * (i + 0.5)));
 
                 }
 
@@ -190,10 +189,23 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                                 xArrive = (int) ChronoUnit.DAYS.between(dateMin, t.getDateDebut());
                                 yDepart = listTacheGantt.indexOf(taDep);
                                 yArrive = listTacheGantt.indexOf(t);
-                                Line diagonalLine = new Line(0, 0, largeurBox * (xArrive - xDepart - dureeDepart - 1), hauteurRectangle * (yArrive - yDepart)); // Adjust the coordinates as needed
-                                diagonalLine.setStrokeWidth(4);
-                                diagonalLine.getStyleClass().add("ligneGantt");
-                                gridGantt.add(diagonalLine, xDepart + dureeDepart + 1, yDepart, xArrive - xDepart + dureeDepart, yArrive - yDepart + 1);
+                                if(yDepart>yArrive){
+                                    Line diagonalLine = new Line(0, 0, largeurBox * (xArrive - xDepart - dureeDepart - 1), hauteurRectangle * (yArrive - yDepart)); // Adjust the coordinates as needed
+                                    diagonalLine.setStrokeWidth(4);
+                                    diagonalLine.getStyleClass().add("ligneGantt");
+
+                                    int rowspan = xArrive - xDepart + dureeDepart;
+                                    gridGantt.add(diagonalLine, xDepart + dureeDepart + 1, yArrive, rowspan, yDepart-yArrive+ 1);
+
+                                }else {
+                                    Line diagonalLine = new Line(0, 0, largeurBox * (xArrive - xDepart - dureeDepart - 1), hauteurRectangle * (yArrive - yDepart)); // Adjust the coordinates as needed
+                                    diagonalLine.setStrokeWidth(4);
+                                    diagonalLine.getStyleClass().add("ligneGantt");
+
+                                    int rowspan = xArrive - xDepart + dureeDepart;
+                                    gridGantt.add(diagonalLine, xDepart + dureeDepart + 1, yDepart, rowspan, yArrive - yDepart + 1);
+                                }
+
                             }
                         }
                     }

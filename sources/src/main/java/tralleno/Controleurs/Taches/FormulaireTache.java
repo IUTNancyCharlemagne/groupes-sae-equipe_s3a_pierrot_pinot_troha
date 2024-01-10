@@ -48,24 +48,28 @@ public class FormulaireTache implements Serializable {
         TextField champDescription = new TextField();
         champDescription.getStyleClass().add("champTexteTache");
 
+        ComboBox<Section> comboSection = new ComboBox<>();
 
-        // Maintenant les dates de début et fin
-        Label labelDateDebut = new Label("Date de début:");
+        Label labelDateDebut = new Label("Date de début :");
         labelDateDebut.getStyleClass().add("titreChamp");
         DatePicker dateDebut = new DatePicker();
         dateDebut.getStyleClass().add("datePicker");
 
-        Label labelDateFin = new Label("Date de fin:");
+        Label labelDateFin = new Label("Date de fin :");
         labelDateFin.getStyleClass().add("titreChamp");
         DatePicker dateFin = new DatePicker();
         dateFin.getStyleClass().add("datePicker");
 
-        ComboBox<Section> comboSection = new ComboBox<>();
 
-        // HBox pour mettre les deux selecteurs de date sur la même ligne
-        HBox choixDate = new HBox(10);
-        choixDate.getChildren().addAll(labelDateDebut, dateDebut, labelDateFin, dateFin);
-        choixDate.getStyleClass().add("conteneurDates");
+        VBox dateDebutBox = new VBox(5);
+        dateDebutBox.getChildren().addAll(labelDateDebut, dateDebut);
+
+        VBox dateFinBox = new VBox(5);
+        dateFinBox.getChildren().addAll(labelDateFin, dateFin);
+
+
+        HBox champsDate = new HBox(20);
+        champsDate.getChildren().addAll(dateDebutBox, dateFinBox);
 
         if(tacheAModifier != null){ // On doit le faire avant l'afficher de tachesDisponibles()
             // On pré-remplit aussi les dates
@@ -250,7 +254,7 @@ public class FormulaireTache implements Serializable {
             );
 
             layout.getChildren().addAll(titreTache, champTitre, labelDescription, champDescription,
-                    choixSection, comboSection, choixDate,tachesAvant, dependances,
+                    choixSection, comboSection, champsDate,tachesAvant, dependances,
                     listViewTachesAvant, boutonContainer);
 
         }else{
@@ -307,7 +311,7 @@ public class FormulaireTache implements Serializable {
                 taillePopUp = 250;
             }else{
                 layout.getChildren().addAll(titreTache, champTitre, labelDescription, champDescription,
-                        choixDate,tachesAvant, dependances,
+                        champsDate,tachesAvant, dependances,
                         listViewTachesAvant, actions, boutonContainer);
             }
 

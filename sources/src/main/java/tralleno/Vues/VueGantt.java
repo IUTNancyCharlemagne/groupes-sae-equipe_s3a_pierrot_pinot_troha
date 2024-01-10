@@ -86,6 +86,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
 
                 //stackpane pour mettre un canvas sur le diagramme pour qu'on puisse dessiner les traits de dependances
                 StackPane st = new StackPane();
+                st.setPadding(new Insets(20));
 
 
                 Canvas cv = new Canvas(1000, 1000);
@@ -184,14 +185,10 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                                 gc.strokeLine(pointTache.get(t).getX(), pointTache.get(t).getY() + (listTacheGantt.indexOf(t) * spacingEntreTache), pointTache.get(taDep).getX() + (taDep.getDuree() + 1) * largeurBox, pointTache.get(taDep).getY() + (listTacheGantt.indexOf(taDep) * spacingEntreTache));
                             }
                         }
-
                     }
                 }
-
                 st.getChildren().addAll(gridGantt, cv);
             }
-
         }
-
     }
 }

@@ -157,7 +157,9 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                     //on vat mettre le titre de la tache a gauche du stackpane
                     temp = new StackPane();
                     temp.getStyleClass().add("stackPaneTacheGantt");
+                    //on met une taille fixe pour que ça ne depasse pas si le titre est plus long
                     temp.setMinSize(largeurBox * (indexJfin-indexJdep + 1), hauteurRectangle);
+                    temp.setMaxSize(largeurBox * (indexJfin-indexJdep + 1), hauteurRectangle);
                     //label pour le nom de la tache
                     tempLab = new Label(tActuelle.getTitre());
                     tempLab.getStyleClass().add("titreTacheGantt");

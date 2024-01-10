@@ -9,10 +9,10 @@
 /* pour la couleur du fond de la page (on peut la voir quand il n'y a pas assez de tâches dans une section) */
 /* problème : ça oblige à définir les couleurs de fond de tous les éléments */
 {
-    -fx-background-color: #CACACA
-;
-/*-fx-background-color: #A3A3A3;*/
-/*-fx-background-color: red;*/
+    -fx-background-color: #CACACA;
+    /*-fx-background-color: #A3A3A3;*/
+    /*-fx-background-color: red;*/
+    /*-fx-background-color: #2cea2c;*/
 }
 
 
@@ -40,13 +40,15 @@
     -fx-background-color: #7E7E7E;
 }
 
-.vueTableau * {
+.vueTableau *{
     -fx-background-color: #CACACA;
 }
 
 .vueTableau {
     -fx-background-color: #CACACA;
 }
+
+/* vueBarreActions */
 
 .nomAppli {
     -fx-font-weight: bold;
@@ -101,6 +103,25 @@
     -fx-background-radius: 5px;
 }
 
+.elementsDroite{
+    -fx-background-color: #7E7E7E;
+    -fx-alignment: center-right;
+}
+
+.labelTheme{
+    -fx-background-color: #7E7E7E;
+    -fx-padding: 5px;
+    -fx-text-fill: #F0F0F0;
+    -fx-font-weight: bold;
+}
+
+#BtnArchivage_ArchivageOuvert{
+    -fx-background-color: #F0F0F0;
+    -fx-text-fill: #585858;
+}
+
+/* vueTableau */
+
 .section {
     -fx-background-color: #F0F0F0;
     -fx-background-radius: 10px;
@@ -127,12 +148,9 @@
     -fx-text-fill: #F0F0F0;
 }
 
+
 .modifier-button:hover {
     -fx-background-color: #7E7E7E;
-}
-
-.vueTableau {
-    -fx-background-color: #CACACA;
 }
 
 .containerSections {
@@ -158,15 +176,15 @@
     -fx-border-width: 4;
 }
 
-.titled-pane .title {
+.vueTache .title {
     -fx-background-color: #CACACA;
 }
 
-.titled-pane .title .arrow-button .arrow {
+.vueTache .title .arrow-button .arrow {
     -fx-background-color: black;
 }
 
-.titled-pane > .content {
+.vueTache > .content {
     /* à mettre de la même couleur que le font de la descpription des tâche (.contenuTache) */
     -fx-background-color: #F0F0F0;
     /* à mettre avec comme pour la tâche en entière (.vueTache) */
@@ -211,7 +229,7 @@
 }
 
 .ScrollPaneArchivage * {
-    -fx-background-color: #A3A3A3; /* Couleur de fond de la piste */
+    -fx-background-color: #A3A3A3;
 }
 
 /* Archivage */

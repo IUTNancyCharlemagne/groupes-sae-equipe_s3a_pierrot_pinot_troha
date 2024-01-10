@@ -54,7 +54,6 @@ public class VueBarreActions extends HBox implements Serializable {
         Label nomAppli = new Label("Tralleno");
         nomAppli.getStyleClass().add("nomAppli");
 
-
         Button creerTacheButton = new Button("Créer Tâche");
         creerTacheButton.getStyleClass().add("actionButton");
         creerTacheButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlCreerTache(modeleBureau));
@@ -68,22 +67,31 @@ public class VueBarreActions extends HBox implements Serializable {
         choixVue.setValue("Vue Tableau");
         choixVue.addEventHandler(ActionEvent.ACTION, new ControlVues(choixVue, vuePrincipale));
 
+        HBox elementsDroite = new HBox();
+        elementsDroite.getStyleClass().add("elementsDroite");
+
         Button tachesArchiveesButton = new Button("Archivage");
         tachesArchiveesButton.addEventHandler(ActionEvent.ACTION, new ControlVues(tachesArchiveesButton, vuePrincipale));
         tachesArchiveesButton.getStyleClass().add("actionButton");
 
-        ChoiceBox<String> theme = new ChoiceBox<>();
-        theme.getItems().addAll("Base", "Bleu");
-        theme.getStyleClass().add("choixVue");
-        theme.setValue("Base");
-        theme.addEventHandler(ActionEvent.ACTION, new ControlVues(theme, vuePrincipale, "Contournement"));
+        Label theme = new Label("Thème :");
+        theme.getStyleClass().add("labelTheme");
+
+        ChoiceBox<String> choixtheme = new ChoiceBox<>();
+        choixtheme.getItems().addAll("Base", "Bleu");
+        choixtheme.getStyleClass().add("choixVue");
+        choixtheme.setValue("Base");
+        choixtheme.addEventHandler(ActionEvent.ACTION, new ControlVues(choixtheme, vuePrincipale, "Contournement"));
+
+        elementsDroite.getChildren().addAll(tachesArchiveesButton, theme, choixtheme);
 
         HBox.setHgrow(nomAppli, Priority.ALWAYS);
+        HBox.setHgrow(elementsDroite, Priority.ALWAYS);
 
         this.setPadding(new Insets(10));
         this.setSpacing(10);
         this.setAlignment(Pos.CENTER_LEFT);
-        this.getChildren().addAll(logo, nomAppli, choixVue, creerSectionButton, creerTacheButton, tachesArchiveesButton, theme);
+        this.getChildren().addAll(logo, nomAppli, choixVue, creerSectionButton, creerTacheButton, elementsDroite);
         this.getStyleClass().add("entete");
     }
 }

@@ -38,14 +38,15 @@ public class VueSection extends VBox implements Observateur, Serializable {
         super();
         this.section = section;
 
-        setMinHeight(50);
-        setPrefWidth(250);
+        this.setMinHeight(50);
+        this.setPrefWidth(250);
 
         setSpacing(18);
         setPadding(new Insets(10));
         getStyleClass().add("section");
 
-        actualiser(modele);
+
+        this.actualiser(modele);
 
     }
 
@@ -61,7 +62,7 @@ public class VueSection extends VBox implements Observateur, Serializable {
 
         String nom = section.getNom();
 
-        String nomAbrege = nom.length() > 30 ? nom.substring(0, 30) + "..." : nom;
+        String nomAbrege = nom.length > 30 ? nom.substring(0, 30) + "..." : nom;
         Label labelSection = new Label(nomAbrege);
         labelSection.setAlignment(Pos.CENTER);
         labelSection.getStyleClass().add("nomSection");

@@ -1,0 +1,345 @@
+@startuml
+class tralleno.Vues.VueTableau {
+- ModeleBureau modeleBureau
++ void actualiser(Sujet)
+- int determinerPositionInsertion(DragEvent)
+}
+class tralleno.Vues.VueSelecteurGantt {
+- ModeleBureau modele
+- VuePrincipale vp
++ void actualiser(Sujet)
+}
+abstract class tralleno.Taches.Tache {
+# Section sectionParente
+# String titre
+# int id
+# LocalDate dateDebut
+# int duree
+# String description
++ Section getSectionParente()
++ void setSectionParente(Section)
++ String getTitre()
++ void setTitre(String)
++ int getId()
++ void setId(int)
++ LocalDate getDateDebut()
++ void setDateDebut(LocalDate)
++ LocalDate getDateFin()
++ void setDateFin(LocalDate)
++ int getDuree()
++ void setDuree(int)
++ String getDescription()
++ void setDescription(String)
++ int compareTo(Tache)
++ String toString()
++ String toStringDate()
+}
+class tralleno.Vues.VueBarreActions {
++ {static} int TABLEAU
++ {static} int LISTE
++ {static} int GANTT
+}
+
+class tralleno.Vues.VueArchivage {
+- ModeleBureau modeleBureau
+- Button tachesArchivees
+- Button boutonCourant
+- VBox vueListe
++ void actualiser(Sujet)
++ VBox creerTache(String,String)
+- void readObject(ObjectInputStream)
++ void changerClasseCSSBoutons()
+- void mettreAJourListeArchivage()
+}
+class tralleno.Taches.TacheFille {
+}
+class tralleno.Controleurs.Sections.ControlSupprimerSection {
+- ModeleBureau modeleBureau
+- Section section
+- Stage fenetre
++ void handle(MouseEvent)
+}
+class tralleno.Controleurs.Taches.ControlModifTache {
+- ModeleBureau modeleBureau
+- Tache tacheAModifier
+- TacheMere tacheParente
++ void handle(MouseEvent)
+}
+interface tralleno.Vues.Observateur {
++ void actualiser(Sujet)
+}
+class tralleno.Controleurs.Taches.ControlSupprimerTache {
+- ModeleBureau modeleBureau
+- Tache tacheASupprimer
+- Stage fenetre
++ void handle(MouseEvent)
+}
+class tralleno.Controleurs.Archivage.ControlArchiverTache {
+- ModeleBureau modeleBureau
+- Tache tache
+- Stage fenetre
++ void handle(MouseEvent)
+}
+interface tralleno.Modele.Sujet {
++ void enregistrerObservateur(Observateur)
++ void supprimerObservateur(Observateur)
++ void notifierObservateurs()
+}
+class tralleno.Vues.VueSection {
+- Section section
++ void actualiser(Sujet)
+- int determinerPositionMettreTache(DragEvent)
+}
+class tralleno.Vues.VueGantt {
+- ModeleBureau modele
++ void actualiser(Sujet)
++ void afficherGantt()
+}
+class tralleno.TaskManager {
++ void start(Stage)
++ {static} void main(String[])
+}
+class tralleno.Controleurs.Restauration.ControlRestaurerTache {
+- ModeleBureau modeleBureau
+- Tache tache
++ void handle(MouseEvent)
+}
+class tralleno.Vues.VueTache {
+- Tache tache
+- VBox sousTachesBox
+- TacheMere tacheParente
++ void actualiser(Sujet)
+}
+class tralleno.Modele.ModeleBureau {
+- List<Observateur> observateurs
+- List<Section> sections
+- Map<Tache,List<Tache>> dependances
+- Tache tacheCourante
+- Section sectionCourante
++ {static} int IDTACHEACTUELLE
+- int idtacheactuelle
++ {static} int IDSECTIONACTUELLE
+- int idsectionactuelle
+- List<Tache> tachesArchivees
+- List<Section> sectionsArchivees
+- List<Tache> selectionTacheGantt
++ int getIdtacheactuelle()
++ void setIdtacheactuelle(int)
++ int getIdsectionactuelle()
++ void setIdsectionactuelle(int)
++ void ajouterSection(Section)
++ void ajouterTache(int)
++ void ajouterDependance(Tache)
++ void ajouterDependances(List<Tache>)
++ Section getSection(String)
++ List<String> getNomSections()
++ void modifierNomSection(String)
++ void deplacerSection(int)
++ void changerSection(Section,int)
+- void mettreAJourSousTachesSection(Tache,Section)
++ List<Tache> getDependancesTache()
++ List<Tache> getTaches()
++ Tache getTacheParId(int)
++ Section getSectionParId(int)
+- Tache chercherTache(int,Tache)
++ void ajouterTacheDansSection()
++ boolean isArchivee_Tache(Tache)
++ boolean isArchivee_Section(Section)
++ boolean isSupprimee_Section(Section)
++ void supprimerSection()
++ void supprimerDependances()
++ void supprimerTache()
++ void supprimerTacheRecursive(Section)
+- void supprimerSousTacheRecursive(Tache,List<Tache>)
++ boolean estSousTacheDe(Tache,Tache)
++ void archiverTache()
++ void archiverSection()
++ void restaurerTache()
++ void restaurerSection()
++ List<Tache> getTachesDisponibles(LocalDate)
++ void enregistrerObservateur(Observateur)
++ void supprimerObservateur(Observateur)
++ void notifierObservateurs()
++ List<Observateur> getObservateurs()
++ void setObservateurs(List<Observateur>)
++ {static} int getIDSECTIONACTUELLE()
++ {static} int getIDTACHEACTUELLE()
++ Tache getTacheCourante()
++ void setTacheCourante(Tache)
++ Section getSectionCourante()
++ void setSectionCourante(Section)
++ List<Tache> getTachesArchivees()
++ void setTachesArchivees(List<Tache>)
++ List<Section> getSectionsArchivees()
++ void setSectionsArchivees(List<Section>)
++ Map<Tache,List<Tache>> getDependances()
++ void setDependances(Map<Tache,List<Tache>>)
++ List<Section> getSections()
++ void setSections(List<Section>)
++ void gentTest()
++ List<Tache> getSelectionTacheGantt()
++ void setSelectionTacheGantt(List<Tache>)
++ void addSelectionTacheGantt(Tache)
++ void removeSelectionTacheGantt(Tache)
++ void clearSelectionTacheGantt()
+}
+class tralleno.Controleurs.Restauration.ControlRestaurerSection {
+- ModeleBureau modeleBureau
+- Section section
++ void handle(MouseEvent)
+}
+class tralleno.MainSerialiser {
++ {static} ModeleBureau modeleBureau
++ {static} String chemin
++ {static} void loaderModele(String)
++ void start(Stage)
++ {static} void serialiser()
++ {static} void main(String[])
+}
+class tralleno.Vues.VueListe {
+- ModeleBureau modeleBureau
++ void actualiser(Sujet)
+}
+class tralleno.Section.Section {
+- List<Tache> taches
+- String nom
+- int id
++ void ajouterTache(Tache)
++ void supprimerTache(Tache)
++ List<Tache> getTaches()
++ void setTaches(List<Tache>)
++ String getNom()
++ void setNom(String)
++ int getId()
++ void setId(int)
++ String toString()
+}
+class tralleno.Taches.TacheMere {
+# List<Tache> sousTaches
++ void ajouterSousTache(Tache)
++ void supprimerSousTache(Tache)
++ List<Tache> getSousTaches()
++ void setSousTaches(List<Tache>)
+}
+class tralleno.MainApp {
++ void start(Stage)
++ {static} void main(String[])
+}
+class tralleno.Controleurs.Taches.FormulaireTache {
++ {static} Scene creerFormulaireTache(ModeleBureau,Tache,TacheMere,Stage)
+}
+class tralleno.Controleurs.Sections.ControlCreerSection {
+- ModeleBureau modeleBureau
++ void handle(MouseEvent)
+}
+class tralleno.Controleurs.Sections.ControlModifSection {
+- ModeleBureau modeleBureau
+- Section section
++ void handle(MouseEvent)
+}
+class tralleno.Controleurs.Taches.ControlCreerTache {
+- ModeleBureau modeleBureau
++ void handle(MouseEvent)
+}
+class tralleno.Controleurs.Archivage.ControlArchiverSection {
+- ModeleBureau modeleBureau
+- Section section
+- Stage fenetre
++ void handle(MouseEvent)
+}
+class tralleno.Vues.VueSectionListe {
+- Section section
++ void actualiser(Sujet)
+}
+class tralleno.Vues.VuePrincipale {
++ {static} int TABLEAU
++ {static} int LISTE
+- {static} int GANTT
++ {static} int SELECTGANTT
++ {static} int THEMEBASE
++ {static} int THEMEBLUE
+- BorderPane conteneurPrincipal
+- Scene scene
+- Stage primaryStage
+- ModeleBureau modeleBureau
+- {static} int themeCourant
+- VueBarreActions vueBarreActions
+- VueTableau vueTableau
+- VueGantt vueGantt
+- VueSelecteurGantt vueSelecteurGantt
+- VueListe vueListe
+- VueArchivage vueArchivage
+- TranslateTransition afficherMenuTransition
+- TranslateTransition cacherMenuTransition
++ void changerVue(int)
++ void afficherArchivage()
++ void cacherArchivage()
++ void afficherOuCacherArchivage()
++ void changerTheme(int)
++ Stage getPrimaryStage()
++ ModeleBureau getModeleBureau()
++ Scene getScene()
++ {static} int getThemeCourant()
+}
+class tralleno.Controleurs.ControlVues {
+- ChoiceBox<String> choixVue
+- Button boutonArchivage
+- ChoiceBox<String> theme
+- VuePrincipale vuePrincipale
++ void handle(ActionEvent)
+}
+
+
+tralleno.Vues.Observateur <|.. tralleno.Vues.VueTableau
+java.io.Serializable <|.. tralleno.Vues.VueTableau
+javafx.scene.control.ScrollPane <|-- tralleno.Vues.VueTableau
+tralleno.Vues.Observateur <|.. tralleno.Vues.VueSelecteurGantt
+java.io.Serializable <|.. tralleno.Vues.VueSelecteurGantt
+tralleno.Vues.ScrollPane <|-- tralleno.Vues.VueSelecteurGantt
+tralleno.Taches.Comparable <|.. tralleno.Taches.Tache
+java.io.Serializable <|.. tralleno.Taches.Tache
+java.io.Serializable <|.. tralleno.Vues.VueBarreActions
+javafx.scene.layout.HBox <|-- tralleno.Vues.VueBarreActions
+tralleno.Vues.Observateur <|.. tralleno.Vues.VueArchivage
+java.io.Serializable <|.. tralleno.Vues.VueArchivage
+javafx.scene.layout.VBox <|-- tralleno.Vues.VueArchivage
+java.io.Serializable <|.. tralleno.Taches.TacheFille
+tralleno.Taches.Tache <|-- tralleno.Taches.TacheFille
+javafx.event.EventHandler <|.. tralleno.Controleurs.Sections.ControlSupprimerSection
+javafx.event.EventHandler <|.. tralleno.Controleurs.Taches.ControlModifTache
+java.io.Serializable <|.. tralleno.Controleurs.Taches.ControlModifTache
+javafx.event.EventHandler <|.. tralleno.Controleurs.Taches.ControlSupprimerTache
+javafx.event.EventHandler <|.. tralleno.Controleurs.Archivage.ControlArchiverTache
+tralleno.Vues.Observateur <|.. tralleno.Vues.VueSection
+java.io.Serializable <|.. tralleno.Vues.VueSection
+javafx.scene.layout.VBox <|-- tralleno.Vues.VueSection
+tralleno.Vues.Observateur <|.. tralleno.Vues.VueGantt
+java.io.Serializable <|.. tralleno.Vues.VueGantt
+tralleno.Vues.ScrollPane <|-- tralleno.Vues.VueGantt
+javafx.application.Application <|-- tralleno.TaskManager
+javafx.event.EventHandler <|.. tralleno.Controleurs.Restauration.ControlRestaurerTache
+tralleno.Vues.Observateur <|.. tralleno.Vues.VueTache
+javafx.scene.control.TitledPane <|-- tralleno.Vues.VueTache
+tralleno.Modele.Sujet <|.. tralleno.Modele.ModeleBureau
+java.io.Serializable <|.. tralleno.Modele.ModeleBureau
+javafx.event.EventHandler <|.. tralleno.Controleurs.Restauration.ControlRestaurerSection
+javafx.application.Application <|-- tralleno.MainSerialiser
+tralleno.Vues.Observateur <|.. tralleno.Vues.VueListe
+java.io.Serializable <|.. tralleno.Vues.VueListe
+javafx.scene.control.ScrollPane <|-- tralleno.Vues.VueListe
+java.io.Serializable <|.. tralleno.Section.Section
+java.io.Serializable <|.. tralleno.Taches.TacheMere
+tralleno.Taches.Tache <|-- tralleno.Taches.TacheMere
+javafx.application.Application <|-- tralleno.MainApp
+java.io.Serializable <|.. tralleno.Controleurs.Taches.FormulaireTache
+javafx.event.EventHandler <|.. tralleno.Controleurs.Sections.ControlCreerSection
+javafx.event.EventHandler <|.. tralleno.Controleurs.Sections.ControlModifSection
+javafx.event.EventHandler <|.. tralleno.Controleurs.Taches.ControlCreerTache
+java.io.Serializable <|.. tralleno.Controleurs.Taches.ControlCreerTache
+javafx.event.EventHandler <|.. tralleno.Controleurs.Archivage.ControlArchiverSection
+tralleno.Vues.Observateur <|.. tralleno.Vues.VueSectionListe
+java.io.Serializable <|.. tralleno.Vues.VueSectionListe
+javafx.scene.control.TitledPane <|-- tralleno.Vues.VueSectionListe
+java.io.Serializable <|.. tralleno.Vues.VuePrincipale
+javafx.event.EventHandler <|.. tralleno.Controleurs.ControlVues
+@enduml

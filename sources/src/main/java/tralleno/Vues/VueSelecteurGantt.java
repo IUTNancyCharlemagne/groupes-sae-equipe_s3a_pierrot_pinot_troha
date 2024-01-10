@@ -39,9 +39,10 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
     @Override
     public void actualiser(Sujet s) {
 
+
         GridPane gp = new GridPane();
         gp.getStyleClass().add("gridSelectionGantt");
-        Button b=new Button("Generer Diagramme De Gantt");
+        Button b = new Button("Generer Diagramme De Gantt");
         b.setOnAction(actionEvent -> {
             this.vp.changerVue(3);
         });
@@ -56,43 +57,80 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
         VBox tempVB;
         Label tempLabSection;
         Label tempLabTitre;
-        CheckBox tempCheck;
+        CheckBox tempCheck = null;
 
         ArrayList<Tache> listeTacheSelectionne = (ArrayList<Tache>) this.modele.getSelectionTacheGantt();
+        ArrayList<CheckBox> listeCheckBox = new ArrayList<>();
+
+        boolean allBoxChecked = true;
+        if (listTache.isEmpty()) {
+            this.modele.clearSelectionTacheGantt();
+
+            allBoxChecked=false;
+        }
 
         for (Tache t : listTache) {
 
-            tempVB=new VBox();
-            tempLabSection=new Label(t.getSectionParente().getNom());
+            tempVB = new VBox();
+            tempLabSection = new Label(t.getSectionParente().getNom());
             tempLabSection.getStyleClass().add("labelSelectionTacheSectionGantt");
-            tempLabTitre=new Label(t.getTitre());
+            tempLabTitre = new Label(t.getTitre());
             tempLabTitre.getStyleClass().add("labelSelectionTacheTitreGantt");
-            tempCheck=new CheckBox();
+            tempCheck = new CheckBox();
             tempCheck.getStyleClass().add("checkboxSelectionTacheGantt");
 
-            tempVB.getChildren().addAll(tempLabTitre,tempLabSection);
+            tempVB.getChildren().addAll(tempLabTitre, tempLabSection);
             tempVB.setMinWidth(100);
             tempVB.getStyleClass().add("containerSelectionTacheGantt");
             tempCheck.setGraphicTextGap(ligne);
 
-            if(listeTacheSelectionne.contains(t)){
+            if (listeTacheSelectionne.contains(t)) {
                 tempCheck.setSelected(true);
+            } else {
+                allBoxChecked = false;
             }
 
+            listeCheckBox.add(tempCheck);
             tempCheck.setOnAction(actionEvent -> {
-                CheckBox c= (CheckBox) actionEvent.getSource();
-                Tache tacheCheck=listTache.get((int) c.getGraphicTextGap());
-                if(c.isSelected()){
+                CheckBox c = (CheckBox) actionEvent.getSource();
+                Tache tacheCheck = listTache.get((int) c.getGraphicTextGap());
+                if (c.isSelected()) {
                     this.modele.addSelectionTacheGantt(tacheCheck);
-                }else{
+                } else {
                     this.modele.removeSelectionTacheGantt(tacheCheck);
                 }
             });
             gp.add(tempVB, colonne, ligne);
-            gp.add(tempCheck,colonne+1,ligne);
+            gp.add(tempCheck, colonne + 1, ligne);
             ligne++;
         }
-        gp.add(b,colonne,ligne);
+        CheckBox selectTout = new CheckBox();
+        selectTout.getStyleClass().add("checkboxSelectionTacheGantt");
+        selectTout.setSelected(allBoxChecked);
+        selectTout.setOnAction(actionEvent -> {
+            CheckBox checkTout = (CheckBox) actionEvent.getSource();
+            if (checkTout.isSelected()) {
+                ArrayList<Tache> tachesG = (ArrayList<Tache>) this.modele.getSelectionTacheGantt();
+
+                for (CheckBox c : listeCheckBox) {
+                    c.setSelected(true);
+                    Tache tacheCheck = listTache.get((int) c.getGraphicTextGap());
+                    if (!tachesG.contains(tacheCheck)) {
+                        this.modele.addSelectionTacheGantt(tacheCheck);
+                    }
+                }
+            } else {
+                this.modele.clearSelectionTacheGantt();
+                for (CheckBox c : listeCheckBox) {
+                    c.setSelected(false);
+
+                }
+
+            }
+        });
+
+        gp.add(b, colonne, ligne);
+        gp.add(selectTout, colonne + 1, ligne);
         this.setContent(gp);
     }
 

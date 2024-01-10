@@ -51,6 +51,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
      */
     public void afficherGantt() {
 
+        this.setContent(null);
         //date min et max des taches selectionné, permet de savoir à partir de quel date on genere le diagramme
         LocalDate dateMin = LocalDate.MAX;
         LocalDate dateMax = LocalDate.MIN;
@@ -126,6 +127,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 GridPane gridGantt = new GridPane();
                 gridGantt.setVgap(spacingEntreTache);
                 gridGantt.getStyleClass().add("gridGantt");
+                VBox tempVBox ;
                 for (int i = 0; i < difjour; i++) {
                     dateJour = (dateMin.plusDays(i));
                     tempLab = new Label(" " + dateJour.toString() + " ");

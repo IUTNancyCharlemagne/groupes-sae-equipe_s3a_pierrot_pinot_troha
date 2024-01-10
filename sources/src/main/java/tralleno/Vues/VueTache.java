@@ -1,6 +1,7 @@
 package tralleno.Vues;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -80,10 +81,7 @@ public class VueTache extends TitledPane implements Observateur {
         modifierButton.getStyleClass().add("modifier-button");
         modifierButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlModifTache(modeleBureau, this.tache, this.tacheParente));
 
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        HBox headerBox = new HBox(titreLabel, spacer, modifierButton);
+        HBox headerBox = new HBox(titreLabel, modifierButton);
         headerBox.setSpacing(5);
         headerBox.setPadding(new Insets(5));
         headerBox.getStyleClass().add("enteteTache");

@@ -303,7 +303,7 @@ public class FormulaireTache implements Serializable {
             // On ne doit pas laisser la possibilité d'attribuer une date.
             if(tacheParente != null){
                 layout.getChildren().addAll(titreTache, champTitre, labelDescription, champDescription,
-                        actions, boutonActionTache);
+                        actions, boutonContainer);
                 taillePopUp = 250;
             }else{
                 layout.getChildren().addAll(titreTache, champTitre, labelDescription, champDescription,

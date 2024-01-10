@@ -26,7 +26,7 @@ public class ControlVues implements EventHandler<ActionEvent> {
     /**
      * Correspond au bouton archivage dans la barre en haut de l'application pour accéder aux tâches et sections archivées
      */
-    private Button boutonArchivage;
+    private static Button boutonArchivage;
 
     /**
      * Correspond à la liste dépliante permettant à l'utilisateur de choisir le thème de l'application
@@ -88,6 +88,13 @@ public class ControlVues implements EventHandler<ActionEvent> {
                     break;
             }
         }
+    }
+
+    /**
+     * @return le bouton qui permet d'ouvrir la fenêtre d'archivage
+     */
+    public static Button getBoutonArchivage() {
+        return boutonArchivage;
     }
 }
 

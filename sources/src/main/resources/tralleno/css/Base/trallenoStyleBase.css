@@ -362,7 +362,7 @@
 .titreTacheGantt {
     -fx-text-fill: #F0F0F0;
     -fx-font-weight: bold;
-    -fx-font-size: 1.5em;
+    -fx-font-size: 1em;
     -fx-background-color: rgba(0, 0, 0, 0);
 }
 
@@ -465,4 +465,9 @@
 
 .modifier-button:hover {
     -fx-background-color: #7E7E7E;
+}
+.ligneGantt{
+    -fx-stroke: red;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-width: 0.1em;
 }

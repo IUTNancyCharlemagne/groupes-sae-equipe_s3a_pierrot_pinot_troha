@@ -6,6 +6,8 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -21,6 +23,9 @@ import tralleno.Modele.Sujet;
 import tralleno.Taches.Tache;
 import tralleno.Taches.TacheMere;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -82,7 +87,20 @@ public class VueTache extends TitledPane implements Observateur {
         titreLabel.setFont(Font.font(14));
         titreLabel.getStyleClass().add("titreTache");
 
-        Button modifierButton = new Button("...");
+        Button modifierButton = new Button();
+        String img=System.getProperty("user.dir")+"/src/main/resources/Images/pen.png";
+        File file = new File(img);
+        ImageView logo;
+        try {
+            FileInputStream f=new FileInputStream(file);
+            logo = new ImageView(new Image(f));
+        } catch (FileNotFoundException e) {
+            logo = new ImageView();
+        }
+
+        modifierButton.setGraphic(logo);
+        logo.setFitWidth(20);
+        logo.setFitHeight(20);
         modifierButton.getStyleClass().add("modifier-button");
         modifierButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlModifTache(modeleBureau, this.tache, this.tacheParente));
 

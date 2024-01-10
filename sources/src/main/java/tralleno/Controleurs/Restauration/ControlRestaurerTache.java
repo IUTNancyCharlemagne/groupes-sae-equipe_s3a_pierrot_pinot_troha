@@ -21,7 +21,6 @@ public class ControlRestaurerTache implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent mouseEvent) {
-        System.out.println("ESSAI de restauration de tâche " + this.tache.getTitre());
         this.modeleBureau.setTacheCourante(this.tache);
         this.modeleBureau.restaurerTache();
     }

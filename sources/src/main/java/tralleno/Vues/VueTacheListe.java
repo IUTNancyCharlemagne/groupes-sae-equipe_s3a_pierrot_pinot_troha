@@ -1,11 +1,12 @@
 package tralleno.Vues;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -21,12 +22,15 @@ import tralleno.Modele.Sujet;
 import tralleno.Taches.Tache;
 import tralleno.Taches.TacheMere;
 
+import java.io.File;
+import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Classe qui représente un élément graphique qui lui représente une tâche. Chaque tâche est représentée par un TitledPane
  */
-public class VueTache extends TitledPane implements Observateur {
+public class VueTacheListe extends TitledPane implements Observateur {
 
     /**
      * Tâche représentée
@@ -42,10 +46,6 @@ public class VueTache extends TitledPane implements Observateur {
      */
     private TacheMere tacheParente;
 
-    /**
-     * Permet de définir si c'est une tâche de VueListe ou VueTableau
-     */
-    private boolean etendre;
 
     /**
      * Construit une vueTache à partir de la tâche que la vue est censée représenter graphiquement
@@ -54,11 +54,8 @@ public class VueTache extends TitledPane implements Observateur {
      * @param modeleBureau
      * @param tacheParente
      */
-    public VueTache(Tache tache, ModeleBureau modeleBureau, TacheMere tacheParente, boolean etendre) {
+    public VueTacheListe(Tache tache, ModeleBureau modeleBureau, TacheMere tacheParente) {
         super();
-        this.etendre = etendre;
-        if(!etendre) // Si etendre vaut vrai c'est qu'on crée une tâche depuis la VueListe
-            setPrefWidth(150);
         this.setExpanded(true);
         this.tache = tache;
         this.sousTachesBox = new VBox();
@@ -78,15 +75,23 @@ public class VueTache extends TitledPane implements Observateur {
         ModeleBureau modeleBureau = (ModeleBureau) s;
 
         Label titreLabel = new Label(tache.getTitre());
-
         titreLabel.setFont(Font.font(14));
         titreLabel.getStyleClass().add("titreTache");
 
-        Button modifierButton = new Button("...");
+        String imagePath = "file:" + "/Image/pen.png";
+        Image icon = new Image(imagePath);
+        Button modifierButton = new Button("Modifier", new ImageView(icon));
+
+
+
+//        Button modifierButton = new Button("...");
         modifierButton.getStyleClass().add("modifier-button");
         modifierButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlModifTache(modeleBureau, this.tache, this.tacheParente));
 
-        HBox headerBox = new HBox(titreLabel, modifierButton);
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        HBox headerBox = new HBox(titreLabel, spacer, modifierButton);
         headerBox.setSpacing(5);
         headerBox.setPadding(new Insets(5));
         headerBox.getStyleClass().add("enteteTache");
@@ -97,15 +102,7 @@ public class VueTache extends TitledPane implements Observateur {
         contenuTache.getStyleClass().add("contenuTache");
 
         Label descriptionLabel = new Label(tache.getDescription());
-
         descriptionLabel.getStyleClass().add("descriptionLabel");
-
-        if(!this.etendre){
-            titreLabel.setMaxWidth(150);
-            titreLabel.setWrapText(false);
-            descriptionLabel.setMaxWidth(150);
-            descriptionLabel.setWrapText(false);
-        }
 
         contenuTache.getChildren().addAll(descriptionLabel, sousTachesBox);
         this.setContent(contenuTache);
@@ -117,7 +114,7 @@ public class VueTache extends TitledPane implements Observateur {
         if(this.tache instanceof TacheMere){
             List<Tache> sousTaches = ((TacheMere) this.tache).getSousTaches();
             for (Tache sousTache : sousTaches) {
-                VueTache vueSousTache = new VueTache(sousTache, modeleBureau, (TacheMere) this.tache, this.etendre);
+                VueTacheListe vueSousTache = new VueTacheListe(sousTache, modeleBureau, (TacheMere) this.tache);
                 sousTachesBox.getChildren().add(vueSousTache);
                 VBox.setMargin(vueSousTache, new Insets(0, 0, 5, 0)); // marge : haut, droite, bas, gauche
             }
@@ -154,7 +151,7 @@ public class VueTache extends TitledPane implements Observateur {
 
         // Écouteur pour accepter le drop de la tâche/sous-tâche pour en faire une sous-tâche
         this.setOnDragOver(event -> {
-            if (event.getGestureSource() instanceof VueTache) {
+            if (event.getGestureSource() instanceof VueTacheListe) {
                 if (modeleBureau.estSousTacheDe(this.tache, modeleBureau.getTacheCourante())) {
                     // Empêche le drop en montrant visuellement qu'il n'est pas autorisé
                     event.acceptTransferModes(TransferMode.NONE);
@@ -169,7 +166,6 @@ public class VueTache extends TitledPane implements Observateur {
                 }
             }
         });
-
 
         this.setOnDragExited(event -> {
             if (!this.contains(event.getX(), event.getY())) {

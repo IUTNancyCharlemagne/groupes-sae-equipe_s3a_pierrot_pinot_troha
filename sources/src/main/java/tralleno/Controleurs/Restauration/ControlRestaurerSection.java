@@ -21,7 +21,6 @@ public class ControlRestaurerSection implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent mouseEvent) {
-        System.out.println("Essai de restauration de section " + this.section.getNom());
         this.modeleBureau.setSectionCourante(this.section);
         this.modeleBureau.restaurerSection();
     }

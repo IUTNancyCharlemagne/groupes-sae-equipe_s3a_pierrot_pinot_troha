@@ -4,6 +4,7 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.util.Duration;
+import tralleno.Controleurs.ControlVues;
 import tralleno.Modele.ModeleBureau;
 
 import javafx.scene.layout.BorderPane;
@@ -149,6 +150,7 @@ public class VuePrincipale implements Serializable {
         if (!vueArchivage.isVisible()) {
             conteneurPrincipal.setRight(vueArchivage); // Ajoute la VBox à droite du BorderPane
             conteneurPrincipal.getRight().getStyleClass().add("BTRight_Archivage");
+            ControlVues.getBoutonArchivage().setId("BtnArchivage_ArchivageOuvert");
             afficherMenuTransition.play();
             vueArchivage.setVisible(true);
         }
@@ -161,6 +163,7 @@ public class VuePrincipale implements Serializable {
             cacherMenuTransition.play();
             vueArchivage.setVisible(false);
             conteneurPrincipal.getChildren().remove(vueArchivage); // Enlève la VBox du BorderPane
+            ControlVues.getBoutonArchivage().setId("aucunStyleSupplementaire");
         }
     }
 

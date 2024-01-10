@@ -378,8 +378,6 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
     public boolean isSupprimee_Section(Section s) {
-        System.out.println("This.sections.contains(s) " + this.sections.contains(s));
-        System.out.println("this.sectionsArchivees.contains(s) " + this.sectionsArchivees.contains(s));
         return !(this.sections.contains(s) || this.sectionsArchivees.contains(s));
     }
 
@@ -538,7 +536,6 @@ public class ModeleBureau implements Sujet, Serializable {
      * (et donc ses sous-tâches qui sont naturellement inclues)
      */
     public void archiverTache() {
-        System.out.println("ARCHIVAGE TAGE " + this.tacheCourante);
         this.tacheCourante.getSectionParente().supprimerTache(this.tacheCourante);
         this.tachesArchivees.add(this.tacheCourante);
 
@@ -575,16 +572,13 @@ public class ModeleBureau implements Sujet, Serializable {
      * laquelle elle se trouvait avant d'être archivée
      */
     public void restaurerTache() {
-        System.out.println("COUCOU TRIPLE MONSTRE");
         Section sectionParente = this.tacheCourante.getSectionParente();
         this.sectionCourante = sectionParente;
         if (!isSupprimee_Section(sectionParente)) {
-            System.out.println("SECTION PAS SUPPRIMEE");
             if (!isArchivee_Section(sectionParente)) { //si la section est dans son état normal
                 ajouterTacheDansSection();
             } else { //si la section est archivée
                 //on restaure la section
-                System.out.println("COUCOU MONSTRE");
                 restaurerSection();
                 ajouterTacheDansSection();
             }
@@ -613,11 +607,8 @@ public class ModeleBureau implements Sujet, Serializable {
      */
     public List<Tache> getTachesDisponibles(LocalDate dateDebut){
         List<Tache> tachesDisponibles = new ArrayList<Tache>();
-        System.out.println("Date debut dans getTachesDisponibles  " + dateDebut);
         if(!(dateDebut == null)){
-            System.out.println("Date début : " + dateDebut);
             List<Tache> taches = this.getTaches();
-            System.out.println("Taille getTaches " + taches.size() );
             // puis si on est dans le cas où la tâche est en train d'être modifiée et pas encore créée, alors
             if(this.tacheCourante != null){
                 taches.remove(this.tacheCourante);
@@ -625,14 +616,12 @@ public class ModeleBureau implements Sujet, Serializable {
             for(Tache t : taches){
                 if(t.getDateFin() != null){
                     if(t.getDateFin().isBefore(dateDebut)){
-                        System.out.println(t.getDateFin() + " is before ? " + dateDebut);// Si la date de fin de la tâche est avant la date de début de la tâche en paramètre
                         tachesDisponibles.add(t);
                     }
                 }
 
             }
         }
-        System.out.println("Taille tachesDisponibles : " + tachesDisponibles.size());
         return tachesDisponibles;
     }
 
@@ -831,22 +820,16 @@ public class ModeleBureau implements Sujet, Serializable {
             ArrayList<Tache> listeDepTach;
             for (Tache t : listTacheGantt) {
 
-                System.out.println(t.getTitre() + "Debut: " + t.getDateDebut() + " Fin: " + t.getDateFin());
-                System.out.println("Tache a faire avant:");
                 listeDepTach = (ArrayList<Tache>) this.dependances.get(t);
                 if (listeDepTach != null && !listeDepTach.isEmpty()) {
                     for (Tache taDep : listeDepTach) {
                         if (listTacheGantt.contains(taDep)) {
-                            System.out.println(taDep.getTitre());
                         }
                     }
 
                 }
             }
-            System.out.println("Date max = "+ dateMax);
-            System.out.println("Date min = "+ dateMin);
             int difjour= (int) ChronoUnit.DAYS.between(dateMin,dateMax)+1;
-            System.out.println("jour entre datemax et datemin :"+ difjour);
         }
     }
 

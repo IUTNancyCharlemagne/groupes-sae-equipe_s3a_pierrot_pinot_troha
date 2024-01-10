@@ -434,6 +434,9 @@
 
 .gridGantt {
 
+    -fx-border-width: 1 ;
+    -fx-border-color: #CACACA;
+    -fx-border-radius: 0.5em;
     -fx-background-color: transparent;
 }
 

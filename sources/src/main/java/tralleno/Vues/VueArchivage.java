@@ -220,11 +220,6 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
 
             }
         }
-        if (this.vueListe.getChildren().isEmpty()) {
-            this.vueListe.getStyleClass().add("fondVide");
-        } else {
-            this.vueListe.getStyleClass().remove("fondVide");
-        }
     }
 
 }

@@ -32,6 +32,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
     public VueGantt(ModeleBureau modele) {
         super();
         this.modele = modele;
+        this.getStyleClass().add("vueGantt");
     }
 
     /**

@@ -3,6 +3,7 @@ package tralleno.Vues;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -27,6 +28,7 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
         this.modele = modele;
         this.vp = vueprincip;
         this.modele.setSelectionTacheGantt(new ArrayList<>());
+        this.getStyleClass().add("vueSelecteurGantt");
     }
 
     /**
@@ -38,6 +40,7 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
     public void actualiser(Sujet s) {
 
         GridPane gp = new GridPane();
+        gp.getStyleClass().add("gridSelectionGantt");
         Button b=new Button("Generer Diagramme De Gantt");
         b.setOnAction(actionEvent -> {
             this.vp.changerVue(3);
@@ -46,7 +49,6 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
         gp.setVgap(5);
         gp.setHgap(5);
         gp.setPadding(new Insets(10));
-        gp.getStyleClass().add("gridSelectionGantt");
         b.getStyleClass().add("boutonGenererGantt");
         ArrayList<Tache> listTache = (ArrayList<Tache>) this.modele.getTaches();
         int colonne = 0;
@@ -56,24 +58,27 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
         Label tempLabTitre;
         CheckBox tempCheck;
 
-        ArrayList<Tache> listeTacheSelectionne= (ArrayList<Tache>) this.modele.getSelectionTacheGantt();
+        ArrayList<Tache> listeTacheSelectionne = (ArrayList<Tache>) this.modele.getSelectionTacheGantt();
 
         for (Tache t : listTache) {
 
             tempVB=new VBox();
             tempLabSection=new Label(t.getSectionParente().getNom());
+            tempLabSection.getStyleClass().add("labelSelectionTacheSectionGantt");
             tempLabTitre=new Label(t.getTitre());
+            tempLabTitre.getStyleClass().add("labelSelectionTacheTitreGantt");
             tempCheck=new CheckBox();
+            tempCheck.getStyleClass().add("checkboxSelectionTacheGantt");
+
             tempVB.getChildren().addAll(tempLabTitre,tempLabSection);
             tempVB.setMinWidth(100);
             tempVB.getStyleClass().add("containerSelectionTacheGantt");
-            tempLabSection.getStyleClass().add("labelSelectionTacheSectionGantt");
-            tempLabTitre.getStyleClass().add("labelSelectionTacheTitreGantt");
-            tempCheck.getStyleClass().add("checkboxSelectionTacheGantt");
             tempCheck.setGraphicTextGap(ligne);
+
             if(listeTacheSelectionne.contains(t)){
                 tempCheck.setSelected(true);
             }
+
             tempCheck.setOnAction(actionEvent -> {
                 CheckBox c= (CheckBox) actionEvent.getSource();
                 Tache tacheCheck=listTache.get((int) c.getGraphicTextGap());
@@ -89,8 +94,6 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
         }
         gp.add(b,colonne,ligne);
         this.setContent(gp);
-
-
     }
 
     public void afficherSelecteurDropdownList() {

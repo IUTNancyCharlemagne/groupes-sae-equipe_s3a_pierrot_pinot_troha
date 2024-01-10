@@ -313,54 +313,109 @@
     -fx-background-color: #CACACA;
 }
 
-.checkboxSelectionTacheGantt {
+/* palette de couleurs
+#585858
+#7E7E7E
+#A3A3A3
+#CACACA
+#F0F0F0
+*/
 
-    -fx-border-color: #585858;
+/* Vue Sélecteur Gantt */
 
-    -fx-padding: 1 1 1 1;
-}
-
-.checkboxSelectionTacheGantt:selected .box {
-    -fx-background-color: #585858;
-}
-
-.checkboxSelectionTacheGantt .box {
+.vueSelecteurGantt *{
     -fx-background-color: #CACACA;
 }
 
-.boutonGenererGantt {
-    -fx-background-color: red;
-    -fx-text-fill: white;
+.gridSelectionGantt {
+    -fx-background-color: #CACACA;
+    -fx-border-color: #7E7E7E;
+    -fx-border-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-background-radius: 5px;
 }
 
 .containerSelectionTacheGantt {
     -fx-padding: 0.5em;
     -fx-spacing: 0.5em;
-    -fx-border-color: #585858;
-    -fx-border-width: 1px;
-}
-
-.labelSelectionTacheSectionGantt {
-
-    -fx-text-fill: green;
+    -fx-border-color: #7E7E7E;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #F0F0F0;
+    -fx-background-radius: 5px;
 }
 
 .labelSelectionTacheTitreGantt {
     -fx-font-size: 1.5em;
-    -fx-text-fill: yellow;
-
+    -fx-text-fill: #585858;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(0, 0, 0, 0);
 }
 
-.gridSelectionGantt {
-    -fx-background-color: blue;
+.labelSelectionTacheSectionGantt {
+    -fx-text-fill: #585858;
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.checkboxSelectionTacheGantt {
+    -fx-border-color: #585858;
+    -fx-background-color: #A3A3A3;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-padding: 1 1 1 1;
+}
+
+.checkboxSelectionTacheGantt .box {
+    -fx-background-color: #A3A3A3;
+}
+
+.checkboxSelectionTacheGantt .box .mark{
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+/*.checkboxSelectionTacheGantt:selected {*/
+/*    -fx-border-color: green;*/
+/*}*/
+
+.checkboxSelectionTacheGantt:selected .box .mark{
+    -fx-background-color: #585858;
+}
+
+.boutonGenererGantt {
+    -fx-background-color: #A3A3A3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.boutonGenererGantt:hover {
+    -fx-background-color: #7E7E7E;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* palette de couleurs
+#585858
+#7E7E7E
+#A3A3A3
+#CACACA
+#F0F0F0
+*/
+
+/* Vue Gantt */
+
+.vueGantt *{
+    -fx-background-color: #CACACA;
 }
 
 .rectangleGantt {
-    -fx-fill: #CACACA;
+    -fx-fill: #F0F0F0;
 }
 
 .titreTacheGantt {
-    -fx-text-fill: green;
+    -fx-text-fill: #F0F0F0;
+    -fx-font-weight: bold;
+    -fx-background-color: red;
 }
 
 .dateTacheGantt {

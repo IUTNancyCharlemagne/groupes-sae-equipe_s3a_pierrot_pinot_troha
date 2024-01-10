@@ -3,6 +3,7 @@ package tralleno.Vues;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -27,6 +28,7 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
         this.modele = modele;
         this.vp = vueprincip;
         this.modele.setSelectionTacheGantt(new ArrayList<>());
+        this.getStyleClass().add("scrollPaneSelecteurGantt");
     }
 
     /**
@@ -36,6 +38,8 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
      */
     @Override
     public void actualiser(Sujet s) {
+
+
 
         GridPane gp = new GridPane();
         Button b=new Button("Generer Diagramme De Gantt");

@@ -381,3 +381,8 @@
 
     -fx-background-color: #CACACA;
 }
+
+
+.scrollPaneSelecteurGantt{
+-fx-alignment: center;
+}

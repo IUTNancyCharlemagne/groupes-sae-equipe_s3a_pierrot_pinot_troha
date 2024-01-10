@@ -66,16 +66,15 @@ public class ControlVues implements EventHandler<ActionEvent> {
         if (actionEvent.getSource() == choixVue) {
             String vueChoisie = choixVue.getValue();
             if (vueChoisie.equals("Vue Tableau")) {
-                System.out.println("COUCOU");
                 this.vuePrincipale.changerVue(VuePrincipale.TABLEAU);
             } else if (vueChoisie.equals("Vue Liste")) {
-                System.out.println("MONSTRE");
                 this.vuePrincipale.changerVue(VuePrincipale.LISTE);
+            } else if(vueChoisie.equals("Vue Gantt")) {
+                this.vuePrincipale.changerVue(VuePrincipale.SELECTGANTT);
             }
         } else if (actionEvent.getSource() == boutonArchivage) {
             String bouton = boutonArchivage.getText();
             if(bouton.equals("Archivage")){
-                System.out.println("ARCHIVAGE");
                 this.vuePrincipale.afficherOuCacherArchivage();
             }
         } else if (actionEvent.getSource() == theme){

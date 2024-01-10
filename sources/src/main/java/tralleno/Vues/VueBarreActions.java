@@ -63,7 +63,7 @@ public class VueBarreActions extends HBox implements Serializable {
         creerSectionButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlCreerSection(modeleBureau));
 
         ChoiceBox<String> choixVue = new ChoiceBox<>();
-        choixVue.getItems().addAll("Vue Tableau", "Vue Liste");
+        choixVue.getItems().addAll("Vue Tableau", "Vue Liste", "Vue Gantt");
         choixVue.getStyleClass().add("choixVue");
         choixVue.setValue("Vue Tableau");
         choixVue.addEventHandler(ActionEvent.ACTION, new ControlVues(choixVue, vuePrincipale));
@@ -83,7 +83,7 @@ public class VueBarreActions extends HBox implements Serializable {
         this.setPadding(new Insets(10));
         this.setSpacing(10);
         this.setAlignment(Pos.CENTER_LEFT);
-        this.getChildren().addAll(logo, nomAppli, choixVue, creerTacheButton, creerSectionButton, tachesArchiveesButton, theme);
+        this.getChildren().addAll(logo, nomAppli, choixVue, creerSectionButton, creerTacheButton, tachesArchiveesButton, theme);
         this.getStyleClass().add("entete");
     }
 }

@@ -1,10 +1,8 @@
 package tralleno.Vues;
 
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -26,7 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ListIterator;
-import java.util.Set;
 
 public class VueArchivage extends VBox implements Observateur, Serializable{
 
@@ -46,9 +43,11 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
         HBox boutonsTachesSection = new HBox();
         boutonsTachesSection.getStyleClass().add("boutonsTachesSection");
         this.tachesArchivees = new Button("Tâches Archivées");
+        this.tachesArchivees.setAlignment(Pos.CENTER);
         this.tachesArchivees.getStyleClass().clear();
         this.tachesArchivees.getStyleClass().add("BtnTacheSelected");
         this.sectionsArchivees = new Button("Sections Archivées");
+        this.sectionsArchivees.setAlignment(Pos.CENTER);
         this.sectionsArchivees.getStyleClass().clear();
         this.sectionsArchivees.getStyleClass().add("BtnSectionNotSelected");
         this.boutonCourant = this.tachesArchivees;
@@ -171,6 +170,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
                     supprimerBouton.getStyleClass().add("btnElementArchive");
 
                     Button restaurerBouton = new Button("Restaurer");
+                    restaurerBouton.setPadding(new Insets(4, 10, 4, 10));
                     restaurerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlRestaurerTache(this.modeleBureau, tache));
                     restaurerBouton.getStyleClass().add("btnElementArchive");
 
@@ -200,6 +200,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
                     supprimerBouton.getStyleClass().add("btnElementArchive");
 
                     Button restaurerBouton = new Button("Restaurer");
+                    restaurerBouton.setPadding(new Insets(4, 10, 4, 10));
                     restaurerBouton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlRestaurerSection(this.modeleBureau, section));
                     restaurerBouton.getStyleClass().add("btnElementArchive");
 

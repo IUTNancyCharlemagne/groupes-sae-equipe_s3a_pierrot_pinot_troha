@@ -26,7 +26,7 @@ public class VuePrincipale implements Serializable {
      */
     public static final int LISTE = 2;
     private static final int GANTT = 3;
-    private static final int SELECTGANTT=4;
+    public static final int SELECTGANTT = 4;
 
     /**
      * Constante qui correspond au thème de base (nuances de gris)
@@ -135,9 +135,9 @@ public class VuePrincipale implements Serializable {
     public void changerVue(int mode) {
         switch (mode){
             case TABLEAU -> conteneurPrincipal.setCenter(this.vueTableau);
-            case LISTE -> conteneurPrincipal.setCenter(this.vueSelecteurGantt);
-            case GANTT -> conteneurPrincipal.setCenter(this.vueGantt);
+            case LISTE -> conteneurPrincipal.setCenter(this.vueListe);
             case SELECTGANTT -> conteneurPrincipal.setCenter(this.vueSelecteurGantt);
+            case GANTT -> conteneurPrincipal.setCenter(this.vueGantt);
         }
         this.modeleBureau.notifierObservateurs();
     }

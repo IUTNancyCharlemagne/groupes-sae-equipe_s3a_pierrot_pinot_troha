@@ -197,6 +197,15 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
+    public void deplacerSection(int position){
+        if(position > this.sections.indexOf(this.sectionCourante)){
+            position -= 1;
+        }
+        this.sections.remove(this.sectionCourante);
+        this.sections.add(position, this.sectionCourante);
+        this.notifierObservateurs();
+    }
+
     /**
      * Permet de déplacer une tâche (et ses sous-tâches) de la section dans laquelle elle était de base
      * c'est à dire sectionCourante, pour ensuite la déplacer dans la section passée en paramètres,
@@ -227,6 +236,7 @@ public class ModeleBureau implements Sujet, Serializable {
 
         this.notifierObservateurs();
     }
+
 
     /**
      * Méthode récursive utiliser par changerSection(Section section)

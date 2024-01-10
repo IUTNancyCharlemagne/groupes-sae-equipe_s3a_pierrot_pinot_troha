@@ -51,6 +51,7 @@ public class VueTache extends TitledPane implements Observateur {
      */
     public VueTache(Tache tache, ModeleBureau modeleBureau, TacheMere tacheParente) {
         super();
+        setPrefWidth(150);
         this.setExpanded(true);
         this.tache = tache;
         this.sousTachesBox = new VBox();
@@ -70,8 +71,9 @@ public class VueTache extends TitledPane implements Observateur {
         ModeleBureau modeleBureau = (ModeleBureau) s;
 
         Label titreLabel = new Label(tache.getTitre());
+        titreLabel.setMaxWidth(150);
+        titreLabel.setWrapText(false);
         titreLabel.setFont(Font.font(14));
-        titreLabel.setWrapText(true);
         titreLabel.getStyleClass().add("titreTache");
 
         Button modifierButton = new Button("...");
@@ -92,8 +94,9 @@ public class VueTache extends TitledPane implements Observateur {
         contenuTache.getStyleClass().add("contenuTache");
 
         Label descriptionLabel = new Label(tache.getDescription());
+        descriptionLabel.setMaxWidth(150);
+        descriptionLabel.setWrapText(false);
         descriptionLabel.getStyleClass().add("descriptionLabel");
-        descriptionLabel.setWrapText(true);
 
         contenuTache.getChildren().addAll(descriptionLabel, sousTachesBox);
         this.setContent(contenuTache);
@@ -112,12 +115,13 @@ public class VueTache extends TitledPane implements Observateur {
         }
 
 
+
         // Écouteur pour le drag and drop des tâches/sous-tâches
         this.setOnDragDetected(event -> {
-            System.out.println("TACHE QUE JE DRAG : " + this.tache.getId());
             Dragboard dragboard = this.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
             content.putImage(this.snapshot(new SnapshotParameters(), null));
+            this.getStyleClass().add("dragging");
             // Si la tâche est une sous-tâche, si on la drag and drop dans une autre section, il faudra
             // qu'elle soit supprimée des sous-tâches de sa tâche mère.
             // Donc si la tacheParente vaut null ça veut dire que la tâche actuelle n'a pas de tâcheMere
@@ -133,6 +137,12 @@ public class VueTache extends TitledPane implements Observateur {
         });
 
 
+        this.setOnDragDone(event -> {
+            // ...
+            this.getStyleClass().remove("dragging");
+            // ...
+        });
+
         // Écouteur pour accepter le drop de la tâche/sous-tâche pour en faire une sous-tâche
         this.setOnDragOver(event -> {
             if (event.getGestureSource() instanceof VueTache) {
@@ -142,10 +152,20 @@ public class VueTache extends TitledPane implements Observateur {
                     event.consume();
                 } else {
                     // Autorise le drop
+                    if (!this.getStyleClass().contains("drag-over")) {
+                        this.getStyleClass().add("drag-over");
+                    }
                     event.acceptTransferModes(TransferMode.MOVE);
                     event.consume();
                 }
             }
+        });
+
+        this.setOnDragExited(event -> {
+            if (!this.contains(event.getX(), event.getY())) {
+                this.getStyleClass().remove("drag-over");
+            }
+            event.consume();
         });
 
         // Écouteur pour transformer la tâche/sous-tâche lors du drop

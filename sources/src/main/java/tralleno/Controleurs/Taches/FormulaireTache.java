@@ -218,7 +218,7 @@ public class FormulaireTache implements Serializable {
         });
 
         // On met le tout dans une Vbox qui est le formulaire
-        int taillePopUp = 425;
+        int taillePopUp = 475;
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
         layout.getStyleClass().add("VBoxFormulaire");

@@ -135,62 +135,62 @@
 .nomSection {
     -fx-font-weight: bold;
     -fx-font-size: 20px;
-    -fx-background-color: #F0F0F0; /* même couleur que le contour de la section */
+    -fx-background-color: transparent;
 }
 
 .fond_titre_section {
-    -fx-background-color: #F0F0F0; /* même couleur que le contour de la section */
+    -fx-background-color: transparent;
 }
 
-.modifier-button {
-    -fx-background-color: #A3A3A3;
-    -fx-background-radius: 5px;
-    -fx-text-fill: #F0F0F0;
-}
+/*.modifier-button {*/
+/*    -fx-background-color: #A3A3A3;*/
+/*    -fx-background-radius: 5px;*/
+/*    -fx-text-fill: #F0F0F0;*/
+/*}*/
 
 
-.modifier-button:hover {
-    -fx-background-color: #7E7E7E;
-}
+/*.modifier-button:hover {*/
+/*    -fx-background-color: #7E7E7E;*/
+/*}*/
 
 .containerSections {
     -fx-background-color: #CACACA;
 }
 
-.vueTache { /* TitlePane */
-    /* à mettre de la même couleur que le fond des sections */
-    -fx-background-color: #CACACA;
-    -fx-border-color: #CACACA;
-    -fx-border-width: 2px;
-    -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
-}
+/*.vueTache { !* TitlePane *!*/
+/*    !* à mettre de la même couleur que le fond des sections *!*/
+/*    -fx-background-color: #CACACA;*/
+/*    -fx-border-color: #CACACA;*/
+/*    -fx-border-width: 2px;*/
+/*    -fx-border-radius: 10px;*/
+/*    -fx-background-radius: 10px;*/
+/*}*/
 
-.vueTache.dragging {
-    -fx-border-color: #2cea2c;
-    -fx-border-width: 4;
-}
+/*.vueTache.dragging {*/
+/*    -fx-border-color: #2cea2c;*/
+/*    -fx-border-width: 4;*/
+/*}*/
 
-.vueTache.drag-over {
-    -fx-border-color: lightblue;
-    -fx-border-width: 4;
-}
+/*.vueTache.drag-over {*/
+/*    -fx-border-color: lightblue;*/
+/*    -fx-border-width: 4;*/
+/*}*/
 
-.vueTache .title {
-    -fx-background-color: #CACACA;
-}
+/*.vueTache .title {*/
+/*    -fx-background-color: #CACACA;*/
+/*}*/
 
-.vueTache .title .arrow-button .arrow {
-    -fx-background-color: black;
-}
+/*.vueTache .title .arrow-button .arrow {*/
+/*    -fx-background-color: black;*/
+/*}*/
 
-.vueTache > .content {
-    /* à mettre de la même couleur que le font de la descpription des tâche (.contenuTache) */
-    -fx-background-color: #F0F0F0;
-    /* à mettre avec comme pour la tâche en entière (.vueTache) */
-    -fx-background-radius: 10px;
-    -fx-border-width: 0px;
-}
+/*.vueTache > .content {*/
+/*    !* à mettre de la même couleur que le font de la descpription des tâche (.contenuTache) *!*/
+/*    -fx-background-color: #F0F0F0;*/
+/*    !* à mettre avec comme pour la tâche en entière (.vueTache) *!*/
+/*    -fx-background-radius: 10px;*/
+/*    -fx-border-width: 0px;*/
+/*}*/
 
 .titreTache {
     -fx-background-color: #CACACA;
@@ -458,7 +458,90 @@
     -fx-background-color: transparent;
 }
 
-
 .vboxGrilleGantt {
     -fx-background-color: #CACACA;
+}
+
+/* Vue Liste */
+
+.pane{
+    -fx-background-color: red;
+}
+
+.vueliste {
+    -fx-background-color: red;
+}
+
+.containerSectionsListe{
+    -fx-background-color: #CACACA;
+}
+
+.vueSectionListe{
+    -fx-background-color: #F0F0F0;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+}
+
+.vueSectionListe .title {
+    -fx-background-color: #F0F0F0;
+    -fx-background-radius: 10;
+}
+
+.vueSectionListe .content {
+    -fx-background-color: #F0F0F0;
+    -fx-background-radius: 10;
+}
+
+.vueSectionListe * {
+    -fx-background-color: #F0F0F0;
+    -fx-background-radius: 10px;
+}
+
+.vueTache { /* TitlePane */
+    /* à mettre de la même couleur que le fond des sections */
+    -fx-background-color: #CACACA;
+    -fx-border-color: #CACACA;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.vueTache.dragging {
+    -fx-border-color: #2cea2c;
+    -fx-border-width: 4;
+}
+
+.vueTache.drag-over {
+    -fx-border-color: lightblue;
+    -fx-border-width: 4;
+}
+
+.vueTache .title {
+    -fx-background-color: #CACACA;
+}
+
+.vueTache .title *{
+    -fx-background-color: #CACACA;
+}
+
+.vueTache .title .arrow-button .arrow {
+    -fx-background-color: black;
+}
+
+.vueTache > .content {
+    /* à mettre de la même couleur que le font de la descpription des tâche (.contenuTache) */
+    -fx-background-color: #F0F0F0;
+    /* à mettre avec comme pour la tâche en entière (.vueTache) */
+    -fx-background-radius: 10px;
+    -fx-border-width: 0px;
+}
+
+.modifier-button {
+    -fx-background-color: #A3A3A3;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #F0F0F0;
+}
+
+.modifier-button:hover {
+    -fx-background-color: #7E7E7E;
 }

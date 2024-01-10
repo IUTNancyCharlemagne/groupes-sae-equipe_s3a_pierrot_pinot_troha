@@ -62,7 +62,7 @@ public class VueSection extends VBox implements Observateur, Serializable {
 
         String nom = section.getNom();
 
-        String nomAbrege = nom.length > 30 ? nom.substring(0, 30) + "..." : nom;
+        String nomAbrege = nom.length() > 30 ? nom.substring(0, 30) + "..." : nom;
         Label labelSection = new Label(nomAbrege);
         labelSection.setAlignment(Pos.CENTER);
         labelSection.getStyleClass().add("nomSection");

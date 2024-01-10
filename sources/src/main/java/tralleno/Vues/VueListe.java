@@ -28,7 +28,7 @@ public class VueListe extends ScrollPane implements Observateur, Serializable {
     public VueListe(ModeleBureau modeleBureau) {
         super();
         this.modeleBureau = modeleBureau;
-        setStyle("-fx-border-color: red; -fx-border-width: 1px;");
+        this.getStyleClass().add("vueListe");
         actualiser(modeleBureau);
     }
 
@@ -37,13 +37,13 @@ public class VueListe extends ScrollPane implements Observateur, Serializable {
             setContent(null); // Effacer le contenu existant
 
             VBox sectionsVBox = new VBox();
+            sectionsVBox.getStyleClass().add("containerSectionsListe");
             sectionsVBox.setSpacing(10);
             sectionsVBox.setPadding(new Insets(20));
             sectionsVBox.setFillWidth(true); // Permettre à la VBox de remplir toute la largeur disponible
 
             // Liaison bidirectionnelle des propriétés prefWidth du ScrollPane et de la VBox
             sectionsVBox.prefWidthProperty().bind(this.widthProperty());
-            sectionsVBox.setStyle("-fx-background-color: white;");
             List<Section> sections = ((ModeleBureau) s).getSections();
 
             for (Section section : sections) {

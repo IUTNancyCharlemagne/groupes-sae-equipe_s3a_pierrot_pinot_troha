@@ -26,14 +26,14 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
     public VueSectionListe(ModeleBureau modele, Section section) {
         super();
         this.section = section;
-
         setExpanded(true); // Déplier le TitledPane par défaut si nécessaire
+
+        this.getStyleClass().add("vueSectionListe");
 
         VBox sectionContent = new VBox();
         sectionContent.setSpacing(15);
         sectionContent.setPadding(new Insets(10));
         setContent(sectionContent);
-
 
         actualiser(modele);
     }
@@ -50,8 +50,6 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
         labelSection.getStyleClass().add("nomSection");
 
         VBox sect = new VBox();
-        sect.setStyle("-fx-background-color: transparent;");
-        labelSection.setStyle("-fx-background-color: transparent;");
         sect.setPadding(new Insets(5));
         sect.getStyleClass().add("fond_titre_section");
         sect.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlModifSection(modeleBureau, section));

@@ -5,6 +5,8 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -20,7 +22,10 @@ import tralleno.Modele.Sujet;
 import tralleno.Taches.Tache;
 import tralleno.Taches.TacheMere;
 
+import java.io.File;
+import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Classe qui représente un élément graphique qui lui représente une tâche. Chaque tâche est représentée par un TitledPane
@@ -73,7 +78,13 @@ public class VueTacheListe extends TitledPane implements Observateur {
         titreLabel.setFont(Font.font(14));
         titreLabel.getStyleClass().add("titreTache");
 
-        Button modifierButton = new Button("...");
+        String imagePath = "file:" + "/Image/pen.png";
+        Image icon = new Image(imagePath);
+        Button modifierButton = new Button("Modifier", new ImageView(icon));
+
+
+
+//        Button modifierButton = new Button("...");
         modifierButton.getStyleClass().add("modifier-button");
         modifierButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlModifTache(modeleBureau, this.tache, this.tacheParente));
 

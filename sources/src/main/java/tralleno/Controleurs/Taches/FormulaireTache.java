@@ -15,11 +15,9 @@ import tralleno.Modele.ModeleBureau;
 import tralleno.Section.Section;
 import tralleno.Taches.Tache;
 import tralleno.Taches.TacheMere;
-import tralleno.Vues.VuePrincipale;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -218,7 +216,7 @@ public class FormulaireTache implements Serializable {
         });
 
         // On met le tout dans une Vbox qui est le formulaire
-        int taillePopUp = 450;
+        int taillePopUp = 475;
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20));
         layout.getStyleClass().add("VBoxFormulaire");

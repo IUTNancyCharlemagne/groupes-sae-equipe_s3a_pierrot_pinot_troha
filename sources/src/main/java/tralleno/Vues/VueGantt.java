@@ -153,11 +153,11 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                     indexJdep = (int) ChronoUnit.DAYS.between(dateMin, tActuelle.getDateDebut());
                     indexJfin = (int) ChronoUnit.DAYS.between(dateMin, tActuelle.getDateFin());
 
-                    //on change la couleur des rectangles dans l'intervalle de date de la tache
-                    //et on ajoute un label sur le premier rectangle pour avoir le titre de la tache
+                    //le stackpane c'est la tache, elle va s'etendre sur la grille, du premier au dernier jour de la tache
+                    //on vat mettre le titre de la tache a gauche du stackpane
                     temp = new StackPane();
                     temp.getStyleClass().add("stackPaneTacheGantt");
-                    temp.setMinSize(largeurBox * (tActuelle.getDuree() + 1), hauteurRectangle);
+                    temp.setMinSize(largeurBox * (indexJfin-indexJdep + 1), hauteurRectangle);
                     //label pour le nom de la tache
                     tempLab = new Label(tActuelle.getTitre());
                     tempLab.getStyleClass().add("titreTacheGantt");

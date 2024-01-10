@@ -102,6 +102,10 @@ public class VueSection extends VBox implements Observateur, Serializable {
         // gestion du drag over, quand on passe la tâche au dessus de la vueSection.
         // Avec ça on peut empecher le dépot d'une tâche à certains endroits
         this.setOnDragOver(event -> {
+            if(event.getGestureSource() instanceof VBox){ // Pour pas qu'on puisse drag une section dans une tâche
+                event.acceptTransferModes(TransferMode.NONE);
+                event.consume();
+            }
             if (event.getGestureSource() instanceof VueTache) {
                 if (!this.getStyleClass().contains("hovered")) {
                     this.getStyleClass().add("hovered");

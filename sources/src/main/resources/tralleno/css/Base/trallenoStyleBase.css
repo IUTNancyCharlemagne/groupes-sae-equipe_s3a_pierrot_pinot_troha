@@ -436,3 +436,7 @@
 }
 
 
+
+.vboxGrilleGantt{
+    -fx-background-color: cyan  ;
+}

@@ -23,5 +23,5 @@ Nous proposons plusieurs vue :
 
 
 **Documents complémentaires :**  
-Trello : https://trello.com/b/wHu9WCAP/sae-301  
-Maquette baslamique : https://balsamiq.cloud/sdcu4x/pxdfi15/r047D  
+- Trello : https://trello.com/b/wHu9WCAP/sae-301  
+- Maquette baslamique : https://balsamiq.cloud/sdcu4x/pxdfi15/r047D  

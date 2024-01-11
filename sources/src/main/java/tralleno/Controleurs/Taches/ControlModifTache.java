@@ -34,6 +34,7 @@ public class ControlModifTache implements EventHandler<MouseEvent>, Serializable
 
     /**
      * Construit le contrôleur à partir du modele et de la tâche à modifier
+     *
      * @param modeleBureau
      * @param tacheAModifier
      * @param tacheParente
@@ -47,6 +48,7 @@ public class ControlModifTache implements EventHandler<MouseEvent>, Serializable
     /**
      * Lorsque l'utilisateur clique sur le bouton "..." de la tâche, cette méthode est appelée.
      * Elle prend en charge l'évenement en permettant à l'utilisateur de modifier la tâche
+     *
      * @param mouseEvent
      */
     @Override
@@ -63,7 +65,7 @@ public class ControlModifTache implements EventHandler<MouseEvent>, Serializable
         Scene scene = FormulaireTache.creerFormulaireTache(this.modeleBureau, this.tacheAModifier, this.tacheParente, fenetreModificationTache);
 
         int themeApp = VuePrincipale.getThemeCourant();
-        switch (themeApp){
+        switch (themeApp) {
             case 1:
                 scene.getStylesheets().clear();
                 scene.getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/popupStyleBrouillard.css").toExternalForm());

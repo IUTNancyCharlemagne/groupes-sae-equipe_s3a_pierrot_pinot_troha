@@ -170,8 +170,9 @@ public abstract class Tache implements Comparable<Tache>, Serializable {
         String aff = this.titre + " - " + this.sectionParente.getNom() + "\n";
         return aff;
     }
+
     public String toStringDate() {
-        String aff = this.titre + " - " + this.sectionParente.getNom() +" - "+this.dateDebut+" - "+this.dateFin+ "\n";
+        String aff = this.titre + " - " + this.sectionParente.getNom() + " - " + this.dateDebut + " - " + this.dateFin + "\n";
         return aff;
     }
 

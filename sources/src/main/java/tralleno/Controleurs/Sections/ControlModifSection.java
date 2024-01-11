@@ -34,6 +34,7 @@ public class ControlModifSection implements EventHandler<MouseEvent> {
 
     /**
      * Construit un contrôleur à partir d'un modèle et d'une section
+     *
      * @param modeleBureau
      * @param section
      */
@@ -45,6 +46,7 @@ public class ControlModifSection implements EventHandler<MouseEvent> {
     /**
      * Lorsque l'utilisateur clique sur une section, cette méthode est appelée.
      * Elle prend en charge l'évenement en modifiant une section
+     *
      * @param mouseEvent
      */
     @Override
@@ -94,7 +96,7 @@ public class ControlModifSection implements EventHandler<MouseEvent> {
         Scene scene = new Scene(layout, 400, 170);
 
         int themeApp = VuePrincipale.getThemeCourant();
-        switch (themeApp){
+        switch (themeApp) {
             case 1:
                 scene.getStylesheets().clear();
                 scene.getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/popupStyleBrouillard.css").toExternalForm());

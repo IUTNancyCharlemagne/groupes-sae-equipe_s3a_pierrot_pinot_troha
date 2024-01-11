@@ -24,7 +24,6 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
     private transient VuePrincipale vp;
 
     /**
-     *
      * @param modele
      * @param vueprincip
      */
@@ -73,7 +72,7 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
         if (listTache.isEmpty()) {
             this.modele.clearSelectionTacheGantt();
 
-            allBoxChecked=false;
+            allBoxChecked = false;
         }
 
         for (Tache t : listTache) {
@@ -145,8 +144,6 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
         gp.add(selectTout, colonne + 1, ligne);
         this.setContent(gp);
     }
-
-
 
 
 }

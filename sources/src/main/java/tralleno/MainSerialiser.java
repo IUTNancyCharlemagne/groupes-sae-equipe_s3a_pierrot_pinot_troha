@@ -7,7 +7,7 @@ import tralleno.Vues.VuePrincipale;
 
 import java.io.*;
 
-public class MainSerialiser extends Application{
+public class MainSerialiser extends Application {
     /**
      * Modèle qui comporte les données de l'application
      */
@@ -19,13 +19,13 @@ public class MainSerialiser extends Application{
     public static String chemin;
 
 
-
     /**
      * charge les attributs static de la classe à partir du fichier serialisé
+     *
      * @param chemin chemin ou se trouve le fichier serialisé
      */
-    public static void loaderModele(String chemin){
-        MainSerialiser.chemin=chemin;
+    public static void loaderModele(String chemin) {
+        MainSerialiser.chemin = chemin;
         // on essai de recuperer le fichier si ça marche pas on créer un nouveau modele
         try {
             FileInputStream fichierEntree = new FileInputStream(chemin);
@@ -33,14 +33,14 @@ public class MainSerialiser extends Application{
 
             // Désérialisation de l'objet
             MainSerialiser.modeleBureau = (ModeleBureau) fluxEntree.readObject();
-            ModeleBureau.IDTACHEACTUELLE=MainSerialiser.modeleBureau.getIdtacheactuelle();
-            ModeleBureau.IDSECTIONACTUELLE=MainSerialiser.modeleBureau.getIdsectionactuelle();
+            ModeleBureau.IDTACHEACTUELLE = MainSerialiser.modeleBureau.getIdtacheactuelle();
+            ModeleBureau.IDSECTIONACTUELLE = MainSerialiser.modeleBureau.getIdsectionactuelle();
 
             fluxEntree.close();
             fichierEntree.close();
         } catch (Exception e) {
             System.out.println("nouveau modele");
-            MainSerialiser.modeleBureau=new ModeleBureau();
+            MainSerialiser.modeleBureau = new ModeleBureau();
         }
 
     }
@@ -61,7 +61,7 @@ public class MainSerialiser extends Application{
     /**
      * methode qui sauvegarde le modele static en fichier avec le chemin de fichier static
      */
-    public static void serialiser(){
+    public static void serialiser() {
         try {
             FileOutputStream fichierSortie = new FileOutputStream(MainSerialiser.chemin);
             ObjectOutputStream fluxSortie = new ObjectOutputStream(fichierSortie);
@@ -81,6 +81,7 @@ public class MainSerialiser extends Application{
 
     /**
      * lance l'application
+     *
      * @param args
      */
     public static void main(String[] args) {

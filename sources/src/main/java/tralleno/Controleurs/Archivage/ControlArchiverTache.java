@@ -30,6 +30,7 @@ public class ControlArchiverTache implements EventHandler<MouseEvent> {
 
     /**
      * Construit un contrôleur à partir du modèle et d'une section et de la fenêtre ouverte
+     *
      * @param modeleBureau
      * @param tache
      * @param fenetre
@@ -43,6 +44,7 @@ public class ControlArchiverTache implements EventHandler<MouseEvent> {
     /**
      * Lorsque l'utilisateur clique sur un bouton archiver tâche, cette méthode est appelée.
      * Elle prend en charge l'évenement en archivant la tâche en question.
+     *
      * @param mouseEvent
      */
     @Override

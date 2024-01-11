@@ -22,9 +22,10 @@ public class ControlCreerTache implements EventHandler<MouseEvent>, Serializable
 
     /**
      * Crée le contrôleur de création de tâche uniquement à partir du modèle
+     *
      * @param modeleBureau
      */
-    public ControlCreerTache(ModeleBureau modeleBureau){
+    public ControlCreerTache(ModeleBureau modeleBureau) {
         this.modeleBureau = modeleBureau;
     }
 
@@ -32,6 +33,7 @@ public class ControlCreerTache implements EventHandler<MouseEvent>, Serializable
      * Lorsque l'utilisateur clique sur un bouton créer tâche, cette méthode est appelée.
      * Elle prend en charge l'évenement en créant une tâche à partir des informations
      * que l'utilisateur choisira de renseigner
+     *
      * @param mouseEvent
      */
     @Override
@@ -46,7 +48,7 @@ public class ControlCreerTache implements EventHandler<MouseEvent>, Serializable
         Scene scene = FormulaireTache.creerFormulaireTache(this.modeleBureau, null, null, fenetreCreationTache);
 
         int themeApp = VuePrincipale.getThemeCourant();
-        switch (themeApp){
+        switch (themeApp) {
             case 1:
                 scene.getStylesheets().clear();
                 scene.getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/popupStyleBrouillard.css").toExternalForm());

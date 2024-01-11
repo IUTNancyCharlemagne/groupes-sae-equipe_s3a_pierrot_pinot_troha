@@ -13,6 +13,7 @@ public class TacheFille extends Tache implements Serializable {
 
     /**
      * Construit une tâche fille à partir d'un titre et d'une description
+     *
      * @param t
      * @param d
      */
@@ -22,6 +23,7 @@ public class TacheFille extends Tache implements Serializable {
 
     /**
      * Construit une tâche fille à partir d'un titre, d'une description, et de dates de début et de fin
+     *
      * @param titre
      * @param description
      * @param dD

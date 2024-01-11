@@ -14,7 +14,7 @@ public class ControlRestaurerSection implements EventHandler<MouseEvent> {
     private Section section;
 
 
-    public ControlRestaurerSection(ModeleBureau modeleBureau, Section section){
+    public ControlRestaurerSection(ModeleBureau modeleBureau, Section section) {
         this.modeleBureau = modeleBureau;
         this.section = section;
     }

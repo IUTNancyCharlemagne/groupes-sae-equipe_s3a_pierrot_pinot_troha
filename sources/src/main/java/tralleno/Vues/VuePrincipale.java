@@ -128,7 +128,7 @@ public class VuePrincipale implements Serializable {
         this.vueGantt = new VueGantt(this.modeleBureau);
         this.modeleBureau.enregistrerObservateur(this.vueGantt);
 
-        this.vueSelecteurGantt = new VueSelecteurGantt(this.modeleBureau,this);
+        this.vueSelecteurGantt = new VueSelecteurGantt(this.modeleBureau, this);
         this.modeleBureau.enregistrerObservateur(this.vueSelecteurGantt);
 
         // Initialisation du menu d'archivage
@@ -152,7 +152,7 @@ public class VuePrincipale implements Serializable {
     }
 
     public void changerVue(int mode) {
-        switch (mode){
+        switch (mode) {
             case TABLEAU -> {
                 conteneurPrincipal.setCenter(this.vueTableau);
             }
@@ -181,6 +181,7 @@ public class VuePrincipale implements Serializable {
             vueArchivage.setVisible(true);
         }
     }
+
     /**
      * Nouvelle méthode pour cacher le menu d'archivage avec animation
      */
@@ -209,8 +210,8 @@ public class VuePrincipale implements Serializable {
      *
      * @param theme numéro du thème choisi
      */
-    public void changerTheme(int theme){
-        switch (theme){
+    public void changerTheme(int theme) {
+        switch (theme) {
             case THEMEBROUILLARD:
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/trallenoStyleBrouillard.css").toExternalForm());
@@ -259,7 +260,7 @@ public class VuePrincipale implements Serializable {
     }
 
     public synchronized Scene getScene() {
-        if(scene == null){
+        if (scene == null) {
             scene = new Scene(conteneurPrincipal, 800, 600);
         }
         return scene;
@@ -268,7 +269,7 @@ public class VuePrincipale implements Serializable {
     /**
      * @return le numéro du thème courant
      */
-    public static int getThemeCourant(){
+    public static int getThemeCourant() {
         return themeCourant;
     }
 }

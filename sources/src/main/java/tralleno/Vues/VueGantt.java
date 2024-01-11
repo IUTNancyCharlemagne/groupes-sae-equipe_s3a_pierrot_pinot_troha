@@ -121,7 +121,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 gridGantt.getStyleClass().add("gridGantt");
 
                 //on ajoute les dates en bas de la grille
-                for (int i = 0; i < difjour+24; i++) {
+                for (int i = 0; i < difjour + 24; i++) {
                     if (i % 2 == 0) {
                         tempVBox = new VBox();
                         tempVBox.getStyleClass().add("vboxGrilleGantt");
@@ -163,7 +163,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                     tempLab = new Label(tActuelle.getTitre());
                     tempLab.getStyleClass().add("titreTacheGantt");
                     //on met la taille maximal pour que si le titre est plus grand que la tache il n'agrandisse pas la tache créant des problemes
-                    tempLab.setMaxWidth(largeurBox*(tActuelle.getDuree()+1));
+                    tempLab.setMaxWidth(largeurBox * (tActuelle.getDuree() + 1));
 
                     temp.setAlignment(Pos.CENTER_LEFT);
                     temp.setPadding(new Insets(5));
@@ -176,7 +176,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 //on vas parcourir les dependances de chaque tache pour tirer les traits de dependances
                 ArrayList<Tache> listeDepTach;
                 Line diagonalLine;
-                int dureeDepart,  xDepart, yDepart, xArrive, yArrive;
+                int dureeDepart, xDepart, yDepart, xArrive, yArrive;
                 for (Tache t : listTacheGantt) {
 
                     listeDepTach = (ArrayList<Tache>) this.modele.getDependances().get(t);
@@ -195,9 +195,9 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                                 int rowspan = xArrive - xDepart + dureeDepart;
                                 diagonalLine.getStyleClass().add("ligneGantt");
                                 //en fonction de la position verticale des tâches par rapport l'une à l'autre il faut changer certain parametre d'index dans la grid
-                                if(yDepart>yArrive){
-                                    gridGantt.add(diagonalLine, xDepart + dureeDepart + 1, yArrive, rowspan, yDepart-yArrive+ 1);
-                                }else {
+                                if (yDepart > yArrive) {
+                                    gridGantt.add(diagonalLine, xDepart + dureeDepart + 1, yArrive, rowspan, yDepart - yArrive + 1);
+                                } else {
                                     gridGantt.add(diagonalLine, xDepart + dureeDepart + 1, yDepart, rowspan, yArrive - yDepart + 1);
                                 }
 
@@ -205,7 +205,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                         }
                     }
                 }
-                st.getChildren().addAll(gridGantt );
+                st.getChildren().addAll(gridGantt);
             }
         }
     }

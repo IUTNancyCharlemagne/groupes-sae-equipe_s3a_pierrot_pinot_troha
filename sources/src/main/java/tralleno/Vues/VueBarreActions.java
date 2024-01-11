@@ -33,18 +33,19 @@ public class VueBarreActions extends HBox implements Serializable {
 
     /**
      * Crée une VueBarreAction à partir du type et du modele de l'application
+     *
      * @param type
      * @param modeleBureau
      */
     public VueBarreActions(int type, ModeleBureau modeleBureau, VuePrincipale vuePrincipale) {
         super(10);
 
-        String img=System.getProperty("user.dir")+"/src/main/resources/Images/logo.png";
+        String img = System.getProperty("user.dir") + "/src/main/resources/Images/logo.png";
         File file = new File(img);
         ImageView logo;
         try {
-        FileInputStream f=new FileInputStream(file);
-        logo = new ImageView(new Image(f));
+            FileInputStream f = new FileInputStream(file);
+            logo = new ImageView(new Image(f));
         } catch (FileNotFoundException e) {
             logo = new ImageView();
         }

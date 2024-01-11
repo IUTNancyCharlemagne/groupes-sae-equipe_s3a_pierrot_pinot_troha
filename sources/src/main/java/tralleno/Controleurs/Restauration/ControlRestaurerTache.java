@@ -13,7 +13,6 @@ public class ControlRestaurerTache implements EventHandler<MouseEvent> {
     private Tache tache;
 
 
-
     public ControlRestaurerTache(ModeleBureau modeleBureau, Tache tache) {
         this.modeleBureau = modeleBureau;
         this.tache = tache;

@@ -52,7 +52,7 @@ public class ControlVues implements EventHandler<ActionEvent> {
         this.vuePrincipale = vuePrincipale;
     }
 
-    public ControlVues(ChoiceBox<String> theme, VuePrincipale vuePrincipale, String contournement){
+    public ControlVues(ChoiceBox<String> theme, VuePrincipale vuePrincipale, String contournement) {
         this.theme = theme;
         this.vuePrincipale = vuePrincipale;
     }
@@ -65,17 +65,17 @@ public class ControlVues implements EventHandler<ActionEvent> {
                 this.vuePrincipale.changerVue(VuePrincipale.TABLEAU);
             } else if (vueChoisie.equals("Vue Liste")) {
                 this.vuePrincipale.changerVue(VuePrincipale.LISTE);
-            } else if(vueChoisie.equals("Vue Gantt")) {
+            } else if (vueChoisie.equals("Vue Gantt")) {
                 this.vuePrincipale.changerVue(VuePrincipale.SELECTGANTT);
             }
         } else if (actionEvent.getSource() == boutonArchivage) {
             String bouton = boutonArchivage.getText();
-            if(bouton.equals("Archivage")){
+            if (bouton.equals("Archivage")) {
                 this.vuePrincipale.afficherOuCacherArchivage();
             }
-        } else if (actionEvent.getSource() == theme){
+        } else if (actionEvent.getSource() == theme) {
             String themeChoisi = theme.getValue();
-            switch (themeChoisi){
+            switch (themeChoisi) {
                 case "Brouillard":
                     this.vuePrincipale.changerTheme(THEMEBROUILLARD);
                     break;

@@ -29,6 +29,7 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
 
     /**
      * Construit une VueTableau à partir du modèle passé en paramètres
+     *
      * @param modeleBureau
      */
     public VueTableau(ModeleBureau modeleBureau) {
@@ -41,6 +42,7 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
 
     /**
      * Déclenchée lorsque l'état du modèle est modifiée
+     *
      * @param s
      */
     public void actualiser(Sujet s) {
@@ -61,7 +63,6 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
                 Pane sectionPane = new Pane();
                 sectionPane.getChildren().add(vueSection);
                 sectionPane.setMaxHeight(Region.USE_PREF_SIZE);
-
 
 
                 containerSections.getChildren().add(sectionPane);
@@ -100,6 +101,7 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
 
     /**
      * Méthode qui détermine l'index à laquelle la section est drop
+     *
      * @param event
      * @return
      */

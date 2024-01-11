@@ -57,7 +57,7 @@ public class VueListe extends ScrollPane implements Observateur, Serializable {
 
             // Pour pouvoir glisser déposer les sections contenues dans la Vbox
             sectionsVBox.setOnDragOver(event -> {
-                if(event.getGestureSource() instanceof VueTache){
+                if (event.getGestureSource() instanceof VueTache) {
                     event.acceptTransferModes(TransferMode.NONE);
                     event.consume();
                 }
@@ -89,6 +89,7 @@ public class VueListe extends ScrollPane implements Observateur, Serializable {
 
     /**
      * Méthode qui détermine l'index à laquelle la section est drop
+     *
      * @param event
      * @return
      */

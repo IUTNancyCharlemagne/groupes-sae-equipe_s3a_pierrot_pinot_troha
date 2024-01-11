@@ -23,6 +23,11 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
 
     private transient VuePrincipale vp;
 
+    /**
+     *
+     * @param modele
+     * @param vueprincip
+     */
     public VueSelecteurGantt(ModeleBureau modele, VuePrincipale vueprincip) {
         super();
         this.modele = modele;
@@ -40,6 +45,7 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
     public void actualiser(Sujet s) {
 
 
+        //on affiche tout dans une gridpane
         GridPane gp = new GridPane();
         gp.getStyleClass().add("gridSelectionGantt");
         Button b = new Button("Generer Diagramme De Gantt");
@@ -62,6 +68,7 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
         ArrayList<Tache> listeTacheSelectionne = (ArrayList<Tache>) this.modele.getSelectionTacheGantt();
         ArrayList<CheckBox> listeCheckBox = new ArrayList<>();
 
+        //sert a savoir si toute les case sont cochés;
         boolean allBoxChecked = true;
         if (listTache.isEmpty()) {
             this.modele.clearSelectionTacheGantt();
@@ -71,6 +78,7 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
 
         for (Tache t : listTache) {
 
+            //on construit la boit qui contient la tache
             tempVB = new VBox();
             tempLabSection = new Label(t.getSectionParente().getNom());
             tempLabSection.getStyleClass().add("labelSelectionTacheSectionGantt");
@@ -82,8 +90,10 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
             tempVB.getChildren().addAll(tempLabTitre, tempLabSection);
             tempVB.setMinWidth(100);
             tempVB.getStyleClass().add("containerSelectionTacheGantt");
+            //on recupère l'id de la tâche avec la propriété graphicTextGap
             tempCheck.setGraphicTextGap(ligne);
 
+            //on verifie si la tâche est déjà dans la liste de tâche selectionné si oui on check la box
             if (listeTacheSelectionne.contains(t)) {
                 tempCheck.setSelected(true);
             } else {
@@ -91,6 +101,7 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
             }
 
             listeCheckBox.add(tempCheck);
+            //on met en event que si la checkbox est coché alors on ajoute la tâche a la liste du modele si elle est décoché on l'enelve
             tempCheck.setOnAction(actionEvent -> {
                 CheckBox c = (CheckBox) actionEvent.getSource();
                 Tache tacheCheck = listTache.get((int) c.getGraphicTextGap());
@@ -107,6 +118,7 @@ public class VueSelecteurGantt extends ScrollPane implements Observateur, Serial
         CheckBox selectTout = new CheckBox();
         selectTout.getStyleClass().add("checkboxSelectionTacheGantt");
         selectTout.setSelected(allBoxChecked);
+        //event de la checkbox qui selectionne toute les tâche puis qui coche toute les checkbox
         selectTout.setOnAction(actionEvent -> {
             CheckBox checkTout = (CheckBox) actionEvent.getSource();
             if (checkTout.isSelected()) {

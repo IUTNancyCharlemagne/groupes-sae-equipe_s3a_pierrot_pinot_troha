@@ -7,6 +7,9 @@ import tralleno.Controleurs.Archivage.ControlArchiverSection;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Section.Section;
 
+/**
+ *
+ */
 public class ControlRestaurerSection implements EventHandler<MouseEvent> {
 
     private ModeleBureau modeleBureau;

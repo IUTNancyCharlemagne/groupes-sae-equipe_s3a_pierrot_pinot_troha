@@ -76,7 +76,6 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
         sect.setPadding(new Insets(5));
         sect.setSpacing(20);
         sect.getStyleClass().add("fond_titre_section");
-        sect.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlModifSection(modeleBureau, section));
 
         Button boutonModifierSect = new Button();
         String img=System.getProperty("user.dir")+"/src/main/resources/Images/pen.png";

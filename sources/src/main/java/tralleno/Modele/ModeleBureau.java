@@ -804,57 +804,50 @@ public class ModeleBureau implements Sujet, Serializable {
         this.sections = sections;
     }
 
-    public void gentTest() {
-        LocalDate dateMin = LocalDate.MAX;
-        LocalDate dateMax = LocalDate.MIN;
-        //creation de la liste de tache pour les test, il faut qu'il y ait une date de debut et de fin et que ce soit pas une sous tache
-
-        List<Tache> listTacheGantt = this.getTaches();
-        //on parcours la liste des taches et on enleve celle qui n'on pas de date
-        if (!listTacheGantt.isEmpty()) {
-            for (Tache t : listTacheGantt) {
-                if (t.getDateDebut() == null) {
-                    listTacheGantt.remove(t);
-                } else {
-                    if (dateMin.isAfter(t.getDateDebut())) dateMin = t.getDateDebut();
-                    if (dateMax.isBefore(t.getDateFin())) dateMax = t.getDateFin();
-                }
-            }
-            ArrayList<Tache> listeDepTach;
-            for (Tache t : listTacheGantt) {
-
-                listeDepTach = (ArrayList<Tache>) this.dependances.get(t);
-                if (listeDepTach != null && !listeDepTach.isEmpty()) {
-                    for (Tache taDep : listeDepTach) {
-                        if (listTacheGantt.contains(taDep)) {
-                        }
-                    }
-
-                }
-            }
-            int difjour= (int) ChronoUnit.DAYS.between(dateMin,dateMax)+1;
-        }
-    }
-
+    /**
+     * liste des tâches que l'utilisateur veut afficher sur gantt
+     */
     private List<Tache> selectionTacheGantt;
 
+    /**
+     * retourne la liste de tâche selectionnée pour afficher sur le gantt
+     * @return
+     */
     public List<Tache> getSelectionTacheGantt() {
         return selectionTacheGantt;
     }
 
+    /**
+     * setter pour selectionTacheGantt
+     * @param selectionTacheGantt
+     */
     public void setSelectionTacheGantt(List<Tache> selectionTacheGantt) {
         this.selectionTacheGantt = selectionTacheGantt;
     }
+
+    /**
+     * ajoute une tâche a la liste selectionGantt
+     * @param t tâche à ajouter
+     */
     public void addSelectionTacheGantt(Tache t){
         if(t!=null){
             this.selectionTacheGantt.add(t);
         }
     }
+
+    /**
+     * enleve une tâche de la liste selectionGantt
+     * @param t tâche à supprimer
+     */
     public void removeSelectionTacheGantt(Tache t ){
         if(t!=null){
             this.selectionTacheGantt.remove(t);
         }
     }
+
+    /**
+     * vide la liste selectionGantt
+     */
     public void clearSelectionTacheGantt(){
         this.selectionTacheGantt.clear();
     }

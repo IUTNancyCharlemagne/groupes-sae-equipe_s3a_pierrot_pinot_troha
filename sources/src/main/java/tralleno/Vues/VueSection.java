@@ -91,7 +91,7 @@ public class VueSection extends VBox implements Observateur, Serializable {
         sect.setOnDragDetected(event -> {
             Dragboard dragboard = sect.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
-            content.putString((String.valueOf(section.getId()))); // Ajoutez ici l'identifiant de la section
+            content.putString((String.valueOf(section.getId())));
             content.putImage(sect.snapshot(new SnapshotParameters(), null));
             dragboard.setContent(content);
             event.consume();

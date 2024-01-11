@@ -20,17 +20,17 @@ public class ControlModifTache implements EventHandler<MouseEvent>, Serializable
     /**
      * Modèle qui comporte les données de l'application
      */
-    private ModeleBureau modeleBureau;
+    private final ModeleBureau modeleBureau;
 
     /**
      * Tâche concernée par la modification
      */
-    private Tache tacheAModifier;
+    private final Tache tacheAModifier;
 
     /**
      * Tache parente de la tâche à modifier, qui vaut null si la tâche n'est pas une sous-tâche
      */
-    private TacheMere tacheParente;
+    private final TacheMere tacheParente;
 
     /**
      * Construit le contrôleur à partir du modele et de la tâche à modifier

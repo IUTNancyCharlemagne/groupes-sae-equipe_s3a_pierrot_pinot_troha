@@ -25,12 +25,12 @@ public class ControlModifSection implements EventHandler<MouseEvent> {
     /**
      * Modèle qui comporte les données de l'application
      */
-    private ModeleBureau modeleBureau;
+    private final ModeleBureau modeleBureau;
 
     /**
      * Section qui est modifiée
      */
-    private Section section;
+    private final Section section;
 
     /**
      * Construit un contrôleur à partir d'un modèle et d'une section

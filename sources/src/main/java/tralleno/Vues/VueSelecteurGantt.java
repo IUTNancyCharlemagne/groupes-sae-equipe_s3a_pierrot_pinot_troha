@@ -12,9 +12,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class VueSelecteurGantt extends ScrollPane implements Observateur, Serializable {
-    private ModeleBureau modele;
+    private final ModeleBureau modele;
 
-    private transient VuePrincipale vp;
+    private final transient VuePrincipale vp;
 
     /**
      * @param modele

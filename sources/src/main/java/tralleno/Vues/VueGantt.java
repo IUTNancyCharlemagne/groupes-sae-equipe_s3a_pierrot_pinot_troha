@@ -20,7 +20,7 @@ import tralleno.Taches.Tache;
 
 public class VueGantt extends ScrollPane implements Observateur, Serializable {
 
-    private ModeleBureau modele;
+    private final ModeleBureau modele;
 
     /**
      * @param modele modele a partir duquel il va chercher les données

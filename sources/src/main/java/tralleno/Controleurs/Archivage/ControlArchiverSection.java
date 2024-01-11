@@ -14,17 +14,17 @@ public class ControlArchiverSection implements EventHandler<MouseEvent> {
     /**
      * Modèle qui contient les données de l'application
      */
-    private ModeleBureau modeleBureau;
+    private final ModeleBureau modeleBureau;
 
     /**
      * Section concernée par l'archivage
      */
-    private Section section;
+    private final Section section;
 
     /**
      * Fenêtre ouverte lors de la modification de la section, à refermer
      */
-    private Stage fenetre;
+    private final Stage fenetre;
 
     /**
      * Construit un contrôleur à partir du modèle et d'une section, et de la fenetre ouverte

@@ -14,17 +14,17 @@ public class ControlArchiverTache implements EventHandler<MouseEvent> {
     /**
      * Modèle qui contient les données de l'application
      */
-    private ModeleBureau modeleBureau;
+    private final ModeleBureau modeleBureau;
 
     /**
      * Tâche à archiver
      */
-    private Tache tache;
+    private final Tache tache;
 
     /**
      * Fenetre ouverte lors de la modification d'une tâche (menu depuis le quel on peut archiver la tâche)
      */
-    private Stage fenetre;
+    private final Stage fenetre;
 
     /**
      * Construit un contrôleur à partir du modèle et d'une section et de la fenêtre ouverte

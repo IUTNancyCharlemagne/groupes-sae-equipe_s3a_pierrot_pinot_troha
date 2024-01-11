@@ -13,12 +13,12 @@ public class ControlRestaurerSection implements EventHandler<MouseEvent> {
     /**
      * Modèle qui contient les données de l'application
      */
-    private ModeleBureau modeleBureau;
+    private final ModeleBureau modeleBureau;
 
     /**
      * Section concernée par la restauration
      */
-    private Section section;
+    private final Section section;
 
 
     /**

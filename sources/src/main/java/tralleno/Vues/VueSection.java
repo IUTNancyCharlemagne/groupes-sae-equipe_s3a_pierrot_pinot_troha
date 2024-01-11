@@ -26,7 +26,7 @@ public class VueSection extends VBox implements Observateur, Serializable {
     /**
      * Section qui est représentée par la vue
      */
-    private Section section;
+    private final Section section;
 
     /**
      * Crée une VueSection à partir de la section qu'elle doit représenter.

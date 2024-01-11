@@ -32,7 +32,7 @@ public class ControlVues implements EventHandler<ActionEvent> {
     /**
      * On va devoir changer le centre du borderpane de la vue principale selon le mode sélectionné
      */
-    private VuePrincipale vuePrincipale;
+    private final VuePrincipale vuePrincipale;
 
     /**
      * @param choixVue
@@ -48,7 +48,7 @@ public class ControlVues implements EventHandler<ActionEvent> {
      * @param vuePrincipale
      */
     public ControlVues(Button archivage, VuePrincipale vuePrincipale) {
-        this.boutonArchivage = archivage;
+        boutonArchivage = archivage;
         this.vuePrincipale = vuePrincipale;
     }
 

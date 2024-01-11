@@ -22,7 +22,7 @@ public class ControlCreerSection implements EventHandler<MouseEvent> {
     /**
      * Modele qui comporte toutes les données
      */
-    private ModeleBureau modeleBureau;
+    private final ModeleBureau modeleBureau;
 
     /**
      * Construit à partir d'un bureau le controleur qui permet de créer une section

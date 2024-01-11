@@ -1,7 +1,7 @@
 package exemples;
 
 public class Tache {
-    private String nom;
+    private final String nom;
 
     public Tache(String nom) {
         this.nom = nom;

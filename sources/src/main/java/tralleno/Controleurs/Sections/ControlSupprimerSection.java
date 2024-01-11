@@ -14,18 +14,18 @@ public class ControlSupprimerSection implements EventHandler<MouseEvent> {
     /**
      * Modèle qui comporte les données de l'application
      */
-    private ModeleBureau modeleBureau;
+    private final ModeleBureau modeleBureau;
 
     /**
      * Section sur laquelle l'évenement de suppression est appelé
      */
-    private Section section;
+    private final Section section;
 
     /**
      * Fenetre ouverte lors de la modification de la section étant donné que pour la supprimer
      * il faut ouvrir la fenêtre de modification
      */
-    private Stage fenetre;
+    private final Stage fenetre;
 
     /**
      * Crée le contrôleur de suppression d'une section à partir du modèle de l'application, de la section associée et de la fenetre de modification ouverte

@@ -33,21 +33,21 @@ public class VueTache extends TitledPane implements Observateur {
     /**
      * Tâche représentée
      */
-    private Tache tache;
+    private final Tache tache;
     /**
      * Vbox qui contient les sous-tâches de la tâche
      */
-    private VBox sousTachesBox;
+    private final VBox sousTachesBox;
 
     /**
      * Tache qui vaut null ou la tâche mere de la tâche actuelle si elle est une sous-tâche
      */
-    private TacheMere tacheParente;
+    private final TacheMere tacheParente;
 
     /**
      * Permet de définir si c'est une tâche de VueListe ou VueTableau
      */
-    private boolean etendre;
+    private final boolean etendre;
 
     /**
      * Construit une vueTache à partir de la tâche que la vue est censée représenter graphiquement

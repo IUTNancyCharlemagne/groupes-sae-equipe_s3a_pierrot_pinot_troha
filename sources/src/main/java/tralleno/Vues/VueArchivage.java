@@ -33,7 +33,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable {
     /**
      * Modèle de l'application qui contient les données
      */
-    private ModeleBureau modeleBureau;
+    private final ModeleBureau modeleBureau;
 
     /**
      * Boutons qui permettent de switch entre les tâches et les sections archivées

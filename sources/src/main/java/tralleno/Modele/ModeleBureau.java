@@ -331,8 +331,7 @@ public class ModeleBureau implements Sujet, Serializable {
         if (tache.getId() == id) {
             return tache;
         }
-        if (tache instanceof TacheMere) { // Si la tâche est une tâcheMère on parcourt ses sous-tâches pour répéter l'opération
-            TacheMere tacheMere = (TacheMere) tache;
+        if (tache instanceof TacheMere tacheMere) { // Si la tâche est une tâcheMère on parcourt ses sous-tâches pour répéter l'opération
             for (Tache sousTache : tacheMere.getSousTaches()) {
                 Tache found = chercherTache(id, sousTache);
                 if (found != null) {
@@ -480,8 +479,7 @@ public class ModeleBureau implements Sujet, Serializable {
         for (Tache tache : new ArrayList<>(tachesSection)) {
             if (tache == tacheASupprimer) { // Comparaison par référence
                 tachesSection.remove(tache);
-            } else if (tache instanceof TacheMere) {
-                TacheMere tacheMere = (TacheMere) tache;
+            } else if (tache instanceof TacheMere tacheMere) {
                 supprimerSousTacheRecursive(tacheASupprimer, tacheMere.getSousTaches());
             }
         }
@@ -498,8 +496,7 @@ public class ModeleBureau implements Sujet, Serializable {
         for (Tache sousTache : new ArrayList<>(sousTaches)) {
             if (sousTache == tacheASupprimer) { // Comparaison par référence
                 sousTaches.remove(sousTache);
-            } else if (sousTache instanceof TacheMere) {
-                TacheMere tacheMere = (TacheMere) sousTache;
+            } else if (sousTache instanceof TacheMere tacheMere) {
                 supprimerSousTacheRecursive(tacheASupprimer, tacheMere.getSousTaches());
             }
         }

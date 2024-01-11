@@ -18,7 +18,7 @@ public class ControlCreerTache implements EventHandler<MouseEvent>, Serializable
     /**
      * Modèle qui comporte les données de l'application
      */
-    private ModeleBureau modeleBureau;
+    private final ModeleBureau modeleBureau;
 
     /**
      * Crée le contrôleur de création de tâche uniquement à partir du modèle

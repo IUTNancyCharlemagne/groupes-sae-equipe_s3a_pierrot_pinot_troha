@@ -14,12 +14,12 @@ public class ControlRestaurerTache implements EventHandler<MouseEvent> {
     /**
      * Modèle qui contient les données de l'application
      */
-    private ModeleBureau modeleBureau;
+    private final ModeleBureau modeleBureau;
 
     /**
      * Tâche concernée par la restauration
      */
-    private Tache tache;
+    private final Tache tache;
 
 
     /**

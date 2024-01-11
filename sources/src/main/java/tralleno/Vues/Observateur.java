@@ -12,5 +12,5 @@ public interface Observateur {
      *
      * @param s
      */
-    public void actualiser(Sujet s);
+    void actualiser(Sujet s);
 }

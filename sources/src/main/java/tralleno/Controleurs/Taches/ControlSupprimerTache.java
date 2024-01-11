@@ -13,17 +13,17 @@ public class ControlSupprimerTache implements EventHandler<MouseEvent> {
     /**
      * Modèle qui contient les données de l'application
      */
-    private ModeleBureau modeleBureau;
+    private final ModeleBureau modeleBureau;
 
     /**
      * tache concernée par la suppression
      */
-    private Tache tacheASupprimer;
+    private final Tache tacheASupprimer;
 
     /**
      * Fenetre de modification de la tâche (qui est ouverte)
      */
-    private Stage fenetre;
+    private final Stage fenetre;
 
     /**
      * Construit un contrôleur à partir du modèle, de la tâche concernée et de la fenêtre de modification ouverte

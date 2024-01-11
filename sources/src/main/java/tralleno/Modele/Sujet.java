@@ -12,17 +12,17 @@ public interface Sujet {
      *
      * @param observateur
      */
-    public void enregistrerObservateur(Observateur observateur);
+    void enregistrerObservateur(Observateur observateur);
 
     /**
      * Supprime un observateur de la liste d'observateurs que le modèle doit contenir
      *
      * @param observateur
      */
-    public void supprimerObservateur(Observateur observateur);
+    void supprimerObservateur(Observateur observateur);
 
     /**
      * Notifie tous les observateurs présents dans la liste d'obsservateurs du modèle
      */
-    public void notifierObservateurs();
+    void notifierObservateurs();
 }

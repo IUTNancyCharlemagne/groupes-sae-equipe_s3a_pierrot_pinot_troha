@@ -90,7 +90,7 @@ public class MainSerialiser extends Application {
         //lunch(new String[]{});
         launch(args);
         MainSerialiser.serialiser();
-        System.out.println(MainSerialiser.modeleBureau.IDTACHEACTUELLE);
+        System.out.println(ModeleBureau.IDTACHEACTUELLE);
 
     }
 }

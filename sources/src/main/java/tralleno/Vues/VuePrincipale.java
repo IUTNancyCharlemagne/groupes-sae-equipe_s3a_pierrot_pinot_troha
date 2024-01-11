@@ -83,6 +83,7 @@ public class VuePrincipale implements Serializable {
 
     private static int themeCourant;
 
+
     /**
      * Barre située en haut de l'application qui permet de créer des sections, tâches de changer de vue, d'accéder à l'archivage
      */
@@ -139,12 +140,12 @@ public class VuePrincipale implements Serializable {
 
 
         // Animation pour afficher le menu d'archivage
-        afficherMenuTransition = new TranslateTransition(Duration.seconds(0.3), vueArchivage);
+        afficherMenuTransition = new TranslateTransition(Duration.seconds(2), vueArchivage);
         afficherMenuTransition.setToX(-vueArchivage.getWidth());
 //        showMenuTransition.setToX(0);
 
         // Animation pour cacher le menu d'archivage
-        cacherMenuTransition = new TranslateTransition(Duration.seconds(0.3), vueArchivage);
+        cacherMenuTransition = new TranslateTransition(Duration.seconds(2), vueArchivage);
         cacherMenuTransition.setToX(0);
         changerVue(TABLEAU);
         this.changerTheme(THEMEOCEAN);
@@ -152,10 +153,18 @@ public class VuePrincipale implements Serializable {
 
     public void changerVue(int mode) {
         switch (mode){
-            case TABLEAU -> conteneurPrincipal.setCenter(this.vueTableau);
-            case LISTE -> conteneurPrincipal.setCenter(this.vueListe);
-            case SELECTGANTT -> conteneurPrincipal.setCenter(this.vueSelecteurGantt);
-            case GANTT -> conteneurPrincipal.setCenter(this.vueGantt);
+            case TABLEAU -> {
+                conteneurPrincipal.setCenter(this.vueTableau);
+            }
+            case LISTE -> {
+                conteneurPrincipal.setCenter(this.vueListe);
+            }
+            case SELECTGANTT -> {
+                conteneurPrincipal.setCenter(this.vueSelecteurGantt);
+            }
+            case GANTT -> {
+                conteneurPrincipal.setCenter(this.vueGantt);
+            }
         }
         this.modeleBureau.notifierObservateurs();
     }

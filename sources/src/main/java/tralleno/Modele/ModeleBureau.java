@@ -5,6 +5,9 @@ import tralleno.Taches.Tache;
 import tralleno.Taches.TacheMere;
 import tralleno.Vues.Observateur;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -91,6 +94,7 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
 
+
     /**
      * Permet d'ajouter une section au modèle
      *
@@ -105,7 +109,6 @@ public class ModeleBureau implements Sujet, Serializable {
      * Permet d'ajouter une tâche à la section courante (this.sectionCourante)
      */
     public void ajouterTache(int position) {
-        System.out.println("POSITION " + position);
         this.sectionCourante.getTaches().add(position, this.tacheCourante);
 
         this.tacheCourante.setSectionParente(this.sectionCourante);
@@ -855,4 +858,6 @@ public class ModeleBureau implements Sujet, Serializable {
     public void clearSelectionTacheGantt(){
         this.selectionTacheGantt.clear();
     }
+
+
 }

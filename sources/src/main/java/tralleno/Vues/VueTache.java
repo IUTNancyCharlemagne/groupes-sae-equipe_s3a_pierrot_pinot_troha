@@ -137,7 +137,7 @@
                 for (Tache sousTache : sousTaches) {
                     VueTache vueSousTache = new VueTache(sousTache, modeleBureau, (TacheMere) this.tache, this.etendre);
                     sousTachesBox.getChildren().add(vueSousTache);
-                    VBox.setMargin(vueSousTache, new Insets(0, 0, 5, 0)); // marge : haut, droite, bas, gauche
+                    VBox.setMargin(vueSousTache, new Insets(0, 0, 5, 0));
                 }
             }
 
@@ -210,8 +210,6 @@
 
                     if (db.hasString()) {
                         // On vérifie d'abord que tâchecible != tâchedragged
-                        System.out.println(modeleBureau.getTacheCourante().getId());
-                        System.out.println(this.tache.getId());
                         if(modeleBureau.getTacheCourante().getId() != this.tache.getId()){
                             // Quand on crée une tâche, elle est tacheMere de base, sinon, cela va créer des problèmes de référence d'objets et
                             // des opérations inutiles. Ainsi, chaque VueTache est prête à en recevoir une autre.

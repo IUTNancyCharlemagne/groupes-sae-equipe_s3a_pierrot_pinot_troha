@@ -87,34 +87,66 @@ public abstract class Tache implements Comparable<Tache>, Serializable {
         this.id = t.getId();
     }
 
+    /**
+     * Retourne la section parente de la tâche sur laquelle la méthode est appelée
+     * @return
+     */
     public Section getSectionParente() {
         return sectionParente;
     }
 
+    /**
+     * Permet de changer la section parente de la tâche qui appelle la méthode
+     * @param sectionParente
+     */
     public void setSectionParente(Section sectionParente) {
         this.sectionParente = sectionParente;
     }
 
+    /**
+     * Renvoie le titre de la tâche
+     * @return
+     */
     public String getTitre() {
         return titre;
     }
 
+    /**
+     * Change le titre de la tâche
+     * @param titre
+     */
     public void setTitre(String titre) {
         this.titre = titre;
     }
 
+    /**
+     * Retourne l'identifiant unique de la tâche
+     * @return
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Change l'id de la tâche
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Retourne la date de début de la tâche
+     * @return
+     */
     public LocalDate getDateDebut() {
         return dateDebut;
     }
 
+    /**
+     * Permet de changer la date de début de la tâche, et par conséquent la durée qui elle aussi change
+     * @param dateDebut
+     */
     public void setDateDebut(LocalDate dateDebut) {
         this.dateDebut = dateDebut;
 
@@ -123,10 +155,18 @@ public abstract class Tache implements Comparable<Tache>, Serializable {
         }
     }
 
+    /**
+     * Retourne la date de fin de la tâche
+     * @return
+     */
     public LocalDate getDateFin() {
         return dateFin;
     }
 
+    /**
+     * Permet de changer la date de fin de la tâche, et par conséquent la durée qui elle aussi change
+     * @param dateFin
+     */
     public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
         if (this.dateDebut != null && this.dateFin != null) {
@@ -134,18 +174,34 @@ public abstract class Tache implements Comparable<Tache>, Serializable {
         }
     }
 
+    /**
+     * Retourne la durée de la tâche
+     * @return
+     */
     public int getDuree() {
         return duree;
     }
 
+    /**
+     * Change la durée de la tâche par celle passée en paramètres
+     * @param duree
+     */
     public void setDuree(int duree) {
         this.duree = duree;
     }
 
+    /**
+     * Retourne la description de la tâche
+     * @return
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Permet de changer la description de la tâche
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
@@ -168,11 +224,6 @@ public abstract class Tache implements Comparable<Tache>, Serializable {
      */
     public String toString() {
         String aff = this.titre + " - " + this.sectionParente.getNom() + "\n";
-        return aff;
-    }
-
-    public String toStringDate() {
-        String aff = this.titre + " - " + this.sectionParente.getNom() + " - " + this.dateDebut + " - " + this.dateFin + "\n";
         return aff;
     }
 

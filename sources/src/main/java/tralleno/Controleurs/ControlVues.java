@@ -52,11 +52,22 @@ public class ControlVues implements EventHandler<ActionEvent> {
         this.vuePrincipale = vuePrincipale;
     }
 
+    /**
+     * Contrôleur pour la choicebox pour les thèmes
+     * @param theme
+     * @param vuePrincipale
+     * @param contournement
+     */
     public ControlVues(ChoiceBox<String> theme, VuePrincipale vuePrincipale, String contournement) {
         this.theme = theme;
         this.vuePrincipale = vuePrincipale;
     }
 
+    /**
+     * Méthode, qui selon l'action sur les attributs du contrôleur, gère les actions. Pour les choicebox, les boutons etc..
+     * Utile la source de l'évènement pour définir quoi faire
+     * @param actionEvent
+     */
     @Override
     public void handle(ActionEvent actionEvent) {
         if (actionEvent.getSource() == choixVue) {

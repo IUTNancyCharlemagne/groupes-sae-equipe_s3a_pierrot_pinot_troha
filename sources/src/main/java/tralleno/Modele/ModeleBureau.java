@@ -5,12 +5,8 @@ import tralleno.Taches.Tache;
 import tralleno.Taches.TacheMere;
 import tralleno.Vues.Observateur;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -69,6 +65,7 @@ public class ModeleBureau implements Sujet, Serializable {
      * Nombre d'id de section total, sert à avoir une id unique pour chaque section
      */
     public static int IDSECTIONACTUELLE = 0;
+
     private int idsectionactuelle;
     /**
      * Liste contenant les Tâches archivées

@@ -25,6 +25,9 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ListIterator;
 
+/**
+ *
+ */
 public class VueArchivage extends VBox implements Observateur, Serializable {
 
     private ModeleBureau modeleBureau;

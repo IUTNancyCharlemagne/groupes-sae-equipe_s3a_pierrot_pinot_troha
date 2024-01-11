@@ -29,11 +29,12 @@ public class ControlSupprimerSection implements EventHandler<MouseEvent> {
 
     /**
      * Crée le contrôleur de suppression d'une section à partir du modèle de l'application, de la section associée et de la fenetre de modification ouverte
+     *
      * @param m
      * @param s
      * @param fenetre
      */
-    public ControlSupprimerSection(ModeleBureau m, Section s, Stage fenetre){
+    public ControlSupprimerSection(ModeleBureau m, Section s, Stage fenetre) {
         this.modeleBureau = m;
         this.section = s;
         this.fenetre = fenetre;
@@ -42,13 +43,14 @@ public class ControlSupprimerSection implements EventHandler<MouseEvent> {
     /**
      * Lorsque l'utilisateur clique sur un bouton suppriemer section, cette méthode est appelée.
      * Elle prend en charge l'évenement en supprimant la section
+     *
      * @param mouseEvent
      */
     @Override
     public void handle(MouseEvent mouseEvent) {
         this.modeleBureau.setSectionCourante(this.section);
         this.modeleBureau.supprimerSection();
-        if(fenetre != null)
+        if (fenetre != null)
             this.fenetre.close();
     }
 }

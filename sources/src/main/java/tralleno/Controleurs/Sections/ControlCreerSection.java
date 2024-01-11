@@ -26,15 +26,17 @@ public class ControlCreerSection implements EventHandler<MouseEvent> {
 
     /**
      * Construit à partir d'un bureau le controleur qui permet de créer une section
+     *
      * @param modeleBureau
      */
-    public ControlCreerSection(ModeleBureau modeleBureau){
+    public ControlCreerSection(ModeleBureau modeleBureau) {
         this.modeleBureau = modeleBureau;
     }
 
     /**
      * Lorsque l'utilisateur clique sur un bouton créer section, cette méthode est appelée.
      * Elle prend en charge l'évenement en créant une section
+     *
      * @param mouseEvent
      */
     @Override
@@ -59,7 +61,7 @@ public class ControlCreerSection implements EventHandler<MouseEvent> {
         );
 
         // Lorsque le bouton est cliqué
-        boutonCreerSection.setOnAction(event ->{
+        boutonCreerSection.setOnAction(event -> {
             // On récupère le nom de la section
             String nom = champNom.getText();
 
@@ -82,7 +84,7 @@ public class ControlCreerSection implements EventHandler<MouseEvent> {
         Scene scene = new Scene(layout, 400, 150);
 
         int themeApp = VuePrincipale.getThemeCourant();
-        switch (themeApp){
+        switch (themeApp) {
             case 1:
                 scene.getStylesheets().clear();
                 scene.getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/popupStyleBrouillard.css").toExternalForm());

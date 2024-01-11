@@ -31,45 +31,50 @@ public class Section implements Serializable {
 
     /**
      * Construit une section vide à partir de son nom
+     *
      * @param n
      */
-    public Section(String n){
+    public Section(String n) {
         this.nom = n;
         this.taches = new ArrayList<Tache>();
-        this.id= ModeleBureau.getIDSECTIONACTUELLE();
+        this.id = ModeleBureau.getIDSECTIONACTUELLE();
     }
 
 
     /**
      * Construit une section à partir de son nom et d'une liste de tâches
+     *
      * @param n
      * @param l
      */
-    public Section(String n, List<Tache> l){
+    public Section(String n, List<Tache> l) {
         this.nom = n;
         this.taches = l;
-        this.id= ModeleBureau.getIDSECTIONACTUELLE();
+        this.id = ModeleBureau.getIDSECTIONACTUELLE();
     }
 
     /**
      * Ajoute une tâche à la section
+     *
      * @param t
      */
-    public void ajouterTache(Tache t){
+    public void ajouterTache(Tache t) {
         this.taches.add(t);
         t.setSectionParente(this);
     }
 
     /**
      * Supprime une tâche de la section
+     *
      * @param t
      */
-    public void supprimerTache(Tache t){
+    public void supprimerTache(Tache t) {
         this.taches.remove(t);
     }
 
     /**
      * Retourne la liste de tâches que la section possède
+     *
      * @return
      */
     public List<Tache> getTaches() {
@@ -78,6 +83,7 @@ public class Section implements Serializable {
 
     /**
      * Permet de changer la liste de tâches que la section possède
+     *
      * @param taches
      */
     public void setTaches(List<Tache> taches) {
@@ -93,6 +99,7 @@ public class Section implements Serializable {
 
     /**
      * Permet de modifier le nom de la section
+     *
      * @param nom
      */
     public void setNom(String nom) {
@@ -101,6 +108,7 @@ public class Section implements Serializable {
 
     /**
      * Retourne l'id de la section
+     *
      * @return
      */
     public int getId() {
@@ -109,6 +117,7 @@ public class Section implements Serializable {
 
     /**
      * Permet de changer l'id de la section
+     *
      * @param id
      */
     public void setId(int id) {
@@ -117,6 +126,7 @@ public class Section implements Serializable {
 
     /**
      * Retourne le nom de la section
+     *
      * @return
      */
     public String toString() {

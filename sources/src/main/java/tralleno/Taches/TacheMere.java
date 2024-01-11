@@ -17,28 +17,31 @@ public class TacheMere extends Tache implements Serializable {
 
     /**
      * Construit une tâche à partir d'un titre et d'une description
+     *
      * @param t titre de la tâche
      * @param d description de la tâche
      */
-    public TacheMere(String t,String d){
+    public TacheMere(String t, String d) {
         super(t, d);
         this.sousTaches = new ArrayList<Tache>();
     }
 
     /**
      * Construit une tâche à partir d'un titre  d'une description et de dates de début et de fin
+     *
      * @param t
      * @param d
      * @param dD
      * @param dF
      */
-    public TacheMere(String t, String d, LocalDate dD, LocalDate dF){
+    public TacheMere(String t, String d, LocalDate dD, LocalDate dF) {
         super(t, d, dD, dF);
         this.sousTaches = new ArrayList<Tache>();
     }
 
     /**
      * Crée une tâche mère par copie de la tâcheMere passée en paramètres
+     *
      * @param t
      */
     public TacheMere(TacheMere t) {
@@ -49,9 +52,10 @@ public class TacheMere extends Tache implements Serializable {
 
     /**
      * Permet d'ajouter une sous tâche à l'instance de Tâche qui appelle la méthode
+     *
      * @param t
      */
-    public void ajouterSousTache(Tache t){
+    public void ajouterSousTache(Tache t) {
 
         t.setSectionParente(this.getSectionParente());
         this.sousTaches.add(t);
@@ -60,25 +64,28 @@ public class TacheMere extends Tache implements Serializable {
 
     /**
      * Permet de supprimer une sous tâche de l'instance de Tâche qui appelle la méthode
+     *
      * @param t
      */
-    public void supprimerSousTache(Tache t){
+    public void supprimerSousTache(Tache t) {
         this.sousTaches.remove(t);
     }
 
     /**
      * Retourne la liste de sous-tâches de la tâche mère
+     *
      * @return
      */
-    public List<Tache> getSousTaches(){
+    public List<Tache> getSousTaches() {
         return this.sousTaches;
     }
 
     /**
      * Permet de changer la liste de sous-tâches de la tâche-mère
+     *
      * @param l
      */
-    public void setSousTaches(List<Tache> l){
+    public void setSousTaches(List<Tache> l) {
         this.sousTaches = l;
     }
 

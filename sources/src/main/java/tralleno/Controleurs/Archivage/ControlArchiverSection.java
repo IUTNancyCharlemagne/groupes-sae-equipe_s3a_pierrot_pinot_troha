@@ -25,12 +25,14 @@ public class ControlArchiverSection implements EventHandler<MouseEvent> {
      * Fenêtre ouverte lors de la modification de la section, à refermer
      */
     private Stage fenetre;
+
     /**
      * Construit un contrôleur à partir du modèle et d'une section, et de la fenetre ouverte
+     *
      * @param modeleBureau
      * @param section
      */
-    public ControlArchiverSection(ModeleBureau modeleBureau, Section section, Stage fenetre){
+    public ControlArchiverSection(ModeleBureau modeleBureau, Section section, Stage fenetre) {
         this.modeleBureau = modeleBureau;
         this.section = section;
         this.fenetre = fenetre;
@@ -39,6 +41,7 @@ public class ControlArchiverSection implements EventHandler<MouseEvent> {
     /**
      * Lorsque l'utilisateur clique sur un bouton archiver section, cette méthode est appelée.
      * Elle prend en charge l'évenement en archivant la section en question.
+     *
      * @param mouseEvent
      */
     @Override

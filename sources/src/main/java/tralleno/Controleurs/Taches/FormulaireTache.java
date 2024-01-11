@@ -27,13 +27,14 @@ public class FormulaireTache implements Serializable {
 
     /**
      * Méthode, qui selon ses attributs retourne un formulaire de création/modification adapté à la tâche
+     *
      * @param modeleBureau
      * @param tacheAModifier
      * @param tacheParente
      * @param fenetreActionTache
      * @return
      */
-    public static Scene creerFormulaireTache(ModeleBureau modeleBureau, Tache tacheAModifier, TacheMere tacheParente, Stage fenetreActionTache){
+    public static Scene creerFormulaireTache(ModeleBureau modeleBureau, Tache tacheAModifier, TacheMere tacheParente, Stage fenetreActionTache) {
 
         // Préparation des données du formulaire
         Label titreTache = new Label("Titre de la tâche:");
@@ -69,7 +70,7 @@ public class FormulaireTache implements Serializable {
         HBox champsDate = new HBox(20);
         champsDate.getChildren().addAll(dateDebutBox, dateFinBox);
 
-        if(tacheAModifier != null){ // On doit le faire avant l'afficher de tachesDisponibles()
+        if (tacheAModifier != null) { // On doit le faire avant l'afficher de tachesDisponibles()
             // On pré-remplit aussi les dates
             // On met également les valeurs connues de la tâche à l'intérieur de chaque DatePicker
             dateDebut.setValue(tacheAModifier.getDateDebut());
@@ -158,7 +159,7 @@ public class FormulaireTache implements Serializable {
             String titre = champTitre.getText();
             String description = champDescription.getText();
             Section sectionChoisie = null;
-            if(tacheAModifier == null){
+            if (tacheAModifier == null) {
                 sectionChoisie = comboSection.getValue();
             }
             LocalDate dD = dateDebut.getValue();
@@ -188,7 +189,7 @@ public class FormulaireTache implements Serializable {
 
                     tacheAModifier.setDateDebut(dD);
                     tacheAModifier.setDateFin(dF);
-                }else{ // On est dans le cas où on crée une tâche
+                } else { // On est dans le cas où on crée une tâche
                     // Donc on la crée
                     TacheMere tache = new TacheMere(titre, description, dD, dF);
                     modeleBureau.setTacheCourante(tache);
@@ -223,7 +224,7 @@ public class FormulaireTache implements Serializable {
 
 
         // Si tacheAModifier vaut null, cela veut dire qu'on se trouve dans le cas où on cherche à créer une tâche, et non à en modifier une
-        if(tacheAModifier == null){
+        if (tacheAModifier == null) {
 
             // Quand on crée une tâche, il faut pouvoir l'ajouter à la section choisie, car quand on la modifie, le choix de la section se fait via le drag and drop
             Label choixSection = new Label("Section :");
@@ -252,18 +253,16 @@ public class FormulaireTache implements Serializable {
             );
 
             layout.getChildren().addAll(titreTache, champTitre, labelDescription, champDescription,
-                    choixSection, comboSection, champsDate,tachesAvant, dependances,
+                    choixSection, comboSection, champsDate, tachesAvant, dependances,
                     listViewTachesAvant, boutonContainer);
 
-        }else{
+        } else {
 
             // Dans le cas où on est dans la modification d'une tâche, on doit pré-remplir les champs
             champTitre.setText(tacheAModifier.getTitre());
             champTitre.getStyleClass().add("champTexteTache");
             champDescription.setText(tacheAModifier.getDescription());
             champDescription.getStyleClass().add("champTexteTache");
-
-
 
 
             List<Tache> dependancesTacheCourante = modeleBureau.getDependancesTache(); // Récupère la liste des dépendances de la tâche actuelle
@@ -303,13 +302,13 @@ public class FormulaireTache implements Serializable {
 
             // Pour l'affichage des dates, on doit vérifier que la tâche n'est pas une sous-tâche, si c'est le cas,
             // On ne doit pas laisser la possibilité d'attribuer une date.
-            if(tacheParente != null){
+            if (tacheParente != null) {
                 layout.getChildren().addAll(titreTache, champTitre, labelDescription, champDescription,
                         actions, boutonContainer);
                 taillePopUp = 250;
-            }else{
+            } else {
                 layout.getChildren().addAll(titreTache, champTitre, labelDescription, champDescription,
-                        champsDate,tachesAvant, dependances,
+                        champsDate, tachesAvant, dependances,
                         listViewTachesAvant, actions, boutonContainer);
             }
 

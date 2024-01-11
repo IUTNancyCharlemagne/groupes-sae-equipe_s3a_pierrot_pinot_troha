@@ -1,4 +1,5 @@
 package tralleno;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import tralleno.Modele.ModeleBureau;
@@ -32,8 +33,6 @@ public class MainApp extends Application {
         TacheMere tache7 = new TacheMere("Tache 7", "QUoiiiii");
         TacheMere tacheFEUR = new TacheMere("Tache FEUR", "fezrth");
         TacheMere tacheQUOI = new TacheMere("Tache QUOI", "dezfrt");
-
-
 
 
         tache1.ajouterSousTache(tache2);
@@ -73,7 +72,6 @@ public class MainApp extends Application {
         // #################################
 
         VuePrincipale vuePrincipale = new VuePrincipale(primaryStage, modeleBureau);
-
 
 
         primaryStage.setScene(vuePrincipale.getScene());

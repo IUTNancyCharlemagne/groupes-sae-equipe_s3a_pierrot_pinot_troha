@@ -86,12 +86,10 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
             //on verifie que la liste de tache ne soit pas vide après qu'on ait enlevé celles sans date
             if (!listTacheGantt.isEmpty()) {
 
-                //stackpane pour mettre un canvas sur le diagramme pour qu'on puisse dessiner les traits de dependances
+                //stackpane pour pouvoir mettre un padding pour les elements
                 StackPane st = new StackPane();
                 st.setPadding(new Insets(20));
 
-                //graphic context sert a dessiner les traits sur le canvas
-                int lineWidth = 1;
 
                 this.setContent(st);
 
@@ -105,23 +103,25 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                 //nbTache c'est la hauteur des colonnnes
                 int nbTache = listTacheGantt.size();
 
-                //
+                //variables qu'on vas intialiser en boucle
                 StackPane temp;
                 Label tempLab;
+                VBox tempVBox;
+
                 //largeur des rectangles et donc des colonnes
                 double largeurBox = 70;
                 double hauteurRectangle = 50;
 
-                //on ajuste la taille du canvas en fonction de largeurBox et du nombre de jour, et de hauteurRectangle et du nombre de tache +1 pour la date qui serat en bas de chaque vbox
 
+                //sert à mettre le format de la date en plus court
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
                 //grille ou on vas mettres les taches
                 GridPane gridGantt = new GridPane();
                 gridGantt.setVgap(spacingEntreTache);
                 gridGantt.getStyleClass().add("gridGantt");
+
                 //on ajoute les dates en bas de la grille
-                VBox tempVBox;
-                for (int i = 0; i < difjour+24; i++) {
+                for (int i = 0; i < difjour + 24; i++) {
                     if (i % 2 == 0) {
                         tempVBox = new VBox();
                         tempVBox.getStyleClass().add("vboxGrilleGantt");
@@ -138,11 +138,11 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                     gridGantt.add(tempLab, i, nbTache);
                 }
 
-                //on calcule et on sauvegarde les points de depart de chaque tache sur le canvas pour pouvoir dessiner les traits de dependances
 
                 //les index nous indique quand commence et quand fini la tache
                 int indexJdep, indexJfin;
                 Tache tActuelle;
+                //on vas placer les tâches sur la grid, ce sont des stackpanes qu'on vas ensuite coloré avec le css
                 for (int i = 0; i < nbTache; i++) {
                     tActuelle = listTacheGantt.get(i);
                     //i c'est l'index de la tache, c'est aussi l'index de la ligne (coordonées y)
@@ -152,16 +152,18 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                     indexJfin = (int) ChronoUnit.DAYS.between(dateMin, tActuelle.getDateFin());
 
                     //le stackpane c'est la tache, elle va s'etendre sur la grille, du premier au dernier jour de la tache
-                    //on vat mettre le titre de la tache a gauche du stackpane
+                    //on va mettre le titre de la tache a gauche du stackpane
                     temp = new StackPane();
                     temp.getStyleClass().add("stackPaneTacheGantt");
-                    //on met une taille fixe pour que ça ne depasse pas si le titre est plus long
+
                     temp.setMinSize(largeurBox * (indexJfin - indexJdep + 1), hauteurRectangle);
                     //temp.setMaxSize(largeurBox * (indexJfin - indexJdep + 1), hauteurRectangle);
+
                     //label pour le nom de la tache
                     tempLab = new Label(tActuelle.getTitre());
                     tempLab.getStyleClass().add("titreTacheGantt");
-                    tempLab.setMaxWidth(largeurBox*(tActuelle.getDuree()+1));
+                    //on met la taille maximal pour que si le titre est plus grand que la tache il n'agrandisse pas la tache créant des problemes
+                    tempLab.setMaxWidth(largeurBox * (tActuelle.getDuree() + 1));
 
                     temp.setAlignment(Pos.CENTER_LEFT);
                     temp.setPadding(new Insets(5));
@@ -173,8 +175,8 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
 
                 //on vas parcourir les dependances de chaque tache pour tirer les traits de dependances
                 ArrayList<Tache> listeDepTach;
-                Line tempLine;
-                int dureeDepart,  xDepart, yDepart, xArrive, yArrive;
+                Line diagonalLine;
+                int dureeDepart, xDepart, yDepart, xArrive, yArrive;
                 for (Tache t : listTacheGantt) {
 
                     listeDepTach = (ArrayList<Tache>) this.modele.getDependances().get(t);
@@ -189,20 +191,13 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                                 xArrive = (int) ChronoUnit.DAYS.between(dateMin, t.getDateDebut());
                                 yDepart = listTacheGantt.indexOf(taDep);
                                 yArrive = listTacheGantt.indexOf(t);
-                                if(yDepart>yArrive){
-                                    Line diagonalLine = new Line(0, 0, largeurBox * (xArrive - xDepart - dureeDepart - 1), hauteurRectangle * (yArrive - yDepart)); // Adjust the coordinates as needed
-                                    diagonalLine.setStrokeWidth(4);
-                                    diagonalLine.getStyleClass().add("ligneGantt");
-
-                                    int rowspan = xArrive - xDepart + dureeDepart;
-                                    gridGantt.add(diagonalLine, xDepart + dureeDepart + 1, yArrive, rowspan, yDepart-yArrive+ 1);
-
-                                }else {
-                                    Line diagonalLine = new Line(0, 0, largeurBox * (xArrive - xDepart - dureeDepart - 1), hauteurRectangle * (yArrive - yDepart)); // Adjust the coordinates as needed
-                                    diagonalLine.setStrokeWidth(4);
-                                    diagonalLine.getStyleClass().add("ligneGantt");
-
-                                    int rowspan = xArrive - xDepart + dureeDepart;
+                                diagonalLine = new Line(0, 0, largeurBox * (xArrive - xDepart - dureeDepart - 1), hauteurRectangle * (yArrive - yDepart)); // Adjust the coordinates as needed
+                                int rowspan = xArrive - xDepart + dureeDepart;
+                                diagonalLine.getStyleClass().add("ligneGantt");
+                                //en fonction de la position verticale des tâches par rapport l'une à l'autre il faut changer certain parametre d'index dans la grid
+                                if (yDepart > yArrive) {
+                                    gridGantt.add(diagonalLine, xDepart + dureeDepart + 1, yArrive, rowspan, yDepart - yArrive + 1);
+                                } else {
                                     gridGantt.add(diagonalLine, xDepart + dureeDepart + 1, yDepart, rowspan, yArrive - yDepart + 1);
                                 }
 
@@ -210,7 +205,7 @@ public class VueGantt extends ScrollPane implements Observateur, Serializable {
                         }
                     }
                 }
-                st.getChildren().addAll(gridGantt );
+                st.getChildren().addAll(gridGantt);
             }
         }
     }

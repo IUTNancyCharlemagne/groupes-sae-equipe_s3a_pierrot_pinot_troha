@@ -28,11 +28,12 @@ public class ControlSupprimerTache implements EventHandler<MouseEvent> {
 
     /**
      * Construit un contrôleur à partir du modèle, de la tâche concernée et de la fenêtre de modification ouverte
+     *
      * @param m
      * @param t
      * @param fenetre
      */
-    public ControlSupprimerTache(ModeleBureau m, Tache t, Stage fenetre){
+    public ControlSupprimerTache(ModeleBureau m, Tache t, Stage fenetre) {
         this.modeleBureau = m;
         this.tacheASupprimer = t;
         this.fenetre = fenetre;
@@ -41,13 +42,14 @@ public class ControlSupprimerTache implements EventHandler<MouseEvent> {
     /**
      * Lorsque l'utilisateur clique sur un bouton supprimer tâche dans le menu de modification, cette méthode est appelée.
      * Elle prend en charge l'évenement en supprimant la tâche concernée
+     *
      * @param mouseEvent
      */
     @Override
     public void handle(MouseEvent mouseEvent) {
         this.modeleBureau.setTacheCourante(this.tacheASupprimer);
         this.modeleBureau.supprimerTache();
-        if(fenetre != null)
+        if (fenetre != null)
             this.fenetre.close();
     }
 }

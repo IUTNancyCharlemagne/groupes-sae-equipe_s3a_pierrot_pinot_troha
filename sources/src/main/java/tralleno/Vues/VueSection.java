@@ -31,6 +31,7 @@ public class VueSection extends VBox implements Observateur, Serializable {
 
     /**
      * Crée une VueSection à partir de la section qu'elle doit représenter.
+     *
      * @param section
      * @param modele
      */
@@ -52,6 +53,7 @@ public class VueSection extends VBox implements Observateur, Serializable {
 
     /**
      * Déclenchée par le constructeur, mais pour l'instant pas directement relié au modèle
+     *
      * @param s
      */
     @Override
@@ -98,11 +100,10 @@ public class VueSection extends VBox implements Observateur, Serializable {
         });
 
 
-
         // gestion du drag over, quand on passe la tâche au dessus de la vueSection.
         // Avec ça on peut empecher le dépot d'une tâche à certains endroits
         this.setOnDragOver(event -> {
-            if(event.getGestureSource() instanceof VBox){ // Pour pas qu'on puisse drag une section dans une tâche
+            if (event.getGestureSource() instanceof VBox) { // Pour pas qu'on puisse drag une section dans une tâche
                 event.acceptTransferModes(TransferMode.NONE);
                 event.consume();
             }
@@ -111,9 +112,9 @@ public class VueSection extends VBox implements Observateur, Serializable {
                     this.getStyleClass().add("hovered");
                 }
                 // Lorsqu'on essaye de déplacer une tâche qui est déjà à la fin, à la fin... (pas logique)
-                    // Sinon on accepte de recevoir des tâches
-                    event.acceptTransferModes(TransferMode.MOVE);
-                    event.consume();
+                // Sinon on accepte de recevoir des tâches
+                event.acceptTransferModes(TransferMode.MOVE);
+                event.consume();
             }
         });
 
@@ -131,7 +132,7 @@ public class VueSection extends VBox implements Observateur, Serializable {
 
             if (db.hasString()) {
                 int idTacheParente = Integer.parseInt(db.getString());
-                if(idTacheParente != -1){ // Si la tâche a une tâche mère la valeur de l'id sera différente de -1
+                if (idTacheParente != -1) { // Si la tâche a une tâche mère la valeur de l'id sera différente de -1
                     TacheMere tacheParente = (TacheMere) modeleBureau.getTacheParId(idTacheParente);
                     tacheParente.supprimerSousTache(modeleBureau.getTacheCourante());
                 }
@@ -154,6 +155,7 @@ public class VueSection extends VBox implements Observateur, Serializable {
 
     /**
      * Permet de déteminer la position dans la section à laquelle la tâche devra être insérée
+     *
      * @param event
      * @return
      */

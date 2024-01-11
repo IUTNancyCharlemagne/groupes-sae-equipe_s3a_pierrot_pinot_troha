@@ -25,7 +25,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ListIterator;
 
-public class VueArchivage extends VBox implements Observateur, Serializable{
+public class VueArchivage extends VBox implements Observateur, Serializable {
 
     private ModeleBureau modeleBureau;
 
@@ -35,7 +35,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
     private transient VBox vueListe;
 
 
-    public VueArchivage(ModeleBureau modeleBureau){
+    public VueArchivage(ModeleBureau modeleBureau) {
         super();
         this.modeleBureau = modeleBureau;
 
@@ -69,14 +69,14 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
 
         // 1er appel avant que la Vue soit sérialisée
         this.tachesArchivees.setOnAction(event -> {
-            if(!(this.boutonCourant.equals(this.tachesArchivees))){
+            if (!(this.boutonCourant.equals(this.tachesArchivees))) {
                 this.changerClasseCSSBoutons();
             }
             this.boutonCourant = this.tachesArchivees;
             mettreAJourListeArchivage();
         });
         this.sectionsArchivees.setOnAction(event -> {
-            if(!(this.boutonCourant.equals(this.sectionsArchivees))){
+            if (!(this.boutonCourant.equals(this.sectionsArchivees))) {
                 this.changerClasseCSSBoutons();
             }
             this.boutonCourant = this.sectionsArchivees;
@@ -94,7 +94,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
     }
 
 
-    public VBox creerTache(String titre, String description){
+    public VBox creerTache(String titre, String description) {
         VBox vBox = new VBox();
 
         Label titreLabel = new Label(titre);
@@ -138,13 +138,13 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
         });
     }
 
-    public void changerClasseCSSBoutons(){
-        if(this.boutonCourant.equals(this.tachesArchivees)){
+    public void changerClasseCSSBoutons() {
+        if (this.boutonCourant.equals(this.tachesArchivees)) {
             this.tachesArchivees.getStyleClass().clear();
             this.tachesArchivees.getStyleClass().add("BtnTacheNotSelected");
             this.sectionsArchivees.getStyleClass().clear();
             this.sectionsArchivees.getStyleClass().add("BtnSectionSelected");
-        }else{
+        } else {
             this.tachesArchivees.getStyleClass().clear();
             this.tachesArchivees.getStyleClass().add("BtnTacheSelected");
             this.sectionsArchivees.getStyleClass().clear();
@@ -153,13 +153,13 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
     }
 
 
-    private void mettreAJourListeArchivage(){
+    private void mettreAJourListeArchivage() {
         vueListe.getChildren().clear();
-        if(this.boutonCourant != null){
+        if (this.boutonCourant != null) {
             if (this.boutonCourant.equals(this.tachesArchivees)) {
                 // On parcourt les tâches archivées du modèle pour les afficher sous forme d'élément graphique
                 ListIterator<Tache> iterateur = this.modeleBureau.getTachesArchivees().listIterator(this.modeleBureau.getTachesArchivees().size());
-                while(iterateur.hasPrevious()) {
+                while (iterateur.hasPrevious()) {
                     Tache tache = iterateur.previous();
                     VBox tacheBox = creerTache(tache.getTitre(), tache.getDescription());
                     tacheBox.getStyleClass().add("nomEtDescriptionTacheArchivee");
@@ -189,7 +189,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable{
                 }
             } else if (this.boutonCourant.equals(this.sectionsArchivees)) {
                 ListIterator<Section> iterateur = this.modeleBureau.getSectionsArchivees().listIterator(this.modeleBureau.getSectionsArchivees().size());
-                while(iterateur.hasPrevious()) {
+                while (iterateur.hasPrevious()) {
                     Section section = iterateur.previous();
                     VBox tacheBox = creerTache(section.getNom(), "");
                     tacheBox.getStyleClass().add("titreTacheArchivee");

@@ -60,7 +60,6 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
         sectionContent.getStyleClass().add("sectionContent");
 
 
-
         content.getChildren().add(sectionContent); // Ajout de la VBox dans la VBox principale
 
         setContent(content);
@@ -78,11 +77,11 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
         sect.getStyleClass().add("fond_titre_section");
 
         Button boutonModifierSect = new Button();
-        String img=System.getProperty("user.dir")+"/src/main/resources/Images/pen.png";
+        String img = System.getProperty("user.dir") + "/src/main/resources/Images/pen.png";
         File file = new File(img);
         ImageView logo;
         try {
-            FileInputStream f=new FileInputStream(file);
+            FileInputStream f = new FileInputStream(file);
             logo = new ImageView(new Image(f));
         } catch (FileNotFoundException e) {
             logo = new ImageView();
@@ -118,8 +117,6 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
         });
 
 
-
-
         // gestion du drag over, quand on passe la tâche au dessus de la vueSection.
         // Avec ça on peut empecher le dépot d'une tâche à certains endroits
         sectionContent.setOnDragOver(event -> {
@@ -131,20 +128,19 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
             }
         });
 
-        this.getGraphic().setOnDragOver(event ->{
-            if(event.getGestureSource() instanceof VueListe || event.getGestureSource() instanceof VueSectionListe){
+        this.getGraphic().setOnDragOver(event -> {
+            if (event.getGestureSource() instanceof VueListe || event.getGestureSource() instanceof VueSectionListe) {
                 event.acceptTransferModes(TransferMode.NONE);
                 event.consume();
             }
         });
 
-        this.getContent().setOnDragOver(event ->{
-            if(event.getGestureSource() instanceof VueSectionListe){
+        this.getContent().setOnDragOver(event -> {
+            if (event.getGestureSource() instanceof VueSectionListe) {
                 event.acceptTransferModes(TransferMode.NONE);
                 event.consume();
             }
         });
-
 
 
         // Gestion du drop pour récupérer la tâche
@@ -154,7 +150,7 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
 
             if (db.hasString()) {
                 int idTacheParente = Integer.parseInt(db.getString());
-                if(idTacheParente != -1){ // Si la tâche a une tâche mère la valeur de l'id sera différente de -1
+                if (idTacheParente != -1) { // Si la tâche a une tâche mère la valeur de l'id sera différente de -1
                     TacheMere tacheParente = (TacheMere) modeleBureau.getTacheParId(idTacheParente);
                     tacheParente.supprimerSousTache(modeleBureau.getTacheCourante());
                 }
@@ -178,6 +174,7 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
 
     /**
      * Permet de déteminer la position dans la section à laquelle la tâche devra être insérée
+     *
      * @param event
      * @return
      */

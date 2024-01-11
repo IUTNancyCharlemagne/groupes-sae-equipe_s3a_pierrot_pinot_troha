@@ -94,7 +94,6 @@ public class ModeleBureau implements Sujet, Serializable {
     }
 
 
-
     /**
      * Permet d'ajouter une section au modèle
      *
@@ -200,8 +199,8 @@ public class ModeleBureau implements Sujet, Serializable {
         this.notifierObservateurs();
     }
 
-    public void deplacerSection(int position){
-        if(position > this.sections.indexOf(this.sectionCourante)){
+    public void deplacerSection(int position) {
+        if (position > this.sections.indexOf(this.sectionCourante)) {
             position -= 1;
         }
         this.sections.remove(this.sectionCourante);
@@ -218,14 +217,14 @@ public class ModeleBureau implements Sujet, Serializable {
      */
     public void changerSection(Section section, int position) {
         Section sectionParente = this.tacheCourante.getSectionParente();
-        if(section == this.tacheCourante.getSectionParente()){// Pour le drag and drop, il faut vérifier
+        if (section == this.tacheCourante.getSectionParente()) {// Pour le drag and drop, il faut vérifier
             int positionActuelle = sectionParente.getTaches().indexOf(this.tacheCourante);
-            if(positionActuelle < position && sectionParente.getTaches().contains(this.tacheCourante))
+            if (positionActuelle < position && sectionParente.getTaches().contains(this.tacheCourante))
                 position -= 1;
             this.tacheCourante.getSectionParente().getTaches().remove(this.tacheCourante);
             sectionParente.getTaches().remove(this.tacheCourante);
             sectionParente.getTaches().add(position, this.tacheCourante);
-        }else{
+        } else {
             // Puis on l'ajoute à la nouvelle section
             this.sectionCourante = section;
             this.ajouterTache(position);
@@ -309,12 +308,13 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Retourne la section associée à l'id passé en paramètre
+     *
      * @param id
      * @return
      */
     public Section getSectionParId(int id) {
         for (Section section : sections) {
-            if(section.getId() == id){
+            if (section.getId() == id) {
                 return section;
             }
         }
@@ -407,7 +407,7 @@ public class ModeleBureau implements Sujet, Serializable {
     /**
      * Supprime toutes les dépendances chronologiques de la tâche courante
      */
-    public void supprimerDependances(){
+    public void supprimerDependances() {
         Set<Tache> listeTachesQuiOntDesDependances = this.dependances.keySet();
         //on stock les tâches qui n'ont plus de dépendances dans cette liste pour les supprimer après le parcours de
         // la liste de tâches qui ont des dépendances sinon ça pose problème
@@ -605,20 +605,21 @@ public class ModeleBureau implements Sujet, Serializable {
 
     /**
      * Méthode qui permet de retourner la liste des tâches pour lesquelles une dépendance avec la tâche actuelle est possible
+     *
      * @param dateDebut
      * @return
      */
-    public List<Tache> getTachesDisponibles(LocalDate dateDebut){
+    public List<Tache> getTachesDisponibles(LocalDate dateDebut) {
         List<Tache> tachesDisponibles = new ArrayList<Tache>();
-        if(!(dateDebut == null)){
+        if (!(dateDebut == null)) {
             List<Tache> taches = this.getTaches();
             // puis si on est dans le cas où la tâche est en train d'être modifiée et pas encore créée, alors
-            if(this.tacheCourante != null){
+            if (this.tacheCourante != null) {
                 taches.remove(this.tacheCourante);
             }
-            for(Tache t : taches){
-                if(t.getDateFin() != null){
-                    if(t.getDateFin().isBefore(dateDebut)){
+            for (Tache t : taches) {
+                if (t.getDateFin() != null) {
+                    if (t.getDateFin().isBefore(dateDebut)) {
                         tachesDisponibles.add(t);
                     }
                 }
@@ -804,58 +805,55 @@ public class ModeleBureau implements Sujet, Serializable {
         this.sections = sections;
     }
 
-    public void gentTest() {
-        LocalDate dateMin = LocalDate.MAX;
-        LocalDate dateMax = LocalDate.MIN;
-        //creation de la liste de tache pour les test, il faut qu'il y ait une date de debut et de fin et que ce soit pas une sous tache
-
-        List<Tache> listTacheGantt = this.getTaches();
-        //on parcours la liste des taches et on enleve celle qui n'on pas de date
-        if (!listTacheGantt.isEmpty()) {
-            for (Tache t : listTacheGantt) {
-                if (t.getDateDebut() == null) {
-                    listTacheGantt.remove(t);
-                } else {
-                    if (dateMin.isAfter(t.getDateDebut())) dateMin = t.getDateDebut();
-                    if (dateMax.isBefore(t.getDateFin())) dateMax = t.getDateFin();
-                }
-            }
-            ArrayList<Tache> listeDepTach;
-            for (Tache t : listTacheGantt) {
-
-                listeDepTach = (ArrayList<Tache>) this.dependances.get(t);
-                if (listeDepTach != null && !listeDepTach.isEmpty()) {
-                    for (Tache taDep : listeDepTach) {
-                        if (listTacheGantt.contains(taDep)) {
-                        }
-                    }
-
-                }
-            }
-            int difjour= (int) ChronoUnit.DAYS.between(dateMin,dateMax)+1;
-        }
-    }
-
+    /**
+     * liste des tâches que l'utilisateur veut afficher sur gantt
+     */
     private List<Tache> selectionTacheGantt;
 
+    /**
+     * retourne la liste de tâche selectionnée pour afficher sur le gantt
+     *
+     * @return
+     */
     public List<Tache> getSelectionTacheGantt() {
         return selectionTacheGantt;
     }
 
+    /**
+     * setter pour selectionTacheGantt
+     *
+     * @param selectionTacheGantt
+     */
     public void setSelectionTacheGantt(List<Tache> selectionTacheGantt) {
         this.selectionTacheGantt = selectionTacheGantt;
     }
-    public void addSelectionTacheGantt(Tache t){
-        if(t!=null){
+
+    /**
+     * ajoute une tâche a la liste selectionGantt
+     *
+     * @param t tâche à ajouter
+     */
+    public void addSelectionTacheGantt(Tache t) {
+        if (t != null) {
             this.selectionTacheGantt.add(t);
         }
     }
-    public void removeSelectionTacheGantt(Tache t ){
-        if(t!=null){
+
+    /**
+     * enleve une tâche de la liste selectionGantt
+     *
+     * @param t tâche à supprimer
+     */
+    public void removeSelectionTacheGantt(Tache t) {
+        if (t != null) {
             this.selectionTacheGantt.remove(t);
         }
     }
-    public void clearSelectionTacheGantt(){
+
+    /**
+     * vide la liste selectionGantt
+     */
+    public void clearSelectionTacheGantt() {
         this.selectionTacheGantt.clear();
     }
 

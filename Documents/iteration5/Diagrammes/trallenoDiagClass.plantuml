@@ -1,0 +1,345 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class ControlArchiverSection {
+  + ControlArchiverSection(ModeleBureau, Section, Stage): 
+  + handle(MouseEvent): void
+}
+class ControlArchiverTache {
+  + ControlArchiverTache(ModeleBureau, Tache, Stage): 
+  + handle(MouseEvent): void
+}
+class ControlCreerSection {
+  + ControlCreerSection(ModeleBureau): 
+  + handle(MouseEvent): void
+}
+class ControlCreerTache {
+  + ControlCreerTache(ModeleBureau): 
+  + handle(MouseEvent): void
+}
+class ControlModifSection {
+  + ControlModifSection(ModeleBureau, Section): 
+  + handle(MouseEvent): void
+}
+class ControlModifTache {
+  + ControlModifTache(ModeleBureau, Tache, TacheMere): 
+  + handle(MouseEvent): void
+}
+class ControlRestaurerSection {
+  + ControlRestaurerSection(ModeleBureau, Section): 
+  + handle(MouseEvent): void
+}
+class ControlRestaurerTache {
+  + ControlRestaurerTache(ModeleBureau, Tache): 
+  + handle(MouseEvent): void
+}
+class ControlSupprimerSection {
+  + ControlSupprimerSection(ModeleBureau, Section, Stage): 
+  + handle(MouseEvent): void
+}
+class ControlSupprimerTache {
+  + ControlSupprimerTache(ModeleBureau, Tache, Stage): 
+  + handle(MouseEvent): void
+}
+class ControlVues {
+  + ControlVues(Button, VuePrincipale): 
+  + ControlVues(ChoiceBox<String>, VuePrincipale, String): 
+  + ControlVues(ChoiceBox<String>, VuePrincipale): 
+  - boutonArchivage: Button
+  + handle(ActionEvent): void
+   boutonArchivage: Button
+}
+class FormulaireTache {
+  + FormulaireTache(): 
+  + creerFormulaireTache(ModeleBureau, Tache, TacheMere, Stage): Scene
+}
+class MainApp {
+  + MainApp(): 
+  + main(String[]): void
+  + start(Stage): void
+}
+class MainSerialiser {
+  + MainSerialiser(): 
+  + serialiser(): void
+  + loaderModele(String): void
+  + main(String[]): void
+  + start(Stage): void
+}
+class ModeleBureau {
+  + ModeleBureau(): 
+  - dependances: Map<Tache, List<Tache>>
+  - idsectionactuelle: int
+  + IDTACHEACTUELLE: int
+  - selectionTacheGantt: List<Tache>
+  + IDSECTIONACTUELLE: int
+  - observateurs: List<Observateur>
+  - tacheCourante: Tache
+  - sectionsArchivees: List<Section>
+  - idtacheactuelle: int
+  - sectionCourante: Section
+  - sections: List<Section>
+  - tachesArchivees: List<Tache>
+  + archiverSection(): void
+  + gentTest(): void
+  + modifierNomSection(String): void
+  + archiverTache(): void
+  + supprimerDependances(): void
+  + deplacerSection(int): void
+  + getSectionParId(int): Section
+  + isArchivee_Tache(Tache): boolean
+  + isSupprimee_Section(Section): boolean
+  + ajouterDependance(Tache): void
+  + enregistrerObservateur(Observateur): void
+  + notifierObservateurs(): void
+  + ajouterTache(int): void
+  + supprimerObservateur(Observateur): void
+  + getSection(String): Section
+  + supprimerTache(): void
+  - chercherTache(int, Tache): Tache?
+  + ajouterDependances(List<Tache>): void
+  - supprimerSousTacheRecursive(Tache, List<Tache>): void
+  + removeSelectionTacheGantt(Tache): void
+  + estSousTacheDe(Tache, Tache): boolean
+  + changerSection(Section, int): void
+  + clearSelectionTacheGantt(): void
+  + ajouterTacheDansSection(): void
+  + getTacheParId(int): Tache
+  + addSelectionTacheGantt(Tache): void
+  + restaurerTache(): void
+  + restaurerSection(): void
+  - mettreAJourSousTachesSection(Tache, Section): void
+  + isArchivee_Section(Section): boolean
+  + supprimerTacheRecursive(Section): void
+  + supprimerSection(): void
+  + getTachesDisponibles(LocalDate): List<Tache>
+  + ajouterSection(Section): void
+   nomSections: List<String>
+   IDSECTIONACTUELLE: int
+   tacheCourante: Tache
+   tachesArchivees: List<Tache>
+   sectionsArchivees: List<Section>
+   sectionCourante: Section
+   dependancesTache: List<Tache>
+   idsectionactuelle: int
+   dependances: Map<Tache, List<Tache>>
+   observateurs: List<Observateur>
+   selectionTacheGantt: List<Tache>
+   idtacheactuelle: int
+   IDTACHEACTUELLE: int
+   taches: List<Tache>
+   sections: List<Section>
+}
+interface Observateur << interface >> {
+  + actualiser(Sujet): void
+}
+class Section {
+  + Section(String): 
+  + Section(String, List<Tache>): 
+  - taches: List<Tache>
+  - nom: String
+  - id: int
+  + toString(): String
+  + ajouterTache(Tache): void
+  + supprimerTache(Tache): void
+   nom: String
+   taches: List<Tache>
+   id: int
+}
+interface Sujet << interface >> {
+  + notifierObservateurs(): void
+  + supprimerObservateur(Observateur): void
+  + enregistrerObservateur(Observateur): void
+}
+class Tache {
+  + Tache(String, String, LocalDate, LocalDate): 
+  + Tache(String, String): 
+  + Tache(Tache): 
+  # sectionParente: Section
+  # titre: String
+  # description: String
+  # duree: int
+  # dateFin: LocalDate
+  # dateDebut: LocalDate
+  # id: int
+  + toString(): String
+  + toStringDate(): String
+  + compareTo(Tache): int
+   dateDebut: LocalDate
+   description: String
+   titre: String
+   dateFin: LocalDate
+   duree: int
+   sectionParente: Section
+   id: int
+}
+class TacheFille {
+  + TacheFille(String, String, LocalDate, LocalDate): 
+  + TacheFille(String, String): 
+}
+class TacheMere {
+  + TacheMere(String, String): 
+  + TacheMere(String, String, LocalDate, LocalDate): 
+  + TacheMere(TacheMere): 
+  # sousTaches: List<Tache>
+  + supprimerSousTache(Tache): void
+  + ajouterSousTache(Tache): void
+   sousTaches: List<Tache>
+}
+class VueArchivage {
+  + VueArchivage(ModeleBureau): 
+  + creerTache(String, String): VBox
+  + actualiser(Sujet): void
+  - mettreAJourListeArchivage(): void
+  - readObject(ObjectInputStream): void
+  + changerClasseCSSBoutons(): void
+}
+class VueBarreActions {
+  + VueBarreActions(int, ModeleBureau, VuePrincipale): 
+}
+class VueGantt {
+  + VueGantt(ModeleBureau): 
+  + afficherGantt(): void
+  + actualiser(Sujet): void
+}
+class VueListe {
+  + VueListe(ModeleBureau): 
+  + actualiser(Sujet): void
+  - determinePositionInsertion(DragEvent): int
+}
+class VuePrincipale {
+  + VuePrincipale(Stage, ModeleBureau): 
+  - modeleBureau: ModeleBureau
+  - scene: Scene
+  - primaryStage: Stage
+  - themeCourant: int
+  + afficherArchivage(): void
+  + changerVue(int): void
+  + cacherArchivage(): void
+  + changerTheme(int): void
+  + afficherOuCacherArchivage(): void
+   modeleBureau: ModeleBureau
+   scene: Scene
+   primaryStage: Stage
+   themeCourant: int
+}
+class VueSection {
+  + VueSection(Section, ModeleBureau): 
+  + actualiser(Sujet): void
+  - determinerPositionMettreTache(DragEvent): int
+}
+class VueSectionListe {
+  + VueSectionListe(ModeleBureau, Section): 
+  - determinerPositionMettreTache(DragEvent, VBox): int
+  + actualiser(Sujet): void
+}
+class VueSelecteurGantt {
+  + VueSelecteurGantt(ModeleBureau, VuePrincipale): 
+  + actualiser(Sujet): void
+}
+class VueTableau {
+  + VueTableau(ModeleBureau): 
+  + actualiser(Sujet): void
+  - determinerPositionInsertion(DragEvent): int
+}
+class VueTache {
+  + VueTache(Tache, ModeleBureau, TacheMere, boolean): 
+  + actualiser(Sujet): void
+}
+class test {
+  + test(): 
+  + main(String[]): void
+  + start(Stage): void
+}
+
+ControlArchiverSection  "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+ControlArchiverSection  "1" *-[#595959,plain]-> "section\n1" Section                 
+ControlArchiverTache    "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+ControlArchiverTache    "1" *-[#595959,plain]-> "tache\n1" Tache                   
+ControlCreerSection     "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+ControlCreerSection      -[#595959,dashed]->  Section                 : "«create»"
+ControlCreerTache       "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+ControlModifSection      -[#595959,dashed]->  ControlArchiverSection  : "«create»"
+ControlModifSection      -[#595959,dashed]->  ControlSupprimerSection : "«create»"
+ControlModifSection     "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+ControlModifSection     "1" *-[#595959,plain]-> "section\n1" Section                 
+ControlModifTache       "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+ControlModifTache       "1" *-[#595959,plain]-> "tacheAModifier\n1" Tache                   
+ControlModifTache       "1" *-[#595959,plain]-> "tacheParente\n1" TacheMere               
+ControlRestaurerSection "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+ControlRestaurerSection "1" *-[#595959,plain]-> "section\n1" Section                 
+ControlRestaurerTache   "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+ControlRestaurerTache   "1" *-[#595959,plain]-> "tache\n1" Tache                   
+ControlSupprimerSection "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+ControlSupprimerSection "1" *-[#595959,plain]-> "section\n1" Section                 
+ControlSupprimerTache   "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+ControlSupprimerTache   "1" *-[#595959,plain]-> "tacheASupprimer\n1" Tache                   
+ControlVues             "1" *-[#595959,plain]-> "vuePrincipale\n1" VuePrincipale           
+FormulaireTache          -[#595959,dashed]->  ControlArchiverTache    : "«create»"
+FormulaireTache          -[#595959,dashed]->  ControlSupprimerTache   : "«create»"
+FormulaireTache          -[#595959,dashed]->  TacheMere               : "«create»"
+MainApp                  -[#595959,dashed]->  ModeleBureau            : "«create»"
+MainApp                  -[#595959,dashed]->  Section                 : "«create»"
+MainApp                  -[#595959,dashed]->  TacheMere               : "«create»"
+MainApp                  -[#595959,dashed]->  VuePrincipale           : "«create»"
+MainSerialiser          "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+MainSerialiser           -[#595959,dashed]->  ModeleBureau            : "«create»"
+MainSerialiser           -[#595959,dashed]->  VuePrincipale           : "«create»"
+ModeleBureau            "1" *-[#595959,plain]-> "observateurs\n*" Observateur             
+ModeleBureau             -[#595959,dashed]->  Section                 : "«create»"
+ModeleBureau            "1" *-[#595959,plain]-> "sections\n*" Section                 
+ModeleBureau             -[#008200,dashed]-^  Sujet                   
+ModeleBureau            "1" *-[#595959,plain]-> "dependances\n*" Tache                   
+Section                 "1" *-[#595959,plain]-> "taches\n*" Tache                   
+Tache                   "1" *-[#595959,plain]-> "sectionParente\n1" Section                 
+TacheFille               -[#000082,plain]-^  Tache                   
+TacheMere                -[#000082,plain]-^  Tache                   
+TacheMere               "1" *-[#595959,plain]-> "sousTaches\n*" Tache                   
+VueArchivage             -[#595959,dashed]->  ControlRestaurerSection : "«create»"
+VueArchivage             -[#595959,dashed]->  ControlRestaurerTache   : "«create»"
+VueArchivage             -[#595959,dashed]->  ControlSupprimerSection : "«create»"
+VueArchivage             -[#595959,dashed]->  ControlSupprimerTache   : "«create»"
+VueArchivage            "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+VueArchivage             -[#008200,dashed]-^  Observateur             
+VueBarreActions          -[#595959,dashed]->  ControlCreerSection     : "«create»"
+VueBarreActions          -[#595959,dashed]->  ControlCreerTache       : "«create»"
+VueBarreActions          -[#595959,dashed]->  ControlVues             : "«create»"
+VueGantt                "1" *-[#595959,plain]-> "modele\n1" ModeleBureau            
+VueGantt                 -[#008200,dashed]-^  Observateur             
+VueListe                "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+VueListe                 -[#008200,dashed]-^  Observateur             
+VueListe                 -[#595959,dashed]->  VueSectionListe         : "«create»"
+VuePrincipale           "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+VuePrincipale           "1" *-[#595959,plain]-> "vueArchivage\n1" VueArchivage            
+VuePrincipale            -[#595959,dashed]->  VueArchivage            : "«create»"
+VuePrincipale           "1" *-[#595959,plain]-> "vueBarreActions\n1" VueBarreActions         
+VuePrincipale            -[#595959,dashed]->  VueBarreActions         : "«create»"
+VuePrincipale            -[#595959,dashed]->  VueGantt                : "«create»"
+VuePrincipale           "1" *-[#595959,plain]-> "vueGantt\n1" VueGantt                
+VuePrincipale           "1" *-[#595959,plain]-> "vueListe\n1" VueListe                
+VuePrincipale            -[#595959,dashed]->  VueListe                : "«create»"
+VuePrincipale           "1" *-[#595959,plain]-> "vueSelecteurGantt\n1" VueSelecteurGantt       
+VuePrincipale            -[#595959,dashed]->  VueSelecteurGantt       : "«create»"
+VuePrincipale           "1" *-[#595959,plain]-> "vueTableau\n1" VueTableau              
+VuePrincipale            -[#595959,dashed]->  VueTableau              : "«create»"
+VueSection               -[#595959,dashed]->  ControlModifSection     : "«create»"
+VueSection               -[#008200,dashed]-^  Observateur             
+VueSection              "1" *-[#595959,plain]-> "section\n1" Section                 
+VueSection               -[#595959,dashed]->  VueTache                : "«create»"
+VueSectionListe          -[#595959,dashed]->  ControlModifSection     : "«create»"
+VueSectionListe          -[#008200,dashed]-^  Observateur             
+VueSectionListe         "1" *-[#595959,plain]-> "section\n1" Section                 
+VueSectionListe          -[#595959,dashed]->  VueTache                : "«create»"
+VueSelecteurGantt       "1" *-[#595959,plain]-> "modele\n1" ModeleBureau            
+VueSelecteurGantt        -[#008200,dashed]-^  Observateur             
+VueSelecteurGantt       "1" *-[#595959,plain]-> "vp\n1" VuePrincipale           
+VueTableau              "1" *-[#595959,plain]-> "modeleBureau\n1" ModeleBureau            
+VueTableau               -[#008200,dashed]-^  Observateur             
+VueTableau               -[#595959,dashed]->  VueSection              : "«create»"
+VueTache                 -[#595959,dashed]->  ControlModifTache       : "«create»"
+VueTache                 -[#008200,dashed]-^  Observateur             
+VueTache                "1" *-[#595959,plain]-> "tache\n1" Tache                   
+VueTache                "1" *-[#595959,plain]-> "tacheParente\n1" TacheMere               
+@enduml

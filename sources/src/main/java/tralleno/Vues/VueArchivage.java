@@ -4,7 +4,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -26,18 +25,36 @@ import java.io.Serializable;
 import java.util.ListIterator;
 
 /**
- *
+ * Classe qui permet de gérer l'archivage. On retrouve dans cette Vue les tâches et sections archivées
+ * avec la possibilité de les restaurer ou les supprimer.
  */
 public class VueArchivage extends VBox implements Observateur, Serializable {
 
+    /**
+     * Modèle de l'application qui contient les données
+     */
     private ModeleBureau modeleBureau;
 
+    /**
+     * Boutons qui permettent de switch entre les tâches et les sections archivées
+     */
     private transient Button tachesArchivees, sectionsArchivees;
+
+    /**
+     * Définit le bouton qui est actuellement cliqué entre celui des tâches archivées et celui des sections archivées
+     */
     private transient Button boutonCourant;
 
+    /**
+     * La VBox qui contient les tâches/sections archivées
+     */
     private transient VBox vueListe;
 
 
+    /**
+     * Construit une VueArchivage uniquement à partir du modèle bureau
+     * @param modeleBureau
+     */
     public VueArchivage(ModeleBureau modeleBureau) {
         super();
         this.modeleBureau = modeleBureau;
@@ -66,7 +83,6 @@ public class VueArchivage extends VBox implements Observateur, Serializable {
         scrollPane.getStyleClass().add("ScrollPaneArchivage");
         scrollPane.setContent(this.vueListe);
 
-        //this.vueListe.getStyleClass().add("tousLesElementsArchives");
         VBox.setVgrow(this.vueListe, Priority.ALWAYS);
         this.getChildren().addAll(boutonsTachesSection, scrollPane);
 
@@ -91,12 +107,22 @@ public class VueArchivage extends VBox implements Observateur, Serializable {
         this.getStyleClass().add("archivage");
     }
 
+    /**
+     * Lorsque la vue est actualisée par le modèle, elle a juste à se mettre à jour seule grâce à la méthode mettreAJourListeArchivage
+     * @param s
+     */
     @Override
     public void actualiser(Sujet s) {
         mettreAJourListeArchivage();
     }
 
 
+    /**
+     * Cette méthode permet de créer l'élément graphique (Vbox) par lequel les tâches/sections sont représentées dans la VueArchivage
+     * @param titre
+     * @param description
+     * @return
+     */
     public VBox creerTache(String titre, String description) {
         VBox vBox = new VBox();
 
@@ -122,6 +148,14 @@ public class VueArchivage extends VBox implements Observateur, Serializable {
         return vBox;
     }
 
+    /**
+     * Permet de recréer manuellement les éléments graphiques après la sérialisation des données du modèle
+     * puisqu'ils ne peuvent pas être sérialisés via le flux normal de sérialisation
+     *
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         // Il faut que la liste soit réinitialisée après la désérialisation des données de l'application
@@ -141,6 +175,7 @@ public class VueArchivage extends VBox implements Observateur, Serializable {
         });
     }
 
+
     public void changerClasseCSSBoutons() {
         if (this.boutonCourant.equals(this.tachesArchivees)) {
             this.tachesArchivees.getStyleClass().clear();
@@ -155,7 +190,10 @@ public class VueArchivage extends VBox implements Observateur, Serializable {
         }
     }
 
-
+    /**
+     * Permet de mettre à jour la liste soit de sections soit de tâches archivées.
+     * Récupère la nature du bouton et selon sa nature crée et ajoute au conteneur les sections ou tâches
+     */
     private void mettreAJourListeArchivage() {
         vueListe.getChildren().clear();
         if (this.boutonCourant != null) {

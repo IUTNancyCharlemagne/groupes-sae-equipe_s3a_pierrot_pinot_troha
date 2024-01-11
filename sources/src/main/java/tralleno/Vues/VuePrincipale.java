@@ -1,8 +1,6 @@
 package tralleno.Vues;
 
-import javafx.animation.TranslateTransition;
 import javafx.scene.Scene;
-import javafx.util.Duration;
 import tralleno.Controleurs.ControlVues;
 import tralleno.Modele.ModeleBureau;
 
@@ -94,8 +92,16 @@ public class VuePrincipale implements Serializable {
      */
     private final VueTableau vueTableau;
 
+    /**
+     * Vue des tâches sous forme de diagramme de Gantt
+     */
     private final VueGantt vueGantt;
+
+    /**
+     * Vue dans laquelle on sélectionne les tâches nécessaires à la génération du diagramme de Gantt
+     */
     private final VueSelecteurGantt vueSelecteurGantt;
+
     /**
      * Vue des tâches/Sections sous forme de Listes dépliantes
      */
@@ -105,8 +111,6 @@ public class VuePrincipale implements Serializable {
      * Vue pour les tâches et sections archivées qui apparaît à droite lorsque l'utilisateur souhaite les consulter
      */
     private final VueArchivage vueArchivage;
-    private TranslateTransition afficherMenuTransition;
-    private TranslateTransition cacherMenuTransition;
 
     public VuePrincipale(Stage primaryStage, ModeleBureau modeleBureau) {
         this.primaryStage = primaryStage;
@@ -138,15 +142,6 @@ public class VuePrincipale implements Serializable {
 
         this.modeleBureau.enregistrerObservateur(vueArchivage);
 
-
-        // Animation pour afficher le menu d'archivage
-        afficherMenuTransition = new TranslateTransition(Duration.seconds(2), vueArchivage);
-        afficherMenuTransition.setToX(-vueArchivage.getWidth());
-//        showMenuTransition.setToX(0);
-
-        // Animation pour cacher le menu d'archivage
-        cacherMenuTransition = new TranslateTransition(Duration.seconds(2), vueArchivage);
-        cacherMenuTransition.setToX(0);
         changerVue(TABLEAU);
         this.changerTheme(THEMEOCEAN);
     }
@@ -170,26 +165,24 @@ public class VuePrincipale implements Serializable {
     }
 
     /**
-     * Nouvelle méthode pour afficher le menu d'archivage avec animation
+     * Permet d'afficher le menu d'archivage en l'ajoutant à droite du borderpane
      */
     public void afficherArchivage() {
         if (!vueArchivage.isVisible()) {
             conteneurPrincipal.setRight(vueArchivage); // Ajoute la VBox à droite du BorderPane
             conteneurPrincipal.getRight().getStyleClass().add("BTRight_Archivage");
             ControlVues.getBoutonArchivage().setId("BtnArchivage_ArchivageOuvert");
-            afficherMenuTransition.play();
             vueArchivage.setVisible(true);
         }
     }
 
     /**
-     * Nouvelle méthode pour cacher le menu d'archivage avec animation
+     * Permet de cacher le menu d'archivage quand il est ouvert, le supprime du BorderPane
      */
     public void cacherArchivage() {
         if (vueArchivage.isVisible()) {
-            cacherMenuTransition.play();
             vueArchivage.setVisible(false);
-            conteneurPrincipal.getChildren().remove(vueArchivage); // Enlève la VBox du BorderPane
+            conteneurPrincipal.getChildren().remove(vueArchivage);
             ControlVues.getBoutonArchivage().setId("aucunStyleSupplementaire");
         }
     }
@@ -250,15 +243,19 @@ public class VuePrincipale implements Serializable {
         }
     }
 
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
+    /**
+     * Retourne le modèle bureau que contient la VuePrincipale
+     * @return
+     */
     public ModeleBureau getModeleBureau() {
         return modeleBureau;
     }
 
+    /**
+     * Retourne la scène de la vueprincipale, car le fait d'y ajouter du css peut faire appeler plusieurs fois
+     * la méthode getScene, il faut donc en créer une s'il n'y en a pas encore, ou la renvoyer si elle existe
+     * @return
+     */
     public synchronized Scene getScene() {
         if (scene == null) {
             scene = new Scene(conteneurPrincipal, 800, 600);

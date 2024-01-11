@@ -1,7 +1,6 @@
 package tralleno.Vues;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,8 +12,6 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import tralleno.Controleurs.Taches.ControlModifTache;
@@ -55,10 +52,12 @@ public class VueTache extends TitledPane implements Observateur {
     /**
      * Construit une vueTache à partir de la tâche que la vue est censée représenter graphiquement
      * du modele et de la tâche parente de la tâche. Si elle n'en a pas, elle vaudra null
-     *
+     * Si on cherche à construire une tâche pour la VueTableau etendre vaudra faux car la tâche devra être d'une petite taille
+     * Si etendre vaut vrai, cela construit une vueTache adaptée à la vueListe et à la largeur d'une VueSection
      * @param tache
      * @param modeleBureau
      * @param tacheParente
+     * @param etendre
      */
     public VueTache(Tache tache, ModeleBureau modeleBureau, TacheMere tacheParente, boolean etendre) {
         super();
@@ -120,6 +119,7 @@ public class VueTache extends TitledPane implements Observateur {
 
         descriptionLabel.getStyleClass().add("descriptionLabel");
 
+        // Si on est dans le cas d'une tâche de VueTableau
         if (!this.etendre) {
             titreLabel.setMaxWidth(150);
             titreLabel.setWrapText(false);
@@ -164,11 +164,9 @@ public class VueTache extends TitledPane implements Observateur {
             event.consume();
         });
 
-
+        // Enlever la couleur qui fait les contours de la tâche une fois le drag fini
         this.setOnDragDone(event -> {
-            // ...
             this.getStyleClass().remove("dragging");
-            // ...
         });
 
         // Écouteur pour accepter le drop de la tâche/sous-tâche pour en faire une sous-tâche
@@ -189,7 +187,7 @@ public class VueTache extends TitledPane implements Observateur {
             }
         });
 
-
+        // Quand le drop est stoppé on enlève la classe qui fait les contours
         this.setOnDragExited(event -> {
             if (!this.contains(event.getX(), event.getY())) {
                 this.getStyleClass().remove("drag-over");
@@ -197,8 +195,8 @@ public class VueTache extends TitledPane implements Observateur {
             event.consume();
         });
 
+        // Idem
         this.setOnMouseExited(event -> {
-            // Retire la classe CSS lorsque la souris quitte la zone de la tâche
             this.getStyleClass().remove("drag-over");
             event.consume();
         });

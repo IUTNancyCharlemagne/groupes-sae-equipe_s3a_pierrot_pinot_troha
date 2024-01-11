@@ -2,8 +2,6 @@ package tralleno.Vues;
 
 import tralleno.Modele.Sujet;
 
-import java.io.Serializable;
-
 /**
  * Observe un sujet et s'actualise lorsqu'il change.
  */

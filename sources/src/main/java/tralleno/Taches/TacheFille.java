@@ -1,10 +1,7 @@
 package tralleno.Taches;
 
-import tralleno.Taches.Tache;
-
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  * Tâche qui ne comporte pas de sous-tâches

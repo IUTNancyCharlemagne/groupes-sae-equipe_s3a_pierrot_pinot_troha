@@ -1,12 +1,10 @@
 package tralleno.Controleurs.Archivage;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Taches.Tache;
-import tralleno.Taches.TacheMere;
 
 /**
  * Classe qui permet d'archiver la tâche sélectionnée par l'utilisateur lors de son interaction

@@ -6,7 +6,6 @@ import tralleno.Section.Section;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
 
 /**
  * Classe représentant une tâche, se déclinant en deux type de tâches. TacheFille, étant une tâche ne possèdant pas de sous-tâche

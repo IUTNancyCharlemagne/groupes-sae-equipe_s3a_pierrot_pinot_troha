@@ -1,7 +1,6 @@
 package tralleno.Vues;
 
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -12,8 +11,6 @@ import javafx.scene.layout.Region;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Modele.Sujet;
 import tralleno.Section.Section;
-import tralleno.Taches.Tache;
-import tralleno.Taches.TacheMere;
 
 import java.io.Serializable;
 import java.util.List;
@@ -42,7 +39,8 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
 
     /**
      * Déclenchée lorsque l'état du modèle est modifiée
-     *
+     * Elle crée pour chaque section du modèle une VueSection et chaque VueSection est ajoutée à la HBox qui les
+     * contient
      * @param s
      */
     public void actualiser(Sujet s) {
@@ -84,10 +82,10 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
                 boolean success = false;
 
                 if (db.hasString()) {
-                    Section section = this.modeleBureau.getSectionParId(Integer.valueOf(db.getString()));
+                    Section section = this.modeleBureau.getSectionParId(Integer.valueOf(db.getString())); // On récupère la section dragged via l'id mis dans le dragboard
                     this.modeleBureau.setSectionCourante(section);
-                    int targetIndex = determinerPositionInsertion(event);
-                    modeleBureau.deplacerSection(targetIndex);
+                    int targetIndex = determinerPositionInsertion(event); // On récupère l'index auquel insérer la section
+                    modeleBureau.deplacerSection(targetIndex); // Et on la déplace
                     success = true;
                 }
 
@@ -106,12 +104,20 @@ public class VueTableau extends ScrollPane implements Observateur, Serializable 
      * @return
      */
     private int determinerPositionInsertion(DragEvent event) {
+        // On récupère l'abscisse de la souris
         double mouseX = event.getX();
+
         List<Section> sections = modeleBureau.getSections();
-        double sectionWidth = 250;
+
+        // On sait qu'une section fait 250 de largeur
+        double largeurSection = 250;
 
         for (int i = 0; i < sections.size(); i++) {
-            double sectionX = i * sectionWidth;
+            // On récupère l'abscisse de la section en faisant i * 250
+            double sectionX = i * largeurSection;
+
+            // Et si l'abscisse de la section est supérieure à celle de la souris
+            // On a trouvé l'indice d'insertion
             if (mouseX < sectionX) {
                 return i - 1;
             }

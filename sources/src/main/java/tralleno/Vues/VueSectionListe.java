@@ -26,10 +26,21 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 
+/**
+ * Représente les sections dans la VueListe sous forme de TitledPane, pour que lorsqu'on la déplie, on ait
+ * accès aux tâches de la section
+ */
 public class VueSectionListe extends TitledPane implements Observateur, Serializable {
+    /**
+     * Section représentée par la vue
+     */
     private final Section section;
 
-
+    /**
+     * Construit une vueSection à partir de la section que la vue doit représenter et le modèle
+     * @param modele
+     * @param section
+     */
     public VueSectionListe(ModeleBureau modele, Section section) {
         super();
         this.section = section;
@@ -42,6 +53,11 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
 
     }
 
+    /**
+     * Lorsqu'elle est appelée, crée la VueSection, en ajoutant pour chaque tâche de la seciton
+     * une VueTache lui étant associée
+     * @param s
+     */
     @Override
     public void actualiser(Sujet s) {
         ModeleBureau modeleBureau = (ModeleBureau) s;
@@ -59,8 +75,8 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
         sectionContent.setMinHeight(50);
         sectionContent.getStyleClass().add("sectionContent");
 
-
-        content.getChildren().add(sectionContent); // Ajout de la VBox dans la VBox principale
+        // On met la Vbox dans l'autre qui est dans le contenu
+        content.getChildren().add(sectionContent);
 
         setContent(content);
 
@@ -93,6 +109,7 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
         boutonModifierSect.getStyleClass().add("modifier-button");
         boutonModifierSect.addEventHandler(MouseEvent.MOUSE_CLICKED, new ControlModifSection(modeleBureau, this.section));
 
+        // Dans l'en-tête du TitledPane qui représente la section on met le nom de la section avec le bouton de modification
         this.setGraphic(sect);
 
 
@@ -100,6 +117,7 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
 
         sectionContent.getChildren().clear();
 
+        // Pour chaque tâche de la section on crée une VueTache et on l'ajoute
         for (Tache t : this.section.getTaches()) {
             VueTache vueTacheListe = new VueTache(t, modeleBureau, null, true);
             sectionContent.getChildren().add(vueTacheListe);
@@ -110,7 +128,8 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
         this.setOnDragDetected(event -> {
             Dragboard dragboard = this.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent contenu = new ClipboardContent();
-            contenu.putString((String.valueOf(section.getId())));
+            contenu.putString((String.valueOf(section.getId()))); // On met l'id de la section
+            // pour le drag and drop de la section dans la VueListe
             contenu.putImage(sect.snapshot(new SnapshotParameters(), null));
             dragboard.setContent(contenu);
             event.consume();
@@ -128,6 +147,9 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
             }
         });
 
+        // Pour empêcher le drag de la VueListe ou d'une VueSection dans l'en-tête d'une section (éviter les problèmes)
+        // Mais à cause de javafx le setgraphic() ne représente que la partie qui contient le nom de la seciton et le bouton
+        // de modification et pas tout l'espace que prend l'en-tête
         this.getGraphic().setOnDragOver(event -> {
             if (event.getGestureSource() instanceof VueListe || event.getGestureSource() instanceof VueSectionListe) {
                 event.acceptTransferModes(TransferMode.NONE);
@@ -135,6 +157,7 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
             }
         });
 
+        // On accepte uniquement le drop de VueTache dans la partie contenu de la section
         this.getContent().setOnDragOver(event -> {
             if (event.getGestureSource() instanceof VueSectionListe) {
                 event.acceptTransferModes(TransferMode.NONE);
@@ -192,14 +215,17 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
         for (int i = 0; i < tachesVisuelles.size(); i++) {
             Node tacheVisuelle = tachesVisuelles.get(i);
 
+            // On récupère ici la position en ordonnée de la VueTache parcourue
             double tacheY = tacheVisuelle.getBoundsInParent().getMinY();
 
+            // Et si en ordonnée elle est supérieure à la souris alors on a trouvé l'endroit où on veut insérer
             if (mouseY < tacheY) {
                 index = i;
                 break;
             }
         }
 
+        // Si mauvaise position alors on met la taille de la liste comme ça dans le setOnDragDropped ça ajoutera à la fin
         if (index == -1) {
             index = tachesVisuelles.size();
         }

@@ -4,7 +4,6 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tralleno.Modele.ModeleBureau;
-import tralleno.Section.Section;
 import tralleno.Taches.Tache;
 
 /**

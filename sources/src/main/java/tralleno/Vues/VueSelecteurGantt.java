@@ -1,22 +1,15 @@
 package tralleno.Vues;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import tralleno.Modele.ModeleBureau;
 import tralleno.Modele.Sujet;
 import tralleno.Taches.Tache;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class VueSelecteurGantt extends ScrollPane implements Observateur, Serializable {
     private ModeleBureau modele;

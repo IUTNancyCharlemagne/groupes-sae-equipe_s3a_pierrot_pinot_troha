@@ -16,7 +16,6 @@ import tralleno.Taches.Tache;
 import tralleno.Taches.TacheMere;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Cette classe représente une section via une VBox. Les sections sont contenues dans les différentes vues et ne sont pas
@@ -64,6 +63,7 @@ public class VueSection extends VBox implements Observateur, Serializable {
 
         String nom = section.getNom();
 
+        // Pour raccourcir le nom de la section s'il est trop long
         String nomAbrege = nom.length() > 30 ? nom.substring(0, 30) + "..." : nom;
         Label labelSection = new Label(nomAbrege);
         labelSection.setAlignment(Pos.CENTER);
@@ -118,6 +118,8 @@ public class VueSection extends VBox implements Observateur, Serializable {
             }
         });
 
+        // Pour l'animation de couleur autour de la section selectionnée par la tâche dragged, enlève la classe
+        // et la section n'est donc plus entourée d'une couleur
         this.setOnDragExited(event -> {
             if (!this.contains(event.getX(), event.getY())) {
                 this.getStyleClass().remove("hovered");
@@ -130,6 +132,7 @@ public class VueSection extends VBox implements Observateur, Serializable {
             Dragboard db = event.getDragboard();
             boolean success = false;
 
+            // Vérification si le dragboard contient bien l'id de la tâche mais juste par précaution
             if (db.hasString()) {
                 int idTacheParente = Integer.parseInt(db.getString());
                 if (idTacheParente != -1) { // Si la tâche a une tâche mère la valeur de l'id sera différente de -1
@@ -173,14 +176,17 @@ public class VueSection extends VBox implements Observateur, Serializable {
         for (int i = 0; i < tachesVisuelles.size(); i++) {
             Node tacheVisuelle = tachesVisuelles.get(i);
 
+            // On récupère ici la position en ordonnée de la VueTache parcourue
             double tacheY = tacheVisuelle.getBoundsInParent().getMinY();
 
+            // Et si en ordonnée elle est supérieure à la souris alors on a trouvé l'endroit où on veut insérer
             if (mouseY < tacheY) {
                 index = i;
                 break;
             }
         }
 
+        // Si pas de position trouvée alors on met la taille de la section pour déplacer la VueTache à la fin (dans le setOnDragDropped)
         if (index == -1) {
             index = tachesVisuelles.size();
         }

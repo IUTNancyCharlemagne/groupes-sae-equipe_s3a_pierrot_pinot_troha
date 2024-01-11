@@ -18,11 +18,20 @@ import java.util.List;
 
 import tralleno.Taches.Tache;
 
+/**
+ * Vue gantt qui affiche les tâches selectionnés dans le modele sous forme de gantt avec les dépendences
+ */
 public class VueGantt extends ScrollPane implements Observateur, Serializable {
 
+
+    /**
+     * Modèle qui contient toutes les données de l'application
+     */
     private ModeleBureau modele;
 
     /**
+     * Instantiates a new Vue gantt.
+     *
      * @param modele modele a partir duquel il va chercher les données
      */
     public VueGantt(ModeleBureau modele) {

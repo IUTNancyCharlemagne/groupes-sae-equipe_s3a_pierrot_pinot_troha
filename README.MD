@@ -5,7 +5,7 @@
 - [PINOT Gaëtan](https://https://github.com/gaetanpinot)
 - [TROHA Stanislas](https://github.com/Stantrh)
 
-**Objectif de l'application**
+**Objectif de l'application**  
 Notre application est un logiciel de gestion de tâches.  
 Vous pouvez créer des sections et mettre des tâches dedans.  
 Les tâches sont caractérisées par un titre et une description. Elle peut être complétée par une durée et des dépendances avec les autres tâches.

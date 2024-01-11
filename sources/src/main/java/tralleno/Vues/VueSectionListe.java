@@ -40,6 +40,7 @@ public class VueSectionListe extends TitledPane implements Observateur, Serializ
         sectionContent.setSpacing(15);
         sectionContent.setPadding(new Insets(15));
         sectionContent.setMinHeight(50);
+        sectionContent.getStyleClass().add("sectionContent");
 
 
 

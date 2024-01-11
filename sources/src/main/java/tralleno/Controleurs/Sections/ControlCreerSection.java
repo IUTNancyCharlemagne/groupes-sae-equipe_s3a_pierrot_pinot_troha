@@ -107,10 +107,6 @@ public class ControlCreerSection implements EventHandler<MouseEvent> {
                 scene.getStylesheets().clear();
                 scene.getStylesheets().add(getClass().getResource("/tralleno/css/Plage/popupStylePlage.css").toExternalForm());
                 break;
-            case 7:
-                scene.getStylesheets().clear();
-                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Pride/popupStylePride.css").toExternalForm());
-                break;
             default:
                 scene.getStylesheets().clear();
                 scene.getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/popupStyleBrouillard.css").toExternalForm());

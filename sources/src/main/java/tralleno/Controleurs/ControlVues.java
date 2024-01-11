@@ -94,9 +94,6 @@ public class ControlVues implements EventHandler<ActionEvent> {
                 case "Plage":
                     this.vuePrincipale.changerTheme(THEMEPLAGE);
                     break;
-                case "Pride":
-                    this.vuePrincipale.changerTheme(THEMEPRIDE);
-                    break;
                 default:
                     this.vuePrincipale.changerTheme(THEMEBROUILLARD);
                     break;

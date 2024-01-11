@@ -1,29 +1,32 @@
 /* palette de couleurs
-#467246
-#5F7F5F
-#749874
-#8AB28A
-#A3C1A3
+#4B5943
+#8FB43A
+#B7CE66
+#C8D6A2
+#DCDFDA
 */
 
 {
-    -fx-background-color: #8AB28A;
+    -fx-background-color: #B7CE66;
+    /*-fx-background-color: #A3A3A3;*/
+    /*-fx-background-color: red;*/
+    /*-fx-background-color: #2cea2c;*/
 }
 
 .entete * {
-    -fx-background-color: #8AB28A;
+    -fx-background-color: #B7CE66;
 }
 
 .entete {
-    -fx-background-color: #5F7F5F;
+    -fx-background-color: #8FB43A;
 }
 
 .vueTableau *{
-    -fx-background-color: #8AB28A;
+    -fx-background-color: #B7CE66;
 }
 
 .vueTableau {
-    -fx-background-color: #8AB28A;
+    -fx-background-color: #B7CE66;
 }
 
 /* vueBarreActions */
@@ -31,8 +34,8 @@
 .nomAppli {
     -fx-font-weight: bold;
     -fx-font-size: 20px;
-    -fx-text-fill: white;
-    -fx-background-color: #5F7F5F; /* le même que le fond de l'entête */
+    -fx-text-fill: black;
+    -fx-background-color: #8FB43A; /* le même que le fond de l'entête */
 
     -fx-scale-x: 1;
     -fx-scale-y: 1;
@@ -44,64 +47,64 @@
 }
 
 .actionButton {
-    -fx-border-color: #A3C1A3;
+    -fx-border-color: #DCDFDA;
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
-    -fx-background-color: #5F7F5F;
-    -fx-text-fill: #A3C1A3;
+    -fx-background-color: #8FB43A;
+    -fx-text-fill: #585858;
     -fx-font-weight: bold;
 }
 
 .actionButton:hover {
-    -fx-background-color: #A3C1A3;
-    -fx-text-fill: #467246;
+    -fx-background-color: #DCDFDA;
+    -fx-text-fill: #585858;
 }
 
 .choixVue {
-    -fx-border-color: #A3C1A3;
+    -fx-border-color: #DCDFDA;
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
-    -fx-background-color: #5F7F5F;
-    -fx-text-fill: #A3C1A3;
+    -fx-background-color: #8FB43A;
+    -fx-text-fill: #DCDFDA;
     -fx-font-weight: bold;
 }
 
 .choixVue .context-menu {
-    -fx-background-color: #8AB28A;
+    -fx-background-color: #B7CE66;
     -fx-background-radius: 5px;
     -fx-border-width: 2px;
-    -fx-border-color: #A3C1A3;
+    -fx-border-color: #DCDFDA;
     -fx-border-radius: 5px;
     -fx-pref-width: 102px;
 }
 
 .choixVue .menu-item {
-    -fx-background-color: #8AB28A;
-    -fx-text-fill: #467246;
+    -fx-background-color: #B7CE66;
+    -fx-text-fill: #585858;
     -fx-background-radius: 5px;
 }
 
-.elementsDroite {
-    -fx-background-color: #5F7F5F;
+.elementsDroite{
+    -fx-background-color: #8FB43A;
     -fx-alignment: center-right;
 }
 
-.labelTheme {
-    -fx-background-color: #5F7F5F;
+.labelTheme{
+    -fx-background-color: #8FB43A;
     -fx-padding: 5px;
-    -fx-text-fill: #A3C1A3;
+    -fx-text-fill: #585858;
     -fx-font-weight: bold;
 }
 
-#BtnArchivage_ArchivageOuvert {
-    -fx-background-color: #A3C1A3;
-    -fx-text-fill: #467246;
+#BtnArchivage_ArchivageOuvert{
+    -fx-background-color: #DCDFDA;
+    -fx-text-fill: #585858;
 }
 
 /* vueTableau */
 
 .section {
-    -fx-background-color: #A3C1A3;
+    -fx-background-color: #DCDFDA;
     -fx-background-radius: 10px;
 }
 
@@ -117,54 +120,175 @@
 }
 
 .fond_titre_section {
-    -fx-background-color: transparent;
+    -fx-background-color: #DCDFDA; /* même couleur que le contour de la section */
 }
 
-/* Vue Liste */
-
-.pane {
-    -fx-background-color: #FF0000; /* Remplacez par la couleur de votre choix */
+.modifier-button {
+    -fx-background-color: #B7CE66;
+    -fx-background-radius: 100px;
+    -fx-text-fill: #DCDFDA;
 }
 
-.vueliste {
-    -fx-background-color: #FF0000; /* Remplacez par la couleur de votre choix */
+
+.modifier-button:hover {
+    -fx-background-color: #8FB43A;
 }
 
-.containerSectionsListe {
-    -fx-background-color: #8AB28A;
+.containerSections {
+    -fx-background-color: #B7CE66;
 }
 
-.vueSectionListe {
-    -fx-background-color: #A3C1A3;
+.titreTache {
+    -fx-background-color: #B7CE66;
+}
+
+.enteteTache {
+    -fx-background-color: #B7CE66;
+}
+
+.contenuTache {
+    -fx-background-color: #DCDFDA;
     -fx-background-radius: 10px;
+    -fx-padding: 5px;
 }
 
-.vueSectionListe .title {
-    -fx-background-color: #A3C1A3;
-    -fx-background-radius: 10;
+.sousTachesBox {
+    -fx-background-color: #DCDFDA;
 }
 
-.vueSectionListe .content {
-    -fx-background-color: #A3C1A3;
-    -fx-background-radius: 10;
+.descriptionLabel {
+    -fx-background-color: #DCDFDA;
 }
 
-.vueSectionListe * {
-    -fx-background-color: #A3C1A3;
-    -fx-background-radius: 10px;
+.scroll-bar {
+    -fx-padding: 2px;
 }
 
-/* ... (code précédent) */
+.scroll-bar .thumb {
+    -fx-background-color: #8FB43A;
+}
+
+.scroll-bar .decrement-button {
+    -fx-background-color: #B7CE66;
+    -fx-padding: 3px;
+    -fx-background-radius: 2px;
+}
+
+.ScrollPaneArchivage * {
+    -fx-background-color: #B7CE66;
+}
+
+/* Archivage */
+
+.archivage {
+    -fx-background-color: #B7CE66;
+    -fx-border-width: 3px;
+    -fx-border-color: #8FB43A;
+}
+
+.archivage * {
+    -fx-background-color: #B7CE66;
+}
+
+.ScrollPaneArchivage * {
+    -fx-background-color: #B7CE66;
+}
+
+.listeElementArchive {
+    -fx-background-color: #B7CE66;
+}
+
+.listeElementArchive * {
+    -fx-background-color: #B7CE66;
+}
+
+.boutonsTachesSection {
+    -fx-background-color: #DCDFDA;
+}
+
+.BtnTacheSelected {
+    -fx-background-color: #B7CE66;
+    -fx-text-fill: #585858;
+    -fx-font-weight: bold;
+    -fx-padding: 10 10 10 10;
+    -fx-pref-width: 194px;
+    -fx-background-radius: 0 5 0 0;
+}
+
+.BtnTacheNotSelected {
+    -fx-background-color: #DCDFDA;
+    -fx-padding: 10 10 10 10;
+    -fx-pref-width: 150px;
+    -fx-text-fill: #585858;
+    -fx-font-weight: bold;
+}
+
+.BtnSectionSelected {
+    -fx-background-color: #B7CE66;
+    -fx-text-fill: #585858;
+    -fx-font-weight: bold;
+    -fx-padding: 10 10 10 10;
+    -fx-pref-width: 194px;
+    -fx-background-radius: 5 0 0 0;
+}
+
+.BtnSectionNotSelected {
+    -fx-background-color: #DCDFDA;
+    -fx-padding: 10 10 10 10;
+    -fx-pref-width: 150px;
+    -fx-text-fill: #585858;
+    -fx-font-weight: bold;
+}
+
+.tacheEtBoutons {
+    -fx-background-color: #B7CE66;
+    -fx-background-radius: 5px;
+}
+
+.conteneurBoutons {
+    -fx-background-color: #B7CE66;
+}
+
+.btnElementArchive {
+    -fx-background-color: #8FB43A;
+    -fx-font-weight: bold;
+    -fx-text-fill: #585858;
+}
+
+.btnElementArchive:hover {
+    -fx-background-color: #C8D6A2;
+}
+
+.texteBox {
+    -fx-background-color: #B7CE66;
+    -fx-pref-width: 190px;
+    -fx-pref-height: 55px;
+    -fx-border-color: #8FB43A;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+}
+
+.titreTacheArchivee {
+    -fx-text-fill: #585858;
+    -fx-font-weight: bold;
+    -fx-background-color: #B7CE66;
+}
+
+.descriptionTacheAbregee {
+    -fx-text-fill: #585858;
+    -fx-font-weight: bold;
+    -fx-background-color: #B7CE66;
+}
 
 /* Vue Sélecteur Gantt */
 
 .vueSelecteurGantt * {
-    -fx-background-color: #8AB28A;
+    -fx-background-color: #B7CE66;
 }
 
 .gridSelectionGantt {
-    -fx-background-color: #8AB28A;
-    -fx-border-color: #5F7F5F;
+    -fx-background-color: #B7CE66;
+    -fx-border-color: #8FB43A;
     -fx-border-radius: 5px;
     -fx-border-width: 2px;
     -fx-background-radius: 5px;
@@ -173,89 +297,183 @@
 .containerSelectionTacheGantt {
     -fx-padding: 0.5em;
     -fx-spacing: 0.5em;
-    -fx-border-color: #5F7F5F;
+    -fx-border-color: #8FB43A;
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
-    -fx-background-color: #A3C1A3;
+    -fx-background-color: #DCDFDA;
     -fx-background-radius: 5px;
 }
 
 .labelSelectionTacheTitreGantt {
     -fx-font-size: 1.5em;
-    -fx-text-fill: #467246;
+    -fx-text-fill: #585858;
     -fx-font-weight: bold;
     -fx-background-color: rgba(0, 0, 0, 0);
 }
 
 .labelSelectionTacheSectionGantt {
-    -fx-text-fill: #467246;
+    -fx-text-fill: #585858;
     -fx-background-color: rgba(0, 0, 0, 0);
 }
 
-/* ... (rest of the code remains unchanged) */
+.checkboxSelectionTacheGantt {
+    -fx-border-color: #585858;
+    -fx-background-color: #B7CE66;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-padding: 1 1 1 1;
+}
+
+.checkboxSelectionTacheGantt .box {
+    -fx-background-color: #B7CE66;
+}
+
+.checkboxSelectionTacheGantt .box .mark {
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.checkboxSelectionTacheGantt:selected .box .mark {
+    -fx-background-color: #585858;
+}
+
+.boutonGenererGantt {
+    -fx-background-color: #4B5943;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.boutonGenererGantt:hover {
+    -fx-background-color: #8FB43A;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
 
 /* Vue Gantt */
 
 .vueGantt * {
-    -fx-background-color: #A3C1A3;
-}
-
-.rectangleGantt {
-    -fx-fill: purple;
+    -fx-background-color: #DCDFDA;
 }
 
 .titreTacheGantt {
-    -fx-text-fill: #A3C1A3;
+    -fx-text-fill: #DCDFDA;
     -fx-font-weight: bold;
     -fx-font-size: 1em;
     -fx-background-color: rgba(0, 0, 0, 0);
 }
 
 .dateTacheGantt {
-    -fx-text-fill: #467246;
+    -fx-text-fill: #585858;
 }
 
 .stackPaneTacheGantt {
-    -fx-background-color: #8AB28A;
+    -fx-background-color: #4B5943;
     -fx-background-radius: 0.5em 0.5em 0.5em 0.5em;
 }
 
 .gridGantt {
     -fx-border-width: 1 ;
-    -fx-border-color: #A3C1A3;
+    -fx-border-color: #B7CE66;
     -fx-border-radius: 0.5em;
     -fx-background-color: transparent;
 }
 
 .vboxGrilleGantt {
-    -fx-background-color: #A3C1A3;
+    -fx-background-color: #C8D6A2;
 }
 
 /* Vue Liste */
+
+.pane{
+    -fx-background-color: #8FB43A;
+}
+
+.vueliste {
+    -fx-background-color: #8FB43A;
+}
+
+.containerSectionsListe{
+    -fx-background-color: #B7CE66;
+}
+
+.vueSectionListe{
+    -fx-background-color: #DCDFDA;
+    -fx-background-radius: 10px;
+}
+
+.vueSectionListe .title {
+    -fx-background-color: #DCDFDA;
+    -fx-background-radius: 10;
+}
+
+.vueSectionListe .content {
+    -fx-background-color: #DCDFDA;
+    -fx-background-radius: 10;
+}
+
+.vueSectionListe * {
+    -fx-background-color: #DCDFDA;
+    -fx-background-radius: 10px;
+    -fx-border-width: 0px;
+}
+
+.sectionContent{
+    -fx-background-color: #8FB43A;
+    /*-fx-border-color: #F0F0F0;*/
+    /*-fx-border-width: 5px;*/
+    -fx-background-radius: 0 0 5 5;
+}
+
+.vueTache { /* TitlePane */
+    /* à mettre de la même couleur que le fond des sections */
+    -fx-background-color: #B7CE66;
+    -fx-border-color: #B7CE66;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.vueTache.dragging {
+    -fx-border-color: #2cea2c;
+    -fx-border-width: 4;
+}
+
+.vueTache.drag-over {
+    -fx-border-color: lightblue;
+    -fx-border-width: 4;
+}
+
+.vueTache .title {
+    -fx-background-color: #B7CE66;
+}
+
+.vueTache .title *{
+    -fx-background-color: #B7CE66;
+}
 
 .vueTache .title .arrow-button .arrow {
     -fx-background-color: black;
 }
 
 .vueTache > .content {
-    -fx-background-color: #A3C1A3;
+    -fx-background-color: #DCDFDA;
     -fx-background-radius: 10px;
     -fx-border-width: 0px;
 }
 
 .modifier-button {
-    -fx-background-color: #5F7F5F;
+    -fx-background-color: #8FB43A;
     -fx-background-radius: 5px;
-    -fx-text-fill: #A3C1A3;
+    -fx-text-fill: #DCDFDA;
 }
 
 .modifier-button:hover {
-    -fx-background-color: #467246;
+    -fx-background-color: #8FB43A;
 }
-.ligneGantt {
+
+.ligneGantt{
     -fx-stroke: red;
     -fx-stroke-line-cap: round;
     -fx-stroke-width: 0.1em;
 }
-
 

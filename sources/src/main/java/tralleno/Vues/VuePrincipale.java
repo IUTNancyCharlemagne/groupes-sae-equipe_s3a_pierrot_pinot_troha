@@ -59,12 +59,6 @@ public class VuePrincipale implements Serializable {
     public static final int THEMEPLAGE = 6;
 
     /**
-     * Constante qui correspond au thème LGBT
-     */
-    public static final int THEMEPRIDE = 7;
-
-
-    /**
      * Conteneur principal de l'application
      */
     private final BorderPane conteneurPrincipal;
@@ -152,9 +146,8 @@ public class VuePrincipale implements Serializable {
         // Animation pour cacher le menu d'archivage
         cacherMenuTransition = new TranslateTransition(Duration.seconds(0.3), vueArchivage);
         cacherMenuTransition.setToX(0);
-
         changerVue(TABLEAU);
-        this.changerTheme(THEMEBROUILLARD);
+        this.changerTheme(THEMEOCEAN);
     }
 
     public void changerVue(int mode) {
@@ -216,7 +209,7 @@ public class VuePrincipale implements Serializable {
                 break;
             case THEMEOCEAN:
                 this.getScene().getStylesheets().clear();
-                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Ocean/trallenoStyleBlue.css").toExternalForm());
+                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Ocean/trallenoStyleOcean.css").toExternalForm());
                 themeCourant = THEMEOCEAN;
                 break;
             case THEMECREPUSCULE:
@@ -238,11 +231,6 @@ public class VuePrincipale implements Serializable {
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Plage/trallenoStylePlage.css").toExternalForm());
                 themeCourant = THEMEPLAGE;
-                break;
-            case THEMEPRIDE:
-                this.getScene().getStylesheets().clear();
-                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Pride/trallenoStylePride.css").toExternalForm());
-                themeCourant = THEMEPRIDE;
                 break;
             default:
                 this.getScene().getStylesheets().clear();

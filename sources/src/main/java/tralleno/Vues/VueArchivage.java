@@ -175,7 +175,9 @@ public class VueArchivage extends VBox implements Observateur, Serializable {
         });
     }
 
-
+    /**
+     * Méthode qui permet d'ajuster le style du bouton en fonction de s'il est selectionné ou pas
+     */
     public void changerClasseCSSBoutons() {
         if (this.boutonCourant.equals(this.tachesArchivees)) {
             this.tachesArchivees.getStyleClass().clear();

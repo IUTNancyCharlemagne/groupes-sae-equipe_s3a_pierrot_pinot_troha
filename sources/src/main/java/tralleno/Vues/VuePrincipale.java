@@ -2,7 +2,6 @@ package tralleno.Vues;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.util.Duration;
 import tralleno.Controleurs.ControlVues;
 import tralleno.Modele.ModeleBureau;
@@ -32,12 +31,37 @@ public class VuePrincipale implements Serializable {
     /**
      * Constante qui correspond au thème de base (nuances de gris)
      */
-    public static final int THEMEBASE = 1;
+    public static final int THEMEBROUILLARD = 1;
 
     /**
      * Constante qui correspond au thème en bleu
      */
-    public static final int THEMEBLUE = 2;
+    public static final int THEMEOCEAN = 2;
+
+    /**
+     * Constante qui correspond au thème en nuances de rouge/orange
+     */
+    public static final int THEMECREPUSCULE = 3;
+
+    /**
+     * Constante qui correspond au thème en vert
+     */
+    public static final int THEMEFORET = 4;
+
+    /**
+     * Constante qui correspond au thème en nuance foncées
+     */
+    public static final int THEMENUIT = 5;
+
+    /**
+     * Constante qui correspond au thème en jaune
+     */
+    public static final int THEMEPLAGE = 6;
+
+    /**
+     * Constante qui correspond au thème LGBT
+     */
+    public static final int THEMEPRIDE = 7;
 
 
     /**
@@ -131,7 +155,7 @@ public class VuePrincipale implements Serializable {
         cacherMenuTransition.setToX(0);
 
         changerVue(TABLEAU);
-        this.changerTheme(THEMEBASE);
+        this.changerTheme(THEMEBROUILLARD);
     }
 
     public void changerVue(int mode) {
@@ -194,20 +218,45 @@ public class VuePrincipale implements Serializable {
      */
     public void changerTheme(int theme){
         switch (theme){
-            case THEMEBASE:
+            case THEMEBROUILLARD:
                 this.getScene().getStylesheets().clear();
-                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Base/trallenoStyleBase.css").toExternalForm());
-                themeCourant = THEMEBASE;
+                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/trallenoStyleBrouillard.css").toExternalForm());
+                themeCourant = THEMEBROUILLARD;
                 break;
-            case THEMEBLUE:
+            case THEMEOCEAN:
                 this.getScene().getStylesheets().clear();
-                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Blue/trallenoStyleBlue.css").toExternalForm());
-                themeCourant = THEMEBLUE;
+                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Ocean/trallenoStyleBlue.css").toExternalForm());
+                themeCourant = THEMEOCEAN;
+                break;
+            case THEMECREPUSCULE:
+                this.getScene().getStylesheets().clear();
+                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Crepuscule/trallenoStyleCrepuscule.css").toExternalForm());
+                themeCourant = THEMECREPUSCULE;
+                break;
+            case THEMEFORET:
+                this.getScene().getStylesheets().clear();
+                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Foret/trallenoStyleForet.css").toExternalForm());
+                themeCourant = THEMEFORET;
+                break;
+            case THEMENUIT:
+                this.getScene().getStylesheets().clear();
+                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Nuit/trallenoStyleNuit.css").toExternalForm());
+                themeCourant = THEMENUIT;
+                break;
+            case THEMEPLAGE:
+                this.getScene().getStylesheets().clear();
+                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Plage/trallenoStylePlage.css").toExternalForm());
+                themeCourant = THEMEPLAGE;
+                break;
+            case THEMEPRIDE:
+                this.getScene().getStylesheets().clear();
+                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Pride/trallenoStylePride.css").toExternalForm());
+                themeCourant = THEMEPRIDE;
                 break;
             default:
                 this.getScene().getStylesheets().clear();
-                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Base/trallenoStyleBase.css").toExternalForm());
-                themeCourant = THEMEBASE;
+                this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/trallenoStyleBrouillard.css").toExternalForm());
+                themeCourant = THEMEBROUILLARD;
                 break;
         }
     }

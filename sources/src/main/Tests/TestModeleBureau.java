@@ -69,7 +69,7 @@ public class TestModeleBureau {
         this.bureau.setTacheCourante(devApp);
         //test
         this.bureau.setSectionCourante(this.sae);
-        this.bureau.ajouterTache();
+        this.bureau.ajouterTache(0);
 
         //vérification
         int nbTachesApres = this.bureau.getTaches().size();

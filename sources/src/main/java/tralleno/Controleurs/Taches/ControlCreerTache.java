@@ -1,24 +1,14 @@
 package tralleno.Controleurs.Taches;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tralleno.Modele.ModeleBureau;
-import tralleno.Section.Section;
-import tralleno.Taches.Tache;
-import tralleno.Taches.TacheMere;
 import tralleno.Vues.VuePrincipale;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.List;
 
 /**
  * Classe qui gère la création d'une tâche lorsque l'utilisateur clique sur le bouton pour
@@ -59,15 +49,35 @@ public class ControlCreerTache implements EventHandler<MouseEvent>, Serializable
         switch (themeApp){
             case 1:
                 scene.getStylesheets().clear();
-                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Base/popupStyleBase.css").toExternalForm());
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/popupStyleBrouillard.css").toExternalForm());
                 break;
             case 2:
                 scene.getStylesheets().clear();
-                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Blue/popupStyleBlue.css").toExternalForm());
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Ocean/popupStyleOcean.css").toExternalForm());
+                break;
+            case 3:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Crepuscule/popupStyleCrepuscule.css").toExternalForm());
+                break;
+            case 4:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Foret/popupStyleForet.css").toExternalForm());
+                break;
+            case 5:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Nuit/popupStyleNuit.css").toExternalForm());
+                break;
+            case 6:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Plage/popupStylePlage.css").toExternalForm());
+                break;
+            case 7:
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Pride/popupStylePride.css").toExternalForm());
                 break;
             default:
                 scene.getStylesheets().clear();
-                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Base/popupStyleBase.css").toExternalForm());
+                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/popupStyleBrouillard.css").toExternalForm());
                 break;
         }
 

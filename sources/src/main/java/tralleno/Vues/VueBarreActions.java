@@ -78,7 +78,7 @@ public class VueBarreActions extends HBox implements Serializable {
         theme.getStyleClass().add("labelTheme");
 
         ChoiceBox<String> choixtheme = new ChoiceBox<>();
-        choixtheme.getItems().addAll("Base", "Bleu");
+        choixtheme.getItems().addAll("Brouillard", "Ocean", "Crepuscule", "Foret", "Nuit", "Plage", "Pride");
         choixtheme.getStyleClass().add("choixVue");
         choixtheme.setValue("Base");
         choixtheme.addEventHandler(ActionEvent.ACTION, new ControlVues(choixtheme, vuePrincipale, "Contournement"));

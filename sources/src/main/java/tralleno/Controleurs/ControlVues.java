@@ -4,13 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.input.MouseEvent;
 import tralleno.Vues.VuePrincipale;
-import tralleno.Vues.VueTableau;
 
-import static tralleno.Vues.VuePrincipale.THEMEBASE;
-import static tralleno.Vues.VuePrincipale.THEMEBLUE;
+import static tralleno.Vues.VuePrincipale.*;
 
 /**
  * Classe qui gère le changement de vues global, donc que ce soit pour changer la vue entre la vuetableau et la vueliste, ou encore la vue des tâches archivées
@@ -80,11 +76,29 @@ public class ControlVues implements EventHandler<ActionEvent> {
         } else if (actionEvent.getSource() == theme){
             String themeChoisi = theme.getValue();
             switch (themeChoisi){
-                case "Base":
-                    this.vuePrincipale.changerTheme(THEMEBASE);
+                case "Brouillard":
+                    this.vuePrincipale.changerTheme(THEMEBROUILLARD);
                     break;
-                case "Bleu":
-                    this.vuePrincipale.changerTheme(THEMEBLUE);
+                case "Ocean":
+                    this.vuePrincipale.changerTheme(THEMEOCEAN);
+                    break;
+                case "Crepuscule":
+                    this.vuePrincipale.changerTheme(THEMECREPUSCULE);
+                    break;
+                case "Foret":
+                    this.vuePrincipale.changerTheme(THEMEFORET);
+                    break;
+                case "Nuit":
+                    this.vuePrincipale.changerTheme(THEMENUIT);
+                    break;
+                case "Plage":
+                    this.vuePrincipale.changerTheme(THEMEPLAGE);
+                    break;
+                case "Pride":
+                    this.vuePrincipale.changerTheme(THEMEPRIDE);
+                    break;
+                default:
+                    this.vuePrincipale.changerTheme(THEMEBROUILLARD);
                     break;
             }
         }

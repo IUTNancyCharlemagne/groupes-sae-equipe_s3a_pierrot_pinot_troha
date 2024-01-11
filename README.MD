@@ -22,6 +22,6 @@ Nous proposons plusieurs vue :
 - JUnit : [*version 5.8.1*](https://junit.org/junit5/docs/5.8.1/api/index.html)
 
 
-**Documents complémentaires**
+**Documents complémentaires :**  
 Trello : https://trello.com/b/wHu9WCAP/sae-301  
 Maquette baslamique : https://balsamiq.cloud/sdcu4x/pxdfi15/r047D  

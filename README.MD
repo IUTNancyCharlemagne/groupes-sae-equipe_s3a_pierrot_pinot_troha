@@ -6,11 +6,6 @@
 - [PINOT Gaëtan](https://https://github.com/gaetanpinot)
 - [TROHA Stanislas](https://github.com/Stantrh)
 
-Le projet est développé sous Java 17  
-Trello : https://trello.com/b/wHu9WCAP/sae-301  
-Maquette baslamique : https://balsamiq.cloud/sdcu4x/pxdfi15/r047D  
-Iteration 5 en cours
-
 **Objectif de l'application**
 
 Notre application est un logiciel de gestion de tâches.  

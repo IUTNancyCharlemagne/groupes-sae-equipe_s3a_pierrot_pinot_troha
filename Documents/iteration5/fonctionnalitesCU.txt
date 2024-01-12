@@ -1,0 +1,12 @@
+Fonctionnalités : 
+VueGantt finalisée PIERROT, PINOT
+Choix du thème de l'application (et thèmes) PIERROT
+VueListe TROHA
+Drag and drop vue Liste TROHA
+CSS final de l'application PIERROT
+
+Cas d'utilisation : 
+Changer thème de l'application
+Visionner les tâches sous forme de Liste
+Selectionner des tâches pour les afficher en Gantt
+Visionner la selection de tâches sous forme de diagramme de Gantt

@@ -79,8 +79,15 @@ public class VuePrincipale implements Serializable {
      */
     private final ModeleBureau modeleBureau;
 
+    /**
+     * numéro du thème courant de l'application
+     */
     private static int themeCourant;
 
+    /**
+     * lien vers le thème pour les fenêtres popup
+     */
+    private static String themePopup;
 
     /**
      * Barre située en haut de l'application qui permet de créer des sections, tâches de changer de vue, d'accéder à l'archivage
@@ -209,36 +216,43 @@ public class VuePrincipale implements Serializable {
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/trallenoStyleBrouillard.css").toExternalForm());
                 themeCourant = THEMEBROUILLARD;
+                themePopup = "/tralleno/css/Brouillard/popupStyleBrouillard.css";
                 break;
             case THEMEOCEAN:
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Ocean/trallenoStyleOcean.css").toExternalForm());
                 themeCourant = THEMEOCEAN;
+                themePopup = "/tralleno/css/Ocean/popupStyleOcean.css";
                 break;
             case THEMECREPUSCULE:
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Crepuscule/trallenoStyleCrepuscule.css").toExternalForm());
                 themeCourant = THEMECREPUSCULE;
+                themePopup = "/tralleno/css/Crepuscule/popupStyleCrepuscule.css";
                 break;
             case THEMEFORET:
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Foret/trallenoStyleForet.css").toExternalForm());
                 themeCourant = THEMEFORET;
+                themePopup = "/tralleno/css/Foret/popupStyleForet.css";
                 break;
             case THEMENUIT:
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Nuit/trallenoStyleNuit.css").toExternalForm());
                 themeCourant = THEMENUIT;
+                themePopup = "/tralleno/css/Nuit/popupStyleNuit.css";
                 break;
             case THEMEPLAGE:
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Plage/trallenoStylePlage.css").toExternalForm());
                 themeCourant = THEMEPLAGE;
+                themePopup = "/tralleno/css/Plage/popupStylePlage.css";
                 break;
             default:
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/trallenoStyleBrouillard.css").toExternalForm());
                 themeCourant = THEMEBROUILLARD;
+                themePopup = "/tralleno/css/Brouillard/popupStyleBrouillard.css";
                 break;
         }
     }
@@ -268,6 +282,13 @@ public class VuePrincipale implements Serializable {
      */
     public static int getThemeCourant() {
         return themeCourant;
+    }
+
+    /**
+     * @return le lien vers le thème courant pour les fenêtres popup
+     */
+    public static String getThemePopup() {
+        return themePopup;
     }
 }
 

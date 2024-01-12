@@ -11,14 +11,26 @@ import tralleno.Taches.Tache;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Vue du selecteur de tâche qui affiche une liste de tâche selectionnable et les enregistre dans le modele
+ */
 public class VueSelecteurGantt extends ScrollPane implements Observateur, Serializable {
-    private final ModeleBureau modele;
-
-    private final transient VuePrincipale vp;
+    /**
+     * Modèle qui contient toutes les données de l'application
+     */
+    private ModeleBureau modele;
 
     /**
-     * @param modele
-     * @param vueprincip
+     * Vue Principale qu'on utilise dans un controleur pour changer de vue quand on a terminé
+     */
+    private transient VuePrincipale vp;
+
+
+    /**
+     * Instantiates a new Vue selecteur gantt.
+     *
+     * @param modele     the modele
+     * @param vueprincip the vueprincip
      */
     public VueSelecteurGantt(ModeleBureau modele, VuePrincipale vueprincip) {
         super();

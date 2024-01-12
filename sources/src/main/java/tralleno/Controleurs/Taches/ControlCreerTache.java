@@ -47,37 +47,8 @@ public class ControlCreerTache implements EventHandler<MouseEvent>, Serializable
         // On crée la nouvelle scène et on lui ajoute le formulaire
         Scene scene = FormulaireTache.creerFormulaireTache(this.modeleBureau, null, null, fenetreCreationTache);
 
-        int themeApp = VuePrincipale.getThemeCourant();
-        switch (themeApp) {
-            case 1:
-                scene.getStylesheets().clear();
-                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/popupStyleBrouillard.css").toExternalForm());
-                break;
-            case 2:
-                scene.getStylesheets().clear();
-                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Ocean/popupStyleOcean.css").toExternalForm());
-                break;
-            case 3:
-                scene.getStylesheets().clear();
-                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Crepuscule/popupStyleCrepuscule.css").toExternalForm());
-                break;
-            case 4:
-                scene.getStylesheets().clear();
-                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Foret/popupStyleForet.css").toExternalForm());
-                break;
-            case 5:
-                scene.getStylesheets().clear();
-                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Nuit/popupStyleNuit.css").toExternalForm());
-                break;
-            case 6:
-                scene.getStylesheets().clear();
-                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Plage/popupStylePlage.css").toExternalForm());
-                break;
-            default:
-                scene.getStylesheets().clear();
-                scene.getStylesheets().add(getClass().getResource("/tralleno/css/Brouillard/popupStyleBrouillard.css").toExternalForm());
-                break;
-        }
+        //on ajoute le style du thème courant à la fenêtre popup
+        scene.getStylesheets().add(getClass().getResource(VuePrincipale.getThemePopup()).toExternalForm());
 
         fenetreCreationTache.setScene(scene);
         fenetreCreationTache.showAndWait();

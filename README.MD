@@ -53,4 +53,4 @@ Lorsqu'une tâche du plus haut niveau devient sous-tâche d'une autre (drag and 
 ### **Liens complémentaires :**
 
 - Trello : https://trello.com/b/wHu9WCAP/sae-301
-- Maquette Balsamiq : https://balsamiq.cloud/sdcu4x/pxdfi15/r047D# SAE S3.01 Développement d'applications
+- Maquette Balsamiq : https://balsamiq.cloud/sdcu4x/pxdfi15/r047D
